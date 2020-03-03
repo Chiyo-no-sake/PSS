@@ -1,22 +1,27 @@
 package ch.supsi.labingsw1.model;
 
-public class Course {
-    private String name;
+import java.util.List;
 
-    public Course(String name) {
+public class Course {
+
+    private String name;
+    List<Student> students;
+
+    public Course(String name, List<Student> students){
         this.name = name;
+        this.students = students;
     }
 
-    public String getName() {
+    public String getName(){
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public List<Student> getStudents() {
+        return students;
     }
 
     @Override
-    public String toString() {
-        return this.name;
+    public String toString(){
+        return name;
     }
 }
