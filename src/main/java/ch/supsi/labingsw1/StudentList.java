@@ -17,12 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-/**
- * TODO:
- *  BUG -> when clicking the second time to a course, it load another reversed list
- *  of student at the bottom of the view.
- */
-
 public class StudentList extends Application {
 
     public static void main(String[] args) {
@@ -84,7 +78,6 @@ public class StudentList extends Application {
 
 
         // Setting custom colored cells
-        // TODO bug only present with this two lines uncommented
         courseLv.setCellFactory(
                 courseListView -> new StyledSelectableCell<>(STUD_COL)
         );

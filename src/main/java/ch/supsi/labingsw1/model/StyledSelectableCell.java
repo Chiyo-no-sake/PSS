@@ -27,21 +27,33 @@ public class StyledSelectableCell<T> extends ListCell<T> {
     protected void updateItem(T item, boolean empty) {
         super.updateItem(item, empty);
 
-        if(item == null) return;
+        // This execute to update each 'empty cell' where in fact the item is null
+        if (item == null) {
+            // setting transparent bg
+            this.setBackground(
+                    new Background(
+                            new BackgroundFill(
+                                    new Color(1., 1., 1., 0.),
+                                    CornerRadii.EMPTY,
+                                    Insets.EMPTY
+                            )));
 
-        if(this.isSelected()) {
-            setBG(this.selBG);
-            setTextFill(this.selTextCol);
-        }
-        else {
-            setBG(this.idleBG);
-            setTextFill(this.idleTextCol);
-        }
+            setText("");
+        } else {
 
-        setText(item.toString());
+            if (this.isSelected()) {
+                setBG(this.selBG);
+                setTextFill(this.selTextCol);
+            } else {
+                setBG(this.idleBG);
+                setTextFill(this.idleTextCol);
+            }
+
+            setText(item.toString());
+        }
     }
 
-    private void setBG(Background c){
+    private void setBG(Background c) {
         this.setBackground(c);
     }
 }
