@@ -5,7 +5,7 @@ import java.util.List;
 public class Course {
 
     private String name;
-    List<Student> students;
+    private List<Student> students;
 
     public Course(String name, List<Student> students){
         this.name = name;
