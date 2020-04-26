@@ -4,7 +4,7 @@
                              http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>ch.supsi.labingsw1</groupId>
+    <groupId>ch.supsi.pss</groupId>
     <artifactId>pss-project-frontend</artifactId>
     <version>1.0.0</version>
     <!-- <packaging>jar</packaging>  -->
@@ -32,7 +32,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>ch.supsi.pss.Pss</mainClass>
+                            <mainClass>ch.supsi.pss.PssFX</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
