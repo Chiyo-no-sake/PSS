@@ -1,28 +1,31 @@
 package ch.supsi.pss.draw;
 
-import javafx.beans.InvalidationListener;
-import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.layout.Pane;
+import javafx.scene.control.ToolBar;
 
-import java.util.*;
+import java.util.ArrayList;
 
 
-public class ToolBar {
-    private ObservableList<Button> btnList;
+public class MyToolBar extends ToolBar {
 
-    ToolBar() {
-        this.btnList = new FXCollections.observableArrayList();
+    private final ArrayList<Button> btnList = new ArrayList<>();
 
-        this.btnList.add(new Button("FreeDraw"));
-        this.btnList.add(new Button("Square"));
-        this.btnList.add(new Button("Circle"));
-    }
+    public MyToolBar() {
+        btnList.add(new Button("Sq"));
+        btnList.add(new Button("Li"));
+        btnList.add(new Button("Fd"));
+        btnList.add(new Button("Er"));
+        btnList.add(new Button("XX"));
 
-    void addToParent(Pane parentPane){
-        parentPane.getChildren().addAll(btnList);
+        this.setOrientation(Orientation.VERTICAL);
+        this.setPadding(new Insets(10, 10, 10, 10));
+
+        btnList.forEach(b -> {
+            this.getItems().add(b);
+            b.setPrefWidth(40);
+            b.setPrefHeight(40);
+        });
     }
 }
