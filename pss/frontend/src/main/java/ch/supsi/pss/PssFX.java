@@ -1,6 +1,6 @@
 package ch.supsi.pss;
 
-import ch.supsi.pss.draw.DrawingFrame;
+import ch.supsi.pss.drawFrame.draw.DrawingFrame;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -15,8 +15,8 @@ import javafx.stage.Stage;
 
 public class PssFX extends Application {
 
-    static int WIDTH = 1366;
-    static int HEIGHT = 768;
+    private static final int WIDTH = 1366;
+    private static final int HEIGHT = 768;
 
     public static void main(String[] args) {
         launch(args);
@@ -59,7 +59,7 @@ public class PssFX extends Application {
         DrawingFrame drawFrame = new DrawingFrame(WIDTH,HEIGHT);
         drawFrame.setStyle("-fx-border-style: solid;" +
                 "-fx-border-color: black;" +
-                "-fx-background-color: white;");
+                "-fx-background-color: #c0c0c0;");
 
         //Search Field
         TextField search = new TextField();
