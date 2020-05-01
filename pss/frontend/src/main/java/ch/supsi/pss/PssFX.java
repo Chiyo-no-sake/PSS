@@ -2,15 +2,23 @@ package ch.supsi.pss;
 
 import ch.supsi.pss.drawFrame.DrawingFrame;
 import javafx.application.Application;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javax.imageio.ImageIO;
+import java.awt.image.RenderedImage;
+import java.io.File;
+import java.io.IOException;
+
 
 
 public class PssFX extends Application {
@@ -35,6 +43,13 @@ public class PssFX extends Application {
         Label drawTitle = new Label("Draw Window");
         Label galleryTitle = new Label("Gallery Window");
 
+        //CanvasPane instantiation
+
+        DrawingFrame drawFrame = new DrawingFrame(WIDTH,HEIGHT);
+        drawFrame.setStyle("-fx-border-style: solid;" +
+                "-fx-border-color: black;" +
+                "-fx-background-color: #c0c0c0;");
+
         //Buttons
         Button drawBtn = new Button();
         drawBtn.setText("Go to Draw Window");
@@ -47,19 +62,29 @@ public class PssFX extends Application {
             stage.sizeToScene();
         });
 
+        // Saving Button
         Button saveBtn = new Button();
         saveBtn.setText("Save");
         saveBtn.setOnAction(actionEvent -> {
             System.out.println("Drawing saved");
+
+            FileChooser savefile = new FileChooser();
+            savefile.setTitle("Save File");
+
+            File file = savefile.showSaveDialog(stage);
+            if(file != null){
+                try {
+                    WritableImage writableImage = new WritableImage(WIDTH, HEIGHT);
+                    drawFrame.snapshot(null, writableImage);
+
+                    RenderedImage renderedImage = SwingFXUtils.fromFXImage(writableImage,null);
+                    ImageIO.write(renderedImage,"png",file);
+                }catch (IOException e){
+                    System.out.printf("Error");
+                }
+            }
             stage.sizeToScene();
         });
-
-        //CanvasPane instantiation
-
-        DrawingFrame drawFrame = new DrawingFrame(WIDTH,HEIGHT);
-        drawFrame.setStyle("-fx-border-style: solid;" +
-                "-fx-border-color: black;" +
-                "-fx-background-color: #c0c0c0;");
 
         //Search Field
         TextField search = new TextField();
