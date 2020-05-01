@@ -1,6 +1,5 @@
-package ch.supsi.pss.drawFrame.draw;
+package ch.supsi.pss.drawFrame;
 
-import ch.supsi.pss.drawFrame.toolbar.DrawToolbar;
 import javafx.geometry.Insets;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
@@ -29,6 +28,8 @@ public class DrawingFrame extends BorderPane {
 
         toolbar = new DrawToolbar(canvas);
         toolbar.setPrefHeight(draw_height);
+
+        canvas.setConnectedToolbar(toolbar);
 
         this.setCenter(canvasContainer);
         this.setRight(toolbar);

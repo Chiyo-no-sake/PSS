@@ -1,19 +1,18 @@
-package ch.supsi.pss.drawFrame.toolbar;
+package ch.supsi.pss.drawFrame;
 
-import ch.supsi.pss.drawFrame.draw.DrawCanvas;
+import ch.supsi.pss.drawFrame.tools.Pencil;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
-import javafx.scene.control.Button;
-import javafx.scene.control.ColorPicker;
-import javafx.scene.control.ToolBar;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 /**
- * TODO: create Tool abstract class. every button will correspond to a shape,
+ * TODO: create Tool abstract class. every button will correspond to a Tool,
  *       every Tool will have a few methos: onmousedown, onmousedragged, onmouserelease.
  *       the shape will be extended by each tool, and each tool will immplement his own methods.
  *       those methods will all be used by the DrawCanvas class by calling the
@@ -21,7 +20,7 @@ import java.util.ArrayList;
  *       where selectedTool is a Tool.
  *
  * TODO: adjust portrait icons to be bigger
- * 
+ *
  */
 
 
@@ -38,7 +37,7 @@ public class DrawToolbar extends ToolBar {
     static final String PORTAIT_OFF_ICO = "/icons/non_portrait.png";
     static final String PORTAIT_ON_ICO = "/icons/portrait.png";
 
-    private final ArrayList<Button> btnToolsList;
+    private final ArrayList<ImageButton> btnToolsList;
     private final ColorPicker colorPicker;
     private final ImageButton portraitButton;
     private final ImageButton clearButton;
@@ -48,7 +47,7 @@ public class DrawToolbar extends ToolBar {
     /**
      * @param connectedCanvas the canvas connected to the Toolbar
      */
-    public DrawToolbar(DrawCanvas connectedCanvas) {
+    DrawToolbar(DrawCanvas connectedCanvas) {
         this.btnToolsList = new ArrayList<>();
         this.colorPicker = new ColorPicker();
 
@@ -103,15 +102,80 @@ public class DrawToolbar extends ToolBar {
         this.getItems().add(spacer3);
         this.getItems().add(clearButton);
         
-        //setup btn listeners
-        portraitButton.setOnMouseClicked(e -> {
-            connectedCanvas.changeMode(connectedCanvas.isPortrait());
+        // ----------------- setup listeners ------------------------
 
-            if(connectedCanvas.isPortrait()){
-                portraitButton.changeImage(new ImageView(this.getClass().getResource(PORTAIT_ON_ICO).toExternalForm()));
-            }else{
-                portraitButton.changeImage(new ImageView(this.getClass().getResource(PORTAIT_OFF_ICO).toExternalForm()));
+        // unimplemented buttons
+        btnToolsList.forEach( b -> {
+            b.setOnMouseClicked( e -> {
+                Alert al = new Alert(Alert.AlertType.INFORMATION);
+                al.setTitle("Feature Coming Soon");
+                al.setHeaderText("Feature is coming soon");
+                al.setContentText("Please wait for a new version");
+                al.showAndWait();
+            });
+        });
+
+        // Color picker listener
+        colorPicker.setOnAction(e -> {
+            connectedCanvas.setColor(colorPicker.getValue());
+        });
+
+        // PortraitMode button listener
+        portraitButton.setOnMouseClicked(e -> {
+            if (popConfirmDialog("Are you sure?", "This operation will erase your work", "Are you ok with this?")) {
+                connectedCanvas.clearContent();
+                connectedCanvas.changeMode(connectedCanvas.isPortrait());
+                if (connectedCanvas.isPortrait()) {
+                    portraitButton.changeImage(new ImageView(this.getClass().getResource(PORTAIT_ON_ICO).toExternalForm()));
+                } else {
+                    portraitButton.changeImage(new ImageView(this.getClass().getResource(PORTAIT_OFF_ICO).toExternalForm()));
+                }
             }
+        });
+
+        // Clear button listener
+        clearButton.setOnMouseClicked(e->{
+            if (popConfirmDialog("Are you sure?", "This operation will erase your work", "Are you ok with this?")){
+                connectedCanvas.clearContent();
+            }
+        });
+
+        // freeDraw button listener
+        btnToolsList.get(0).setOnMouseClicked(e -> {
+            resetButtonStatus();
+            ((ImageButton)e.getSource()).setSelected(true);
+            connectedCanvas.setTool(new Pencil());
+        });
+    }
+
+    boolean popConfirmDialog(String title, String header, String content) {
+        final Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+
+        alert.getButtonTypes().clear();
+        alert.getButtonTypes().addAll(ButtonType.YES, ButtonType.CANCEL);
+
+        //Deactivate Defaultbehavior for yes-Button:
+        Button yesButton = (Button) alert.getDialogPane().lookupButton( ButtonType.YES );
+        yesButton.setDefaultButton( false );
+
+        //Activate Defaultbehavior for no-Button:
+        Button noButton = (Button) alert.getDialogPane().lookupButton( ButtonType.CANCEL );
+        noButton.setDefaultButton( true );
+
+        final Optional<ButtonType> result = alert.showAndWait();
+        return result.isPresent() && result.get() == ButtonType.YES;
+    }
+
+    Color getSelectedColor(){
+        return colorPicker.getValue();
+    }
+
+    private void resetButtonStatus(){
+        btnToolsList.forEach( b -> {
+            b.setSelected(false);
         });
     }
 }

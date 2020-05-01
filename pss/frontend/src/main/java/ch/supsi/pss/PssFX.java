@@ -1,6 +1,6 @@
 package ch.supsi.pss;
 
-import ch.supsi.pss.drawFrame.draw.DrawingFrame;
+import ch.supsi.pss.drawFrame.DrawingFrame;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
