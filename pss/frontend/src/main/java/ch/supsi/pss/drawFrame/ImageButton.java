@@ -3,7 +3,11 @@ package ch.supsi.pss.drawFrame;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 
-public class ImageButton extends Button {
+
+/**
+ * not intended to use outside the package
+ */
+class ImageButton extends Button {
     private ImageView img;
     private boolean isSelected;
 

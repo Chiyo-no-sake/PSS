@@ -3,6 +3,13 @@ package ch.supsi.pss.drawFrame.tools;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 
+/**
+ * abstract class, used to create other tools
+ *  - listeners need to be implemented in each tool to work with the canvas, that auto calls the method from
+ *    a selected object of this type.
+ *
+ *  - toolName String can be used for testing and debugging purposes
+ */
 public abstract class Tool {
     private String toolName;
     EventHandler<MouseEvent> onMousePressed;

@@ -1,12 +1,16 @@
 package ch.supsi.pss.drawFrame;
 
 import ch.supsi.pss.drawFrame.tools.Tool;
-import ch.supsi.pss.drawFrame.DrawToolbar;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 
+/**
+ * - not intended to use outside the package -
+ *
+ * Provide a canvas intended to work with the class 'DrawToolbar'
+ * those two items needs infact to be connected with the method: setConnectedToolbar.
+ */
 class DrawCanvas extends Canvas {
     private boolean isPortrait;
     private DrawToolbar connectedToolbar;

@@ -19,8 +19,15 @@ import java.util.Optional;
  */
 
 
-
-public class DrawToolbar extends ToolBar {
+/**
+ * - not intended to use outside the package -
+ *
+ * intended to work with a connected DrawCanvas, this last need to be passed in the constructor
+ *
+ * provide a toolbar with some tools in it and some buttons mapped to em.
+ * provide also a portrait mode button, a clear button and a color picker.
+ */
+class DrawToolbar extends ToolBar {
     static final int BTN_SIZE = 40;
 
     static final String PENCIL_ICO = "/icons/pencil.png";

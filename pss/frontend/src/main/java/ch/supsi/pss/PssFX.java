@@ -47,6 +47,14 @@ public class PssFX extends Application {
             stage.sizeToScene();
         });
 
+
+        // TODO: move into backend and create appropriate classes
+        //  save method: request for tags (preferably with a popup window),
+        //  save the tags under a 'data' folder within a file named with uuid of the draw,
+        //  and the draw itself like a png under 'draws' folder
+        //  with the same name ( data/uuid.data, draw/uuid.skt --> a simple png with different extension )
+        //  examples: http://java-buddy.blogspot.com/2013/04/save-canvas-to-png-file.html
+        //  those folder are not intended to go into resources, but into 'target'
         Button saveBtn = new Button();
         saveBtn.setText("Save");
         saveBtn.setOnAction(actionEvent -> {
