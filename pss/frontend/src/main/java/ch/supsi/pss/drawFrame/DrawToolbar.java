@@ -12,12 +12,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 /**
- * TODO: create Tool abstract class. every button will correspond to a Tool,
- *       every Tool will have a few methos: onmousedown, onmousedragged, onmouserelease.
- *       the shape will be extended by each tool, and each tool will immplement his own methods.
- *       those methods will all be used by the DrawCanvas class by calling the
- *              'selectedTool.<eventhandlename>'
- *       where selectedTool is a Tool.
+ * TODO: implement other tools
  *
  * TODO: adjust portrait icons to be bigger
  *
