@@ -58,6 +58,7 @@ public class PssFX extends Application {
         saveBtn.setText("Save");
         saveBtn.setOnAction(actionEvent -> {
             System.out.println("Drawing saved");
+            Save.setDirectory(stage);
             Save.save(stage, drawFrame);
             stage.sizeToScene();
         });
