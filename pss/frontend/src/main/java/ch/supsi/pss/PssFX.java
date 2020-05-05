@@ -2,29 +2,20 @@ package ch.supsi.pss;
 
 import ch.supsi.pss.drawFrame.DrawingFrame;
 import javafx.application.Application;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.image.WritableImage;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javax.imageio.ImageIO;
-import java.awt.image.RenderedImage;
-import java.io.File;
-import java.io.IOException;
-
-
 
 public class PssFX extends Application {
 
-    private static final int WIDTH = 1366;
-    private static final int HEIGHT = 768;
+    static final int WIDTH = 1366;
+    static final int HEIGHT = 768;
 
     public static void main(String[] args) {
         launch(args);
@@ -67,22 +58,7 @@ public class PssFX extends Application {
         saveBtn.setText("Save");
         saveBtn.setOnAction(actionEvent -> {
             System.out.println("Drawing saved");
-
-            FileChooser savefile = new FileChooser();
-            savefile.setTitle("Save File");
-
-            File file = savefile.showSaveDialog(stage);
-            if(file != null){
-                try {
-                    WritableImage writableImage = new WritableImage(WIDTH, HEIGHT);
-                    drawFrame.snapshot(null, writableImage);
-
-                    RenderedImage renderedImage = SwingFXUtils.fromFXImage(writableImage,null);
-                    ImageIO.write(renderedImage,"png",file);
-                }catch (IOException e){
-                    System.out.printf("Error");
-                }
-            }
+            Save.save(stage, drawFrame);
             stage.sizeToScene();
         });
 
