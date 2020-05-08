@@ -16,6 +16,8 @@ class DrawCanvas extends Canvas {
     private DrawToolbar connectedToolbar;
     private Tool selectedTool;
 
+    private DrawCanvasEventController controller;
+
     DrawCanvas(double width, double height) {
         super();
         this.setHeight(height);
@@ -26,6 +28,8 @@ class DrawCanvas extends Canvas {
         this.getGraphicsContext2D().fillRect(0, 0, this.getWidth(), this.getHeight());
 
         this.selectedTool = null;
+
+        this.controller = new DrawCanvasEventController(this);
     }
 
     void changeMode(boolean isPortrait) {
@@ -45,15 +49,11 @@ class DrawCanvas extends Canvas {
 
     void setTool(Tool t){
         if(this.selectedTool!=null) {
-            this.removeEventHandler(MouseEvent.MOUSE_PRESSED, this.selectedTool.getOnMousePressed());
-            this.removeEventHandler(MouseEvent.MOUSE_DRAGGED, this.selectedTool.getOnMouseDragged());
-            this.removeEventHandler(MouseEvent.MOUSE_RELEASED, this.selectedTool.getOnMouseReleased());
+            controller.resetMouseHandlers();
         }
 
         this.selectedTool = t;
-        this.addEventHandler(MouseEvent.MOUSE_PRESSED,  t.getOnMousePressed());
-        this.addEventHandler(MouseEvent.MOUSE_DRAGGED,  t.getOnMouseDragged());
-        this.addEventHandler(MouseEvent.MOUSE_RELEASED, t.getOnMouseReleased());
+        controller.setMouseHandlers(t.getOnMousePressed(), t.getOnMouseDragged(), t.getOnMouseReleased());
     }
 
     void setConnectedToolbar(DrawToolbar connectedToolbar) {

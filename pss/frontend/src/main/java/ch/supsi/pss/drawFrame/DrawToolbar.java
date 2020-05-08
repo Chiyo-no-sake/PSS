@@ -44,6 +44,7 @@ class DrawToolbar extends ToolBar {
     private final ImageButton portraitButton;
     private final ImageButton clearButton;
 
+    private final DrawToolbarController controller;
     private final DrawCanvas connectedCanvas;
 
     /**
@@ -54,7 +55,7 @@ class DrawToolbar extends ToolBar {
         this.colorPicker = new ColorPicker();
 
         this.connectedCanvas = connectedCanvas;
-        
+
         // ----------------- create items and set properties --------------------------
         colorPicker.setPrefWidth(BTN_SIZE);
         colorPicker.setPrefHeight(BTN_SIZE);
@@ -83,7 +84,7 @@ class DrawToolbar extends ToolBar {
         clearButton.setPrefHeight(BTN_SIZE);
         clearButton.setPrefWidth(BTN_SIZE);
         // ------------------ set toolbox properties ------------------------------
-        
+
         this.setOrientation(Orientation.VERTICAL);
         this.setPadding(new Insets(10, 10, 20, 10));
 
@@ -103,81 +104,42 @@ class DrawToolbar extends ToolBar {
 
         this.getItems().add(spacer3);
         this.getItems().add(clearButton);
-        
-        // ----------------- setup listeners ------------------------
 
-        // unimplemented buttons
-        btnToolsList.forEach( b -> {
-            b.setOnMouseClicked( e -> {
-                Alert al = new Alert(Alert.AlertType.INFORMATION);
-                al.setTitle("Feature Coming Soon");
-                al.setHeaderText("Feature is coming soon");
-                al.setContentText("Please wait for a new version");
-                al.showAndWait();
-            });
-        });
+        // ---------------- Create Controller -----------------------------------
 
-        // Color picker listener
-        colorPicker.setOnAction(e -> {
-            connectedCanvas.setColor(colorPicker.getValue());
-        });
-
-        // PortraitMode button listener
-        portraitButton.setOnMouseClicked(e -> {
-            if (popConfirmDialog("Are you sure?", "This operation will erase your work", "Are you ok with this?")) {
-                connectedCanvas.clearContent();
-                connectedCanvas.changeMode(connectedCanvas.isPortrait());
-                if (connectedCanvas.isPortrait()) {
-                    portraitButton.changeImage(new ImageView(this.getClass().getResource(PORTAIT_ON_ICO).toExternalForm()));
-                } else {
-                    portraitButton.changeImage(new ImageView(this.getClass().getResource(PORTAIT_OFF_ICO).toExternalForm()));
-                }
-            }
-        });
-
-        // Clear button listener
-        clearButton.setOnMouseClicked(e->{
-            if (popConfirmDialog("Are you sure?", "This operation will erase your work", "Are you ok with this?")){
-                connectedCanvas.clearContent();
-            }
-        });
-
-        // freeDraw button listener
-        btnToolsList.get(0).setOnMouseClicked(e -> {
-            resetButtonStatus();
-            ((ImageButton)e.getSource()).setSelected(true);
-            connectedCanvas.setTool(new Pencil());
-        });
-    }
-
-    boolean popConfirmDialog(String title, String header, String content) {
-        final Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(header);
-        alert.setContentText(content);
-
-        alert.getButtonTypes().clear();
-        alert.getButtonTypes().addAll(ButtonType.YES, ButtonType.CANCEL);
-
-        //Deactivate Defaultbehavior for yes-Button:
-        Button yesButton = (Button) alert.getDialogPane().lookupButton( ButtonType.YES );
-        yesButton.setDefaultButton( false );
-
-        //Activate Defaultbehavior for no-Button:
-        Button noButton = (Button) alert.getDialogPane().lookupButton( ButtonType.CANCEL );
-        noButton.setDefaultButton( true );
-
-        final Optional<ButtonType> result = alert.showAndWait();
-        return result.isPresent() && result.get() == ButtonType.YES;
+        this.controller = new DrawToolbarController(this);
+        controller.setupListeners();
     }
 
     Color getSelectedColor(){
         return colorPicker.getValue();
     }
 
-    private void resetButtonStatus(){
-        btnToolsList.forEach( b -> {
-            b.setSelected(false);
-        });
+    ArrayList<ImageButton> getBtnToolsList(){
+        return this.btnToolsList;
+    }
+
+    ColorPicker getColorPicker() {
+        return colorPicker;
+    }
+
+    ImageButton getPortraitButton() {
+        return portraitButton;
+    }
+
+    ImageButton getClearButton() {
+        return clearButton;
+    }
+
+    DrawCanvas getConnectedCanvas() {
+        return connectedCanvas;
+    }
+
+    static String getPortaitOffIco() {
+        return PORTAIT_OFF_ICO;
+    }
+
+    static String getPortaitOnIco() {
+        return PORTAIT_ON_ICO;
     }
 }
