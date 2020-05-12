@@ -3,10 +3,7 @@ package ch.supsi.pss;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.URI;
 import java.util.Properties;
 
@@ -23,7 +20,14 @@ public class PreferencesRepository{
 
             return props;
         } catch (IOException e) {
-            e.printStackTrace();
+
+            try {
+                FileWriter fw = new FileWriter("pss/backend/config.properties");
+                fw.write("path=");
+                fw.close();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
         }
         return null;
     }
