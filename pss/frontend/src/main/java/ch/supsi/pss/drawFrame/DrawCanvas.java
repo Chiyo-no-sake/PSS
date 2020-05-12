@@ -37,6 +37,8 @@ public class DrawCanvas extends Canvas {
         controller.setDrawCanvas(this);
 
         upperCanvas = new Canvas();
+        upperCanvas.setWidth(width);
+        upperCanvas.setHeight(height);
     }
 
     void changeMode(boolean isPortrait) {
@@ -53,6 +55,10 @@ public class DrawCanvas extends Canvas {
         this.setLayoutY(0);
         this.getGraphicsContext2D().setFill(Color.WHITE);
         this.getGraphicsContext2D().fillRect(0, 0, this.getWidth(), this.getHeight());
+    }
+
+    Canvas getUpperCanvas(){
+        return upperCanvas;
     }
 
     void setTool(Tool t) {

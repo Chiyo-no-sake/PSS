@@ -6,7 +6,6 @@ import ch.supsi.pss.drawFrame.DrawCanvasController;
 import ch.supsi.pss.helpers.Alerter;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Menu;
 import javafx.stage.Stage;
 
@@ -58,10 +57,15 @@ class MenuBarController {
             }
         });
 
+        // 'Help->About' listener
+        //TODO add a place in .properties were we take developer names of the app
+        menus.get("Help").getItems().get(0).setOnAction(e -> {
+            Alerter.popInformationAlert("TODO","TODO","data must be read by properties file");
+        });
+
         // 'File->save' listener
         menus.get("File").getItems().get(1).setOnAction( e -> {
             System.out.println("Drawing saved");
-            //TODO make classes public in sketchcontroller and create a package (maybe 'saves'?)
 
             SketchController sketchController = new SketchController();
             PreferencesRepository.setRepository(controlledStage);

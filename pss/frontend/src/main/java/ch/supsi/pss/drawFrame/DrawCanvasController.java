@@ -42,20 +42,20 @@ public class DrawCanvasController {
         activeEventOnDrag = onDrag;
         activeEventOnUp = onUp;
 
-        dc.addEventHandler(MouseEvent.MOUSE_PRESSED,  onDown);
-        dc.addEventHandler(MouseEvent.MOUSE_DRAGGED, onDrag);
-        dc.addEventHandler(MouseEvent.MOUSE_RELEASED, onUp);
+        dc.getUpperCanvas().addEventHandler(MouseEvent.MOUSE_PRESSED,  onDown);
+        dc.getUpperCanvas().addEventHandler(MouseEvent.MOUSE_DRAGGED, onDrag);
+        dc.getUpperCanvas().addEventHandler(MouseEvent.MOUSE_RELEASED, onUp);
     }
 
     void resetMouseHandlers(){
         if(activeEventOnDown != null)
-            dc.removeEventHandler(MouseEvent.MOUSE_PRESSED, activeEventOnDown);
+            dc.getUpperCanvas().removeEventHandler(MouseEvent.MOUSE_PRESSED, activeEventOnDown);
 
         if(activeEventOnDrag != null)
-            dc.removeEventHandler(MouseEvent.MOUSE_DRAGGED, activeEventOnDrag);
+            dc.getUpperCanvas().removeEventHandler(MouseEvent.MOUSE_DRAGGED, activeEventOnDrag);
 
         if(activeEventOnUp != null)
-            dc.removeEventHandler(MouseEvent.MOUSE_RELEASED, activeEventOnUp);
+            dc.getUpperCanvas().removeEventHandler(MouseEvent.MOUSE_RELEASED, activeEventOnUp);
 
         activeEventOnUp = null;
         activeEventOnDrag = null;
