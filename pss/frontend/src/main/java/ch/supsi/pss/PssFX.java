@@ -70,8 +70,8 @@ public class PssFX extends Application {
         Scene defaultScene = new Scene(VerticalBoxDraw, DEF_WIN_WIDTH, DEF_WIN_HEIGHT);
 
         // -------------------- Menu bars ----------------------------------------
-        PssMenuBar menuBar_draw = new PssMenuBar(defaultScene, VerticalBoxGallery, VerticalBoxDraw, false);
-        PssMenuBar menuBar_gallery = new PssMenuBar(defaultScene, VerticalBoxGallery, VerticalBoxDraw, true);
+        PssMenuBar menuBar_draw = new PssMenuBar(stage, VerticalBoxGallery, VerticalBoxDraw, false);
+        PssMenuBar menuBar_gallery = new PssMenuBar(stage, VerticalBoxGallery, VerticalBoxDraw, true);
 
         //----------------- adding elements to Gallery view -------------------
         //TODO gallery pane insertion, when gallery is ready

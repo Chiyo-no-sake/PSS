@@ -17,7 +17,7 @@ public class PssMenuBar extends MenuBar {
 
     private HashMap<String, Menu> menus;
 
-    public PssMenuBar(Scene controlledScene, Node galleryRoot, Node drawRoot, boolean bGalleryView) {
+    public PssMenuBar(Stage controlledStage, Node galleryRoot, Node drawRoot, boolean bGalleryView) {
         Platform.runLater(() -> this.bGalleryView = bGalleryView);
         menus = new HashMap<>();
 
@@ -66,7 +66,7 @@ public class PssMenuBar extends MenuBar {
         }
 
         controller = MenuBarController.getInstance();
-        controller.setupController(controlledScene, galleryRoot, drawRoot, this);
+        controller.setupController(controlledStage, galleryRoot, drawRoot, this);
     }
 
     HashMap<String, Menu> getMenuMap() {

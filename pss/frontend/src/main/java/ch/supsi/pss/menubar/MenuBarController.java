@@ -8,12 +8,13 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Menu;
+import javafx.stage.Stage;
 
 import java.util.HashMap;
 
 class MenuBarController {
     private PssMenuBar connectedMenuBar;
-    private Scene controlledScene;
+    private Stage controlledScene;
     private Node galleryRoot, drawRoot;
 
     private static MenuBarController instance;
@@ -29,9 +30,9 @@ class MenuBarController {
     private MenuBarController() {
     }
 
-    public void setupController(Scene controlledScene, Node galleryRoot, Node drawRoot, PssMenuBar connectedMenuBar) {
+    public void setupController(Stage controlledStage, Node galleryRoot, Node drawRoot, PssMenuBar connectedMenuBar) {
         this.connectedMenuBar = connectedMenuBar;
-        this.controlledScene = controlledScene;
+        this.controlledScene = controlledStage;
         this.drawRoot = drawRoot;
         this.galleryRoot = galleryRoot;
 
@@ -42,12 +43,12 @@ class MenuBarController {
 
         // 'View->gallery' listener
         menus.get("View").getItems().get(0).setOnAction(e -> {
-            controlledScene.setRoot((Parent) galleryRoot);
+            controlledStage.getScene().setRoot((Parent) galleryRoot);
         });
 
         // 'View->draw' listener
         menus.get("View").getItems().get(1).setOnAction(e -> {
-            controlledScene.setRoot((Parent) drawRoot);
+            controlledStage.getScene().setRoot((Parent) drawRoot);
         });
 
         // 'Edit->Clear' listener
@@ -61,16 +62,16 @@ class MenuBarController {
         menus.get("File").getItems().get(1).setOnAction( e -> {
             System.out.println("Drawing saved");
             //TODO make classes public in sketchcontroller and create a package (maybe 'saves'?)
-            /*
-            SketchController sketchController = new SketchController();
-            PreferencesRepository.setRepository(stage);
 
-            sketchController.newSketch(drawFrame);
+            SketchController sketchController = new SketchController();
+            PreferencesRepository.setRepository(controlledStage);
+
+            sketchController.newSketch(DrawCanvasController.getInstance().getDrawCanvas());
 
             if(sketchController.getSketchService().saveSketch()){
                 Alerter.popInformationAlert(null,null,"Sketch correctly saved.");
             }
-            */
+
         });
 
     }

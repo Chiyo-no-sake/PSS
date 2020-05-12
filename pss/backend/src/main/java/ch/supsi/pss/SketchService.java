@@ -1,10 +1,12 @@
 package ch.supsi.pss;
 
 import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.BorderPane;
 
 import javax.imageio.ImageIO;
+
 import java.awt.image.RenderedImage;
 import java.io.File;
 import java.util.Set;
@@ -23,9 +25,9 @@ public class SketchService{
     }
 
     private final Set<String> tags = new TreeSet<>();
-    private BorderPane sketch;
+    private Canvas sketch;
 
-    public SketchService(final BorderPane sketch) {
+    public SketchService(final Canvas sketch) {
         this.sketch = sketch;
     }
 
