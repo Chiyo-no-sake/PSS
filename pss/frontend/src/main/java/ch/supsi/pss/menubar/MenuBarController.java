@@ -54,5 +54,22 @@ class MenuBarController {
                 DrawCanvasController.getInstance().getDrawCanvas().clearContent();
             }
         });
+
+        // 'File->save' listener
+        menus.get("File").getItems().get(1).setOnAction( e -> {
+            System.out.println("Drawing saved");
+            //TODO make classes public in sketchcontroller and create a package (maybe 'saves'?)
+            /*
+            SketchController sketchController = new SketchController();
+            PreferencesRepository.setRepository(stage);
+
+            sketchController.newSketch(drawFrame);
+
+            if(sketchController.getSketchService().saveSketch()){
+                Alerter.popInformationAlert(null,null,"Sketch correctly saved.");
+            }
+            */
+        });
+
     }
 }

@@ -35,6 +35,15 @@ public abstract class Alerter {
         return result.isPresent() && result.get() == ButtonType.YES;
     }
 
+    public static void popInformationAlert(String title, String header, String content){
+        Alert al = new Alert(Alert.AlertType.INFORMATION);
+        al.setTitle(title);
+        al.setHeaderText(header);
+        al.setContentText(content);
+        al.setResizable(true);
+        al.showAndWait();
+    }
+
     public static void popNotImlementedAlert(){
         Alert al = new Alert(Alert.AlertType.INFORMATION);
         al.setTitle("Feature Coming Soon");
