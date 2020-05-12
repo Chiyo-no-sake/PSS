@@ -5,6 +5,7 @@ import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -53,13 +54,26 @@ public class PssFX extends Application {
             stage.sizeToScene();
         });
 
+        SketchController sketchController = new SketchController();
+
         // Saving Button
         Button saveBtn = new Button();
         saveBtn.setText("Save");
         saveBtn.setOnAction(actionEvent -> {
             System.out.println("Drawing saved");
-            Save.setDirectory(stage);
-            Save.save(stage, drawFrame);
+            PreferencesRepository.setRepository(stage);
+
+            sketchController.newSketch(drawFrame);
+
+            if(sketchController.getSketchService().saveSketch()){
+                Alert al = new Alert(Alert.AlertType.INFORMATION);
+                al.setTitle(null);
+                al.setHeaderText(null);
+                al.setContentText("Sketch salvato corretamente.");
+                al.setResizable(true);
+                al.showAndWait();
+            }
+
             stage.sizeToScene();
         });
 
