@@ -1,13 +1,14 @@
 package ch.supsi.pss.drawFrame.tools;
 
 import ch.supsi.pss.drawFrame.DrawCanvas;
+import ch.supsi.pss.drawFrame.DrawCanvasController;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
 public class Eraser extends Tool {
-    float width, height;
+    double width, height;
 
     public Eraser(){
         super("eraser");
@@ -18,19 +19,17 @@ public class Eraser extends Tool {
     @Override
     void setOnMousePressed() {
         super.onMousePressed = event -> {
-            if(event.getSource() instanceof DrawCanvas){
-                DrawCanvas c = (DrawCanvas)event.getSource();
-                c.renderTempSquare(event.getX()-width/2, event.getY()-height/2, width, height, Color.BLACK);
-                eraserTick(c, event);
-            }
+            DrawCanvas c = DrawCanvasController.getInstance().getDrawCanvas();
+            c.renderTempSquare(event.getX()-width/2, event.getY()-height/2, width, height, Color.BLACK);
+            eraserTick(c, event);
         };
     }
 
     @Override
     void setOnMouseReleased() {
         super.onMouseReleased = event -> {
-            if(event.getSource() instanceof DrawCanvas){
-                DrawCanvas c = (DrawCanvas)event.getSource();
+            if(event.getSource() instanceof Canvas){
+                DrawCanvas c = DrawCanvasController.getInstance().getDrawCanvas();
                 c.clearTempSquare();
                 eraserTick(c, event);
             }
@@ -40,12 +39,11 @@ public class Eraser extends Tool {
     @Override
     void setOnMouseDragged() {
         super.onMouseDragged = event -> {
-            if(event.getSource() instanceof DrawCanvas){
-                DrawCanvas c = (DrawCanvas)event.getSource();
-                c.clearTempSquare();
-                c.renderTempSquare(event.getX()-width/2, event.getY()-height/2, width, height, Color.BLACK);
-                eraserTick(c, event);
-            }
+            DrawCanvas c = DrawCanvasController.getInstance().getDrawCanvas();
+            c.clearTempSquare();
+            c.renderTempSquare(event.getX()-width/2, event.getY()-height/2, width, height, Color.BLACK);
+            eraserTick(c, event);
+
         };
     }
 
