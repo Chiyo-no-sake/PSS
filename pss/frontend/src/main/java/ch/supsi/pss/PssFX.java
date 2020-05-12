@@ -5,6 +5,7 @@ import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -12,11 +13,10 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-
 public class PssFX extends Application {
 
-    private static final int WIDTH = 1366;
-    private static final int HEIGHT = 768;
+    static final int WIDTH = 1366;
+    static final int HEIGHT = 768;
 
     public static void main(String[] args) {
         launch(args);
@@ -35,6 +35,13 @@ public class PssFX extends Application {
         Label drawTitle = new Label("Draw Window");
         Label galleryTitle = new Label("Gallery Window");
 
+        //CanvasPane instantiation
+
+        DrawingFrame drawFrame = new DrawingFrame(WIDTH,HEIGHT);
+        drawFrame.setStyle("-fx-border-style: solid;" +
+                "-fx-border-color: black;" +
+                "-fx-background-color: #c0c0c0;");
+
         //Buttons
         Button drawBtn = new Button();
         drawBtn.setText("Go to Draw Window");
@@ -47,20 +54,28 @@ public class PssFX extends Application {
             stage.sizeToScene();
         });
 
+        SketchController sketchController = new SketchController();
+        // Saving Button
 
         Button saveBtn = new Button();
         saveBtn.setText("Save");
         saveBtn.setOnAction(actionEvent -> {
             System.out.println("Drawing saved");
+            PreferencesRepository.setRepository(stage);
+
+            sketchController.newSketch(drawFrame);
+
+            if(sketchController.getSketchService().saveSketch()){
+                Alert al = new Alert(Alert.AlertType.INFORMATION);
+                al.setTitle(null);
+                al.setHeaderText(null);
+                al.setContentText("Sketch salvato corretamente.");
+                al.setResizable(true);
+                al.showAndWait();
+            }
+
             stage.sizeToScene();
         });
-
-        //CanvasPane instantiation
-
-        DrawingFrame drawFrame = new DrawingFrame(WIDTH,HEIGHT);
-        drawFrame.setStyle("-fx-border-style: solid;" +
-                "-fx-border-color: black;" +
-                "-fx-background-color: #c0c0c0;");
 
         //Search Field
         TextField search = new TextField();
