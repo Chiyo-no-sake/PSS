@@ -3,20 +3,38 @@ package ch.supsi.pss.drawFrame;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 
-
-class DrawCanvasEventController {
-    private final DrawCanvas dc;
+/**
+ * singleton class for canvas controller
+ */
+public class DrawCanvasController {
+    private DrawCanvas dc;
 
     private EventHandler<MouseEvent> activeEventOnDown;
     private EventHandler<MouseEvent> activeEventOnDrag;
     private EventHandler<MouseEvent> activeEventOnUp;
 
-    DrawCanvasEventController(DrawCanvas dc){
-        this.dc = dc;
+    private static DrawCanvasController instance;
 
+    public static DrawCanvasController getInstance(){
+        if(instance == null){
+            instance = new DrawCanvasController();
+        }
+
+        return instance;
+    }
+
+    private DrawCanvasController(){
         activeEventOnUp = null;
         activeEventOnDrag = null;
         activeEventOnDown = null;
+    }
+
+    public void setDrawCanvas(DrawCanvas dc) {
+        this.dc = dc;
+    }
+
+    public DrawCanvas getDrawCanvas(){
+        return dc;
     }
 
     void setMouseHandlers(EventHandler<MouseEvent> onDown, EventHandler<MouseEvent> onDrag, EventHandler<MouseEvent> onUp){

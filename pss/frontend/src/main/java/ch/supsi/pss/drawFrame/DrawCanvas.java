@@ -16,12 +16,14 @@ public class DrawCanvas extends Canvas {
     private DrawToolbar connectedToolbar;
     private Tool selectedTool;
 
-    private DrawCanvasEventController controller;
+    private DrawCanvasController controller;
 
     private Canvas upperCanvas;
 
     DrawCanvas(double width, double height) {
         super();
+        this.setLayoutX(0);
+        this.setLayoutY(0);
         this.setHeight(height);
         this.setWidth(width);
         this.isPortrait = false;
@@ -31,7 +33,8 @@ public class DrawCanvas extends Canvas {
 
         this.selectedTool = null;
 
-        this.controller = new DrawCanvasEventController(this);
+        this.controller = DrawCanvasController.getInstance();
+        controller.setDrawCanvas(this);
 
         upperCanvas = new Canvas();
     }
@@ -46,7 +49,8 @@ public class DrawCanvas extends Canvas {
         tmp = this.getWidth();
         this.setWidth(this.getHeight());
         this.setHeight(tmp);
-
+        this.setLayoutX(0);
+        this.setLayoutY(0);
         this.getGraphicsContext2D().setFill(Color.WHITE);
         this.getGraphicsContext2D().fillRect(0, 0, this.getWidth(), this.getHeight());
     }
@@ -72,7 +76,7 @@ public class DrawCanvas extends Canvas {
         return isPortrait;
     }
 
-    void clearContent() {
+    public void clearContent() {
         this.getGraphicsContext2D().setFill(Color.WHITE);
         this.getGraphicsContext2D().fillRect(0, 0, this.getWidth(), this.getHeight());
         this.setColor(connectedToolbar.getSelectedColor());

@@ -42,7 +42,6 @@ class DrawToolbar extends ToolBar {
     private final ArrayList<ImageButton> btnToolsList;
     private final ColorPicker colorPicker;
     private final ImageButton portraitButton;
-    private final ImageButton clearButton;
 
     private final DrawToolbarController controller;
     private final DrawCanvas connectedCanvas;
@@ -71,18 +70,12 @@ class DrawToolbar extends ToolBar {
         Region spacer2 = new Region();
         spacer2.setPrefHeight(25);
 
-        Region spacer3 = new Region();
-        spacer3.setPrefHeight(25);
-
         btnToolsList.add(new ImageButton(new ImageView(this.getClass().getResource(PENCIL_ICO).toExternalForm())));
         btnToolsList.add(new ImageButton(new ImageView(this.getClass().getResource(LINE_ICO).toExternalForm())));
         btnToolsList.add(new ImageButton(new ImageView(this.getClass().getResource(SQUARE_ICO).toExternalForm())));
         btnToolsList.add(new ImageButton(new ImageView(this.getClass().getResource(CIRCLE_ICO).toExternalForm())));
         btnToolsList.add(new ImageButton(new ImageView(this.getClass().getResource(ERASER_ICO).toExternalForm())));
 
-        clearButton = new ImageButton(new ImageView(this.getClass().getResource(CLEAR_ICO).toExternalForm()));
-        clearButton.setPrefHeight(BTN_SIZE);
-        clearButton.setPrefWidth(BTN_SIZE);
         // ------------------ set toolbox properties ------------------------------
 
         this.setOrientation(Orientation.VERTICAL);
@@ -102,12 +95,10 @@ class DrawToolbar extends ToolBar {
             b.setPrefHeight(BTN_SIZE);
         });
 
-        this.getItems().add(spacer3);
-        this.getItems().add(clearButton);
-
         // ---------------- Create Controller -----------------------------------
 
-        this.controller = new DrawToolbarController(this);
+        this.controller = DrawToolbarController.getInstance();
+        this.controller.setToolBar(this);
         controller.setupListeners();
     }
 
@@ -125,10 +116,6 @@ class DrawToolbar extends ToolBar {
 
     ImageButton getPortraitButton() {
         return portraitButton;
-    }
-
-    ImageButton getClearButton() {
-        return clearButton;
     }
 
     DrawCanvas getConnectedCanvas() {
