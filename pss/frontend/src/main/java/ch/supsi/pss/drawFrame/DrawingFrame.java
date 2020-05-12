@@ -30,7 +30,11 @@ public class DrawingFrame extends BorderPane {
         canvas.setStyle("-fx-border-style: solid;" +
                 "-fx-border-color: black;");
 
-        canvasContainer = new ScrollPane(canvas);
+        Pane drawZone = new Pane();
+        drawZone.getChildren().add(canvas);
+        drawZone.getChildren().add(canvas.getUpperCanvas());
+
+        canvasContainer = new ScrollPane(drawZone);
         canvasContainer.setPadding(new Insets(10, 10, 10, 10));
 
         toolbar = new DrawToolbar(canvas);

@@ -19,14 +19,19 @@ public class PssFX extends Application {
     private static final int DRAW_WIDTH = 1366;
     private static final int DRAW_HEIGHT = 768;
 
+    private static final String title = "Personal Sketching System";
+
     public static void main(String[] args) {
         launch(args);
     }
 
     @java.lang.Override
     public void start(Stage stage) {
+
         PreferencesRepository.copyPropertiesFile();
-        stage.setTitle("Draw.io");
+
+        stage.setTitle(title);
+
 
         // ------------ Gallery window settings and elements creation  -----------
         VBox VerticalBoxGallery = new VBox();

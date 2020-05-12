@@ -57,10 +57,15 @@ class MenuBarController {
             }
         });
 
+        // 'Help->About' listener
+        //TODO add a place in .properties were we take developer names of the app
+        menus.get("Help").getItems().get(0).setOnAction(e -> {
+            Alerter.popInformationAlert("TODO","TODO","data must be read by properties file");
+        });
+
         // 'File->save' listener
         menus.get("File").getItems().get(1).setOnAction( e -> {
             System.out.println("Drawing saved");
-            //TODO make classes public in sketchcontroller and create a package (maybe 'saves'?)
 
             SketchController sketchController = new SketchController(DrawCanvasController.getInstance().getDrawCanvas());
             PreferencesRepository.setRepository(controlledStage);
