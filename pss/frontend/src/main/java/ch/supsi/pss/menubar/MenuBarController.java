@@ -1,5 +1,7 @@
 package ch.supsi.pss.menubar;
 
+import ch.supsi.pss.PreferencesRepository;
+import ch.supsi.pss.SketchController;
 import ch.supsi.pss.drawFrame.DrawCanvasController;
 import ch.supsi.pss.helpers.Alerter;
 import javafx.scene.Node;
