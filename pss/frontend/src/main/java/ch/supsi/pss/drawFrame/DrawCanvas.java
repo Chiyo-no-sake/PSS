@@ -18,6 +18,8 @@ public class DrawCanvas extends Canvas {
 
     private DrawCanvasController controller;
 
+    // Upper canvas will catch all events, in canvasController, don't use event.src()
+    // instad use DrawCanvasController.getDrawCanvas()
     private Canvas upperCanvas;
 
     DrawCanvas(double width, double height) {
@@ -57,7 +59,7 @@ public class DrawCanvas extends Canvas {
         this.getGraphicsContext2D().fillRect(0, 0, this.getWidth(), this.getHeight());
     }
 
-    Canvas getUpperCanvas(){
+    Canvas getUpperCanvas() {
         return upperCanvas;
     }
 
@@ -88,14 +90,25 @@ public class DrawCanvas extends Canvas {
         this.setColor(connectedToolbar.getSelectedColor());
     }
 
-    // TODO: not working rect overlay
-    public void renderTempSquare(double x1, double x2, double width, double height, Paint color){
+    public void renderTempOval(double x, double y, double width, double height, Paint color) {
         upperCanvas.toFront();
         this.upperCanvas.getGraphicsContext2D().setStroke(color);
-        this.upperCanvas.getGraphicsContext2D().strokeRect(x1,x2,width,height);
+        this.upperCanvas.getGraphicsContext2D().strokeOval(x, y, width, height);
     }
 
-    public void clearTempSquare(){
-        this.upperCanvas.getGraphicsContext2D().clearRect(0,0,this.getWidth(), this.getHeight());
+    public void renderTempLine(double x1, double y1, double x2, double y2, Paint color) {
+        upperCanvas.toFront();
+        this.upperCanvas.getGraphicsContext2D().setStroke(color);
+        this.upperCanvas.getGraphicsContext2D().strokeLine(x1, y1, x2, y2);
+    }
+
+    public void renderTempSquare(double x, double y, double width, double height, Paint color) {
+        upperCanvas.toFront();
+        this.upperCanvas.getGraphicsContext2D().setStroke(color);
+        this.upperCanvas.getGraphicsContext2D().strokeRect(x, y, width, height);
+    }
+
+    public void clearAllTemp() {
+        this.upperCanvas.getGraphicsContext2D().clearRect(0, 0, this.getWidth(), this.getHeight());
     }
 }
