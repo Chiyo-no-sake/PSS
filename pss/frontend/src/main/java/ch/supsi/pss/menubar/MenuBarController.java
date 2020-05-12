@@ -6,7 +6,6 @@ import ch.supsi.pss.drawFrame.DrawCanvasController;
 import ch.supsi.pss.helpers.Alerter;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Menu;
 import javafx.stage.Stage;
 
@@ -63,10 +62,9 @@ class MenuBarController {
             System.out.println("Drawing saved");
             //TODO make classes public in sketchcontroller and create a package (maybe 'saves'?)
 
-            SketchController sketchController = new SketchController();
+            SketchController sketchController = new SketchController(DrawCanvasController.getInstance().getDrawCanvas());
             PreferencesRepository.setRepository(controlledStage);
 
-            sketchController.newSketch(DrawCanvasController.getInstance().getDrawCanvas());
 
             if(sketchController.getSketchService().saveSketch()){
                 Alerter.popInformationAlert(null,null,"Sketch correctly saved.");

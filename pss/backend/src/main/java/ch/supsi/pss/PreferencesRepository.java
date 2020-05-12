@@ -4,89 +4,89 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 
 import java.io.*;
-import java.net.URI;
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Properties;
+
 
 public class PreferencesRepository{
 
+    private static final String CONFIG_PROPERTIES = System.getProperty("user.home") + File.separator + ".pss" + File.separator + "config.properties"  ;
     private static String drawsPath, metadataPath;
 
-    private static Properties getProps(){
-        File file = new File("pss/backend/config.properties");
-        try {
-            if(file.createNewFile()){
-                FileWriter fw = new FileWriter(file);
-                fw.write("path=");
-                fw.close();
-            }
-            else{
-                FileInputStream in = new FileInputStream(file);
-                Properties props = new Properties();
-                props.load(in);
-                in.close();
+    private static Properties getAllProperties(final boolean flag){
+        Properties properties = new Properties();
 
-                return props;
+        if(flag){
+            try (InputStream input = PreferencesRepository.class.getClassLoader().getResourceAsStream("config.properties"))
+            {
+                properties.load(input);
+                return properties;
+
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        } catch (IOException e) {
+            return null;
+        }
+        else {
+            try (InputStream input = new FileInputStream(CONFIG_PROPERTIES))
+            {
+                properties.load(input);
+                return properties;
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+    }
+
+    public static void copyPropertiesFile() {
+        Path path = Paths.get(CONFIG_PROPERTIES);
+        File directory = new File(path.getParent().toString());
+        directory.mkdir();
+
+        File file = new File(CONFIG_PROPERTIES);
+
+        if(file.exists())
+            return;
+
+        Properties properties = getAllProperties(true);
+        try{
+            if (file.createNewFile()){
+                FileOutputStream out = new FileOutputStream(file);
+                properties.store(out, null);
+            }
+        }catch (IOException e) {
             e.printStackTrace();
         }
-        return null;
     }
 
-    private static String getPath(){
-        Properties properties = getProps();
-        String path = null;
+    public static void setRepository(final Stage stage) {
 
-        if (properties != null) {
-            path = properties.getProperty("path");
-            drawsPath = path + "/draws";
-            metadataPath = path + "/metadata";
-        }
+        Properties properties = getAllProperties(false);
 
-        return path;
-    }
-
-    public static URI getStorageUri(){
-        try{
-            String path = getPath();
-            if(path == null)
-                throw new Exception("Path has not been setted!");
-
-            return new URI(path);
-
-        } catch (Exception e) {
-            e.getMessage();
-        }
-        return null;
-    }
-
-    public static boolean setRepository(final Stage stage) {
-        if(getPath() == null || !(new File(getPath()).exists())){
+        if(!properties.containsKey("path") || !(new File(properties.getProperty("path")).exists())){
             DirectoryChooser directoryChooser = new DirectoryChooser();
             File directory = directoryChooser.showDialog(stage);
 
-            Properties properties = getProps();
-
             try{
-                if(properties == null)
-                    throw new IOException("Properties Error");
+                FileOutputStream out = new FileOutputStream(CONFIG_PROPERTIES);
 
-                FileOutputStream out = new FileOutputStream("pss/backend/config.properties");
-                properties.setProperty("path",directory.getAbsolutePath());
+                properties.setProperty("path", directory.getAbsolutePath());
                 properties.store(out, null);
+
                 out.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            drawsPath = getPath() + "/draws";
-            metadataPath = getPath() + "/metadata";
-
-            new File(  drawsPath).mkdir();
-            new File( metadataPath ).mkdir();
-
-            return true;
         }
-        return false;
+        drawsPath =  properties.getProperty("path") + "/draws";
+        metadataPath = properties.getProperty("path") + "/metadata";
+
+        new File( drawsPath).mkdir();
+        new File( metadataPath ).mkdir();
     }
 
     public static String getDrawsPath() {

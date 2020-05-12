@@ -25,6 +25,7 @@ public class PssFX extends Application {
 
     @java.lang.Override
     public void start(Stage stage) {
+        PreferencesRepository.copyPropertiesFile();
         stage.setTitle("Draw.io");
 
         // ------------ Gallery window settings and elements creation  -----------
