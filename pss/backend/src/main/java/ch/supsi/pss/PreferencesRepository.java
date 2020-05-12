@@ -12,22 +12,23 @@ public class PreferencesRepository{
     private static String drawsPath, metadataPath;
 
     private static Properties getProps(){
-        try{
-            FileInputStream in = new FileInputStream("pss/backend/config.properties");
-            Properties props = new Properties();
-            props.load(in);
-            in.close();
-
-            return props;
-        } catch (IOException e) {
-
-            try {
-                FileWriter fw = new FileWriter("pss/backend/config.properties");
+        File file = new File("pss/backend/config.properties");
+        try {
+            if(file.createNewFile()){
+                FileWriter fw = new FileWriter(file);
                 fw.write("path=");
                 fw.close();
-            } catch (IOException ioException) {
-                ioException.printStackTrace();
             }
+            else{
+                FileInputStream in = new FileInputStream(file);
+                Properties props = new Properties();
+                props.load(in);
+                in.close();
+
+                return props;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return null;
     }
