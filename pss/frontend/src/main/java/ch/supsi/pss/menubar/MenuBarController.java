@@ -58,10 +58,14 @@ class MenuBarController {
             }
         });
 
+        // 'Help->About' listener
+        menus.get("Help").getItems().get(0).setOnAction(e -> {
+            Alerter.popInformationAlert(null,null,null);
+        });
+
         // 'File->save' listener
         menus.get("File").getItems().get(1).setOnAction( e -> {
             System.out.println("Drawing saved");
-            //TODO make classes public in sketchcontroller and create a package (maybe 'saves'?)
 
             SketchController sketchController = new SketchController();
             PreferencesRepository.setRepository(controlledStage);
