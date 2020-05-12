@@ -2,6 +2,7 @@ package ch.supsi.pss.drawFrame;
 
 import ch.supsi.pss.drawFrame.tools.Eraser;
 import ch.supsi.pss.drawFrame.tools.Pencil;
+import ch.supsi.pss.helpers.Alerter;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -14,9 +15,24 @@ import java.util.Optional;
 public class DrawToolbarController {
 
     DrawToolbar tb;
+    static DrawToolbarController instance;
 
-    DrawToolbarController(DrawToolbar tb) {
+    private DrawToolbarController() { }
+
+    public static DrawToolbarController getInstance() {
+        if (instance == null) {
+            instance = new DrawToolbarController();
+        }
+
+        return instance;
+    }
+
+    public void setToolBar(DrawToolbar tb){
         this.tb = tb;
+    }
+
+    public DrawToolbar getToolBar(){
+        return this.tb;
     }
 
     /**
@@ -26,12 +42,7 @@ public class DrawToolbarController {
         // unimplemented buttons
         tb.getBtnToolsList().forEach(b -> {
             b.setOnMouseClicked(e -> {
-                Alert al = new Alert(Alert.AlertType.INFORMATION);
-                al.setTitle("Feature Coming Soon");
-                al.setHeaderText("Feature is coming soon");
-                al.setContentText("Please wait for a new version");
-                al.setResizable(true);
-                al.showAndWait();
+                Alerter.popNotImlementedAlert();
             });
         });
 
@@ -42,7 +53,7 @@ public class DrawToolbarController {
 
         // PortraitMode button listener
         tb.getPortraitButton().setOnMouseClicked(e -> {
-            if (popConfirmDialog("Are you sure?", "This operation will erase your work", "Are you ok with this?")) {
+            if (Alerter.popConfirmDialog("Are you sure?", "This operation will erase your work", "Are you ok with this?")) {
                 tb.getConnectedCanvas().clearContent();
                 tb.getConnectedCanvas().changeMode(tb.getConnectedCanvas().isPortrait());
                 if (tb.getConnectedCanvas().isPortrait()) {
@@ -52,14 +63,6 @@ public class DrawToolbarController {
                 }
             }
         });
-
-        // Clear button listener
-        tb.getClearButton().setOnMouseClicked(e -> {
-            if (popConfirmDialog("Are you sure?", "This operation will erase your work", "Are you ok with this?")) {
-                tb.getConnectedCanvas().clearContent();
-            }
-        });
-
         // freeDraw button listener
         tb.getBtnToolsList().get(0).setOnMouseClicked(e -> {
             resetButtonStatus();
@@ -75,37 +78,10 @@ public class DrawToolbarController {
         });
     }
 
-    /**
-     * provides a confirmation dialog 'secure' for important decisions, no is on the right and is selected by default.
-     *
-     * @return the user answer
-     */
-    private boolean popConfirmDialog(String title, String header, String content) {
-        final Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(header);
-        alert.setContentText(content);
-
-        alert.getButtonTypes().clear();
-        alert.getButtonTypes().addAll(ButtonType.YES, ButtonType.CANCEL);
-
-        //Deactivate Default behavior for yes-Button:
-        Button yesButton = (Button) alert.getDialogPane().lookupButton(ButtonType.YES);
-        yesButton.setDefaultButton(false);
-
-        //Activate Default behavior for no-Button:
-        Button noButton = (Button) alert.getDialogPane().lookupButton(ButtonType.CANCEL);
-        noButton.setDefaultButton(true);
-
-        alert.setResizable(true);
-
-        final Optional<ButtonType> result = alert.showAndWait();
-        return result.isPresent() && result.get() == ButtonType.YES;
-    }
-
     private void resetButtonStatus() {
         tb.getBtnToolsList().forEach(b -> {
             b.setSelected(false);
         });
     }
 }
+
