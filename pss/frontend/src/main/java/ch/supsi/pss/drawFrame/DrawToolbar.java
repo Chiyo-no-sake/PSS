@@ -1,18 +1,17 @@
 package ch.supsi.pss.drawFrame;
 
-import ch.supsi.pss.drawFrame.tools.Pencil;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
-import javafx.scene.control.*;
+import javafx.scene.control.ColorPicker;
+import javafx.scene.control.Slider;
+import javafx.scene.control.ToolBar;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
-import java.util.Optional;
 
 /**
- * TODO: implement other tools
  *
  * TODO: adjust portrait icons to be bigger
  *
@@ -30,6 +29,8 @@ import java.util.Optional;
 class DrawToolbar extends ToolBar {
     static final int BTN_SIZE = 40;
 
+    static final int STROKE_DEF_THICK = 3;
+
     static final String PENCIL_ICO = "/icons/pencil.png";
     static final String SQUARE_ICO = "/icons/square.png";
     static final String CIRCLE_ICO = "/icons/circle.png";
@@ -45,6 +46,8 @@ class DrawToolbar extends ToolBar {
 
     private final DrawToolbarController controller;
     private final DrawCanvas connectedCanvas;
+
+    private final Slider strokeSlider;
 
     /**
      * @param connectedCanvas the canvas connected to the Toolbar
@@ -76,6 +79,20 @@ class DrawToolbar extends ToolBar {
         btnToolsList.add(new ImageButton(new ImageView(this.getClass().getResource(CIRCLE_ICO).toExternalForm())));
         btnToolsList.add(new ImageButton(new ImageView(this.getClass().getResource(ERASER_ICO).toExternalForm())));
 
+        Region spacer3 = new Region();
+        spacer3.setPrefHeight(25);
+
+        strokeSlider = new Slider();
+        strokeSlider.setMin(1);
+        strokeSlider.setMax(25);
+        strokeSlider.setValue(STROKE_DEF_THICK);
+        strokeSlider.setOrientation(Orientation.VERTICAL);
+        strokeSlider.setPrefHeight(200);
+        strokeSlider.setShowTickMarks(true);
+        strokeSlider.setShowTickLabels(true);
+        connectedCanvas.getGraphicsContext2D().setLineWidth(strokeSlider.getValue());
+
+
         // ------------------ set toolbox properties ------------------------------
 
         this.setOrientation(Orientation.VERTICAL);
@@ -90,16 +107,22 @@ class DrawToolbar extends ToolBar {
 
         btnToolsList.forEach(b -> {
             this.getItems().add(b);
-            //set the style for each button
+            //set the style for each tool-button
             b.setPrefWidth(BTN_SIZE);
             b.setPrefHeight(BTN_SIZE);
         });
 
-        // ---------------- Create Controller -----------------------------------
+        this.getItems().add(spacer3);
+        this.getItems().add(strokeSlider);
 
+        // ---------------- Create Controller -----------------------------------
         this.controller = DrawToolbarController.getInstance();
         this.controller.setToolBar(this);
         controller.setupListeners();
+    }
+
+    public Slider getStrokeSlider(){
+        return strokeSlider;
     }
 
     Color getSelectedColor(){

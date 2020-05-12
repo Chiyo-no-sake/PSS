@@ -1,15 +1,9 @@
 package ch.supsi.pss.drawFrame;
 
-import ch.supsi.pss.drawFrame.tools.Eraser;
-import ch.supsi.pss.drawFrame.tools.Pencil;
+import ch.supsi.pss.drawFrame.tools.*;
 import ch.supsi.pss.helpers.Alerter;
-import javafx.application.Platform;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
+import javafx.event.Event;
 import javafx.scene.image.ImageView;
-
-import java.util.Optional;
 
 
 public class DrawToolbarController {
@@ -63,18 +57,35 @@ public class DrawToolbarController {
                 }
             }
         });
+
         // freeDraw button listener
         tb.getBtnToolsList().get(0).setOnMouseClicked(e -> {
-            resetButtonStatus();
-            ((ImageButton) e.getSource()).setSelected(true);
-            tb.getConnectedCanvas().setTool(new Pencil());
+            selectBtnAs(new Pencil(), e);
+        });
+
+        // line button listener
+        tb.getBtnToolsList().get(1).setOnMouseClicked(e -> {
+            selectBtnAs(new Line(), e);
+        });
+
+        // square button listener
+        tb.getBtnToolsList().get(2).setOnMouseClicked(e -> {
+            selectBtnAs(new Square(), e);
+        });
+
+        // oval button listener
+        tb.getBtnToolsList().get(3).setOnMouseClicked(e -> {
+            selectBtnAs(new Circle(), e);
         });
 
         // eraser button listener
         tb.getBtnToolsList().get(4).setOnMouseClicked(e -> {
-            resetButtonStatus();
-            ((ImageButton) e.getSource()).setSelected(true);
-            tb.getConnectedCanvas().setTool(new Eraser());
+            selectBtnAs(new Eraser(), e);
+        });
+
+        // stroke slider listener
+        tb.getStrokeSlider().valueProperty().addListener(e->{
+            tb.getConnectedCanvas().getGraphicsContext2D().setLineWidth(tb.getStrokeSlider().getValue());
         });
     }
 
@@ -82,6 +93,12 @@ public class DrawToolbarController {
         tb.getBtnToolsList().forEach(b -> {
             b.setSelected(false);
         });
+    }
+
+    private void selectBtnAs(Tool t, Event e) {
+        resetButtonStatus();
+        ((ImageButton) e.getSource()).setSelected(true);
+        tb.getConnectedCanvas().setTool(t);
     }
 }
 

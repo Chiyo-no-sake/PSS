@@ -9,6 +9,8 @@ import javafx.scene.input.MouseEvent;
  *    a selected object of this type.
  *
  *  - toolName String can be used for testing and debugging purposes
+ *  // Upper canvas will catch all events, in canvasController, don't use event.src()
+ *  // instad use DrawCanvasController.getDrawCanvas()
  */
 public abstract class Tool {
     private String toolName;
@@ -33,15 +35,15 @@ public abstract class Tool {
 
     abstract void setOnMousePressed();
 
-    public EventHandler<MouseEvent> getOnMouseReleased() {
-        return onMouseReleased;
-    }
-
-    abstract void setOnMouseReleased();
-
     public EventHandler<MouseEvent> getOnMouseDragged() {
         return onMouseDragged;
     }
 
     abstract void setOnMouseDragged();
+
+    public EventHandler<MouseEvent> getOnMouseReleased() {
+        return onMouseReleased;
+    }
+
+    abstract void setOnMouseReleased();
 }

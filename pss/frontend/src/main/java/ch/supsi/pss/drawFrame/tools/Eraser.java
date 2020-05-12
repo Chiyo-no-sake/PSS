@@ -30,7 +30,7 @@ public class Eraser extends Tool {
         super.onMouseReleased = event -> {
             if(event.getSource() instanceof Canvas){
                 DrawCanvas c = DrawCanvasController.getInstance().getDrawCanvas();
-                c.clearTempSquare();
+                c.clearAllTemp();
                 eraserTick(c, event);
             }
         };
@@ -40,7 +40,7 @@ public class Eraser extends Tool {
     void setOnMouseDragged() {
         super.onMouseDragged = event -> {
             DrawCanvas c = DrawCanvasController.getInstance().getDrawCanvas();
-            c.clearTempSquare();
+            c.clearAllTemp();
             c.renderTempSquare(event.getX()-width/2, event.getY()-height/2, width, height, Color.BLACK);
             eraserTick(c, event);
 
