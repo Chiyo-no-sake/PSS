@@ -1,5 +1,6 @@
 package ch.supsi.pss.drawFrame;
 
+import ch.supsi.pss.drawFrame.tools.Eraser;
 import ch.supsi.pss.drawFrame.tools.Pencil;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
@@ -64,6 +65,13 @@ public class DrawToolbarController {
             resetButtonStatus();
             ((ImageButton) e.getSource()).setSelected(true);
             tb.getConnectedCanvas().setTool(new Pencil());
+        });
+
+        // eraser button listener
+        tb.getBtnToolsList().get(4).setOnMouseClicked(e -> {
+            resetButtonStatus();
+            ((ImageButton) e.getSource()).setSelected(true);
+            tb.getConnectedCanvas().setTool(new Eraser());
         });
     }
 
