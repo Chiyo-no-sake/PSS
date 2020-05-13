@@ -77,7 +77,7 @@ public class PreferencesRepository{
 
     public static void updateDirectory(final Stage stage){
 
-        if(properties == null){
+        if(properties == null || !properties.containsKey("path")){
             setDirectory(stage);
             return;
         }
