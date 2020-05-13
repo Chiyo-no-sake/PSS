@@ -17,22 +17,20 @@ public class SketchService{
     private static final int HEIGHT = 768;
 
     private final Set<String> tags = new TreeSet<>();
-    private Canvas sketch;
-    private String uuid;
+    private String uuid ;
 
-    public SketchService(final Canvas sketch, final String uuid) {
-        this.sketch = sketch;
+    public SketchService(String uuid) {
         this.uuid = uuid;
     }
 
-    public boolean saveSketch(){
-        if(saveDraw(uuid) && saveMetadata(uuid))
+    public boolean saveSketch(final Canvas sketch){
+        if(saveDraw(uuid, sketch) && saveMetadata(uuid))
             return true;
 
         return false;
     }
 
-    private boolean saveDraw(final String uuid){
+    private boolean saveDraw(final String uuid, final Canvas sketch){
         File file = new File(PreferencesRepository.getDrawsPath() + File.separator + uuid + ".png" );
         try {
             WritableImage writableImage = new WritableImage(WIDTH, HEIGHT);

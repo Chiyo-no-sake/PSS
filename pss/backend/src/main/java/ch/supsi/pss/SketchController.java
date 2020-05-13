@@ -9,18 +9,37 @@ public class SketchController {
 
     private SketchService sketchService;
     private String uuid;
+    private Canvas sketch;
+
+    public Canvas getSketch() {
+        return sketch;
+    }
+
+    public void setSketch(Canvas skecth) {
+        this.sketch = skecth;
+    }
+
+    public SketchController() {
+        uuid = UUID.randomUUID().toString();
+        sketchService = new SketchService(uuid);
+    }
 
     public SketchController(final Canvas sketch) {
         uuid = UUID.randomUUID().toString();
-        sketchService = new SketchService(sketch, uuid);
+        this.sketch = sketch;
+        //sketchService = new SketchService(sketch, uuid);
     }
 
-    public void saveSketch(){
-        sketchService.saveSketch();
+    public void newUUID(){
+        uuid = UUID.randomUUID().toString();
     }
 
-    public void updateSketch(final Canvas sketch){
-        sketchService = new SketchService(sketch, uuid);
+    public boolean saveSketch(){
+        return sketchService.saveSketch(sketch);
+    }
+
+    public void setSketchService(SketchService sketchService) {
+        this.sketchService = sketchService;
     }
 
     public SketchService getSketchService() {

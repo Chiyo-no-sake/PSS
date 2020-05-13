@@ -11,6 +11,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.util.Locale;
+
 public class PssFX extends Application {
 
     private static final int DEF_WIN_WIDTH = 800;
@@ -27,11 +29,10 @@ public class PssFX extends Application {
 
     @java.lang.Override
     public void start(Stage stage) {
-
+        PreferencesRepository.setDefaultLanguage(Locale.getDefault().getLanguage());
         PreferencesRepository.copyPropertiesFile();
 
         stage.setTitle(title);
-
 
         // ------------ Gallery window settings and elements creation  -----------
         VBox VerticalBoxGallery = new VBox();

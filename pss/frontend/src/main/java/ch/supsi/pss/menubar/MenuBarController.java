@@ -10,6 +10,7 @@ import javafx.scene.control.Menu;
 import javafx.stage.Stage;
 
 import java.util.HashMap;
+import java.util.concurrent.atomic.AtomicReference;
 
 class MenuBarController {
     private PssMenuBar connectedMenuBar;
@@ -37,6 +38,9 @@ class MenuBarController {
 
         HashMap<String, Menu> menus = connectedMenuBar.getMenuMap();
 
+        AtomicReference<SketchController> sketchController = new AtomicReference<>();
+        sketchController.set(new SketchController());
+
         //not implemented linsteners
         menus.values().forEach( m -> m.getItems().forEach( menuItem -> menuItem.setOnAction( e -> Alerter.popNotImlementedAlert())));
 
@@ -49,12 +53,34 @@ class MenuBarController {
         menus.get("View").getItems().get(1).setOnAction(e -> {
             controlledStage.getScene().setRoot((Parent) drawRoot);
         });
-
+        
         // 'Edit->Clear' listener
         menus.get("Edit").getItems().get(0).setOnAction(e -> {
             if (Alerter.popConfirmDialog("Are you sure?", "This operation will erase your work", "Are you ok with this?")) {
                 DrawCanvasController.getInstance().getDrawCanvas().clearContent();
             }
+        });
+
+        // 'Edit->Preferences' listener
+        menus.get("Edit").getItems().get(3).setOnAction(e -> {});
+
+        // 'Edit->Preferences->Language' listener
+        menus.get("Preferences").getItems().get(0).setOnAction(e -> {});
+
+        // 'Edit->Preferences->Folder' listener
+        menus.get("Preferences").getItems().get(1).setOnAction(e -> {
+            PreferencesRepository.updateDirectory(controlledStage);
+        });
+
+        // 'Edit->Preferences->Language->Italiano' listener
+        menus.get("Language").getItems().get(0).setOnAction(e -> {
+            // TODO: 13/05/20
+            
+        });
+
+        // 'Edit->Preferences->Language->English' listener
+        menus.get("Language").getItems().get(1).setOnAction(e -> {
+            // TODO: 13/05/20  
         });
 
         // 'Help->About' listener
@@ -63,18 +89,29 @@ class MenuBarController {
             Alerter.popInformationAlert("TODO","TODO","data must be read by properties file");
         });
 
+        // 'File->new' listener
+        menus.get("File").getItems().get(0).setOnAction( e -> {
+            sketchController.set(new SketchController());
+            if (Alerter.popConfirmDialog("Are you sure?", "This operation will erase your work", "Are you ok with this?"))
+                DrawCanvasController.getInstance().getDrawCanvas().clearContent();
+        });
+
+
         // 'File->save' listener
         menus.get("File").getItems().get(1).setOnAction( e -> {
-            System.out.println("Drawing saved");
+            PreferencesRepository.setDirectory(controlledStage);
 
-            SketchController sketchController = new SketchController(DrawCanvasController.getInstance().getDrawCanvas());
-            PreferencesRepository.setRepository(controlledStage);
-
-
-            if(sketchController.getSketchService().saveSketch()){
-                Alerter.popInformationAlert(null,null,"Sketch correctly saved.");
+            if(sketchController.get().getSketch() == null){
+                sketchController.get().setSketch(DrawCanvasController.getInstance().getDrawCanvas());
+                if(sketchController.get().saveSketch())
+                    Alerter.popInformationAlert(null, null, "Sketch correctly saved.");
             }
-
+            else if(sketchController.get().getSketch() != null){
+                sketchController.get().setSketch(DrawCanvasController.getInstance().getDrawCanvas());
+                if(sketchController.get().saveSketch())
+                    Alerter.popInformationAlert(null, null, "Sketch correctly updated.");
+            }
+            System.out.println("Drawing saved");
         });
 
     }
