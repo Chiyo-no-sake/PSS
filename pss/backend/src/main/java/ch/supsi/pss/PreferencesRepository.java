@@ -13,19 +13,15 @@ public class PreferencesRepository{
     private static final String CONFIG_PROPERTIES = System.getProperty("user.home") + File.separator + ".pss" + File.separator + "config.properties"  ;
     private static String drawsPath, metadataPath;
     private static Properties properties = null;
-    private static String defaultLanguage = null;
-
-    public static void setDefaultLanguage(String defaultLanguage) {
-        PreferencesRepository.defaultLanguage = defaultLanguage;
-    }
-
-    public static String getDefaultLanguage() {
-        return defaultLanguage;
-    }
 
     private static void setProperties(final boolean flag){
         properties = getAllProperties(flag);
     }
+
+    public static String getLanguage(){
+        return properties.getProperty("current_language");
+    }
+
 
     public static Properties getAllProperties(final boolean flag){
         Properties properties = new Properties();
@@ -61,8 +57,11 @@ public class PreferencesRepository{
 
         File file = new File(CONFIG_PROPERTIES);
 
-        if(file.exists())
+        if(file.exists()){
+            setProperties(false);
             return;
+        }
+
 
         setProperties(true);
         try{
@@ -71,6 +70,15 @@ public class PreferencesRepository{
                 properties.store(out, null);
             }
         }catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void changeFiel(final String field, final String str){
+        try (FileOutputStream out = new FileOutputStream(CONFIG_PROPERTIES)){
+            properties.setProperty(field, str);
+            properties.store(out,null);
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

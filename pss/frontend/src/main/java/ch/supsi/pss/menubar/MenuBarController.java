@@ -1,15 +1,18 @@
 package ch.supsi.pss.menubar;
 
+import ch.supsi.pss.LanguageController;
 import ch.supsi.pss.PreferencesRepository;
 import ch.supsi.pss.SketchController;
 import ch.supsi.pss.drawFrame.DrawCanvasController;
 import ch.supsi.pss.helpers.Alerter;
+import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Menu;
 import javafx.stage.Stage;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.concurrent.atomic.AtomicReference;
 
 class MenuBarController {
@@ -36,6 +39,8 @@ class MenuBarController {
         this.drawRoot = drawRoot;
         this.galleryRoot = galleryRoot;
 
+
+        LanguageController languageController = LanguageController.getIstance();
         HashMap<String, Menu> menus = connectedMenuBar.getMenuMap();
 
         AtomicReference<SketchController> sketchController = new AtomicReference<>();
@@ -56,7 +61,7 @@ class MenuBarController {
         
         // 'Edit->Clear' listener
         menus.get("Edit").getItems().get(0).setOnAction(e -> {
-            if (Alerter.popConfirmDialog("Are you sure?", "This operation will erase your work", "Are you ok with this?")) {
+            if (Alerter.popConfirmDialog(languageController.getString("r_u_sure"), languageController.getString("erase"), languageController.getString("ok_with"))) {
                 DrawCanvasController.getInstance().getDrawCanvas().clearContent();
             }
         });
@@ -74,13 +79,18 @@ class MenuBarController {
 
         // 'Edit->Preferences->Language->Italiano' listener
         menus.get("Language").getItems().get(0).setOnAction(e -> {
-            // TODO: 13/05/20
-            
+            if(Alerter.popConfirmDialog(languageController.getString("restart"),languageController.getString("restart_mes"), languageController.getString("r_u_sure"))) {
+                PreferencesRepository.changeFiel("current_language", Locale.ITALIAN.getLanguage());
+                controlledStage.close();
+            }
         });
 
         // 'Edit->Preferences->Language->English' listener
         menus.get("Language").getItems().get(1).setOnAction(e -> {
-            // TODO: 13/05/20  
+            if(Alerter.popConfirmDialog(languageController.getString("restart"),languageController.getString("restart_mes"), languageController.getString("r_u_sure"))) {
+                PreferencesRepository.changeFiel("current_language", Locale.ENGLISH.getLanguage());
+                controlledStage.close();
+            }
         });
 
         // 'Help->About' listener
@@ -92,7 +102,7 @@ class MenuBarController {
         // 'File->new' listener
         menus.get("File").getItems().get(0).setOnAction( e -> {
             sketchController.set(new SketchController());
-            if (Alerter.popConfirmDialog("Are you sure?", "This operation will erase your work", "Are you ok with this?"))
+            if (Alerter.popConfirmDialog(languageController.getString("r_u_sure"), languageController.getString("erase"), languageController.getString("ok_with")))
                 DrawCanvasController.getInstance().getDrawCanvas().clearContent();
         });
 
@@ -104,12 +114,12 @@ class MenuBarController {
             if(sketchController.get().getSketch() == null){
                 sketchController.get().setSketch(DrawCanvasController.getInstance().getDrawCanvas());
                 if(sketchController.get().saveSketch())
-                    Alerter.popInformationAlert(null, null, "Sketch correctly saved.");
+                    Alerter.popInformationAlert(null, null, languageController.getString("saved"));
             }
             else if(sketchController.get().getSketch() != null){
                 sketchController.get().setSketch(DrawCanvasController.getInstance().getDrawCanvas());
                 if(sketchController.get().saveSketch())
-                    Alerter.popInformationAlert(null, null, "Sketch correctly updated.");
+                    Alerter.popInformationAlert(null, null, languageController.getString("updated"));
             }
             System.out.println("Drawing saved");
         });

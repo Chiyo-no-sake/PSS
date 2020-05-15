@@ -1,5 +1,6 @@
 package ch.supsi.pss.helpers;
 
+import ch.supsi.pss.LanguageController;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -46,9 +47,9 @@ public abstract class Alerter {
 
     public static void popNotImlementedAlert(){
         Alert al = new Alert(Alert.AlertType.INFORMATION);
-        al.setTitle("Feature Coming Soon");
-        al.setHeaderText("Feature is coming soon");
-        al.setContentText("Please wait for a new version");
+        al.setTitle(LanguageController.getIstance().getString("comingSoon"));
+        al.setHeaderText(LanguageController.getIstance().getString("comingSoon"));
+        al.setContentText(LanguageController.getIstance().getString("waitNewV"));
         al.setResizable(true);
         al.showAndWait();
     }

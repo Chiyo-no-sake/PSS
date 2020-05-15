@@ -1,6 +1,6 @@
 package ch.supsi.pss.menubar;
 
-import ch.supsi.pss.PreferencesRepository;
+import ch.supsi.pss.LanguageController;
 import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.control.Menu;
@@ -8,7 +8,6 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.stage.Stage;
 import java.util.HashMap;
-import java.util.Properties;
 
 
 public class PssMenuBar extends MenuBar {
@@ -21,74 +20,35 @@ public class PssMenuBar extends MenuBar {
         Platform.runLater(() -> this.bGalleryView = bGalleryView);
         menus = new HashMap<>();
 
-        Properties props = PreferencesRepository.getAllProperties(true);
-
-        String editString = null;
-        String viewString = null;
-        String helpString = null;
-        String newString = null;
-        String saveString = null;
-        String findString = null;
-        String clearString = null;
-        String langString = null;
-        String prefsString = null;
-        String dirString = null;
-        String galleryString = null;
-        String drawString = null;
-        String aboutString = null;
-
-
-        String language = null;
-        if (PreferencesRepository.getDefaultLanguage().equals("en"))
-            language = "Eng";
-        else
-            language = "Ita";
-
-
-        editString = props.getProperty("edit" + language);
-        viewString = props.getProperty("view" + language);
-        helpString = props.getProperty("help" + language);
-
-        newString = props.getProperty("new" + language);
-        saveString = props.getProperty("save" + language);
-        findString = props.getProperty("find" + language);
-        clearString = props.getProperty("clear" + language);
-        langString = props.getProperty("lang" + language);
-        prefsString = props.getProperty("prefs" + language);
-        dirString = props.getProperty("dir" + language);
-        galleryString = props.getProperty("gallery" + language);
-        drawString = props.getProperty("draw" + language);
-        aboutString = props.getProperty("about" + language);
-
-
+        LanguageController languageController = LanguageController.getIstance();
 
         Menu fileMenu = new Menu("File");
-        fileMenu.getItems().add(new MenuItem(newString));
-        fileMenu.getItems().add(new MenuItem(saveString));
+        fileMenu.getItems().add(new MenuItem(languageController.getString("newTab")));
+        fileMenu.getItems().add(new MenuItem(languageController.getString("save")));
         //fileMenu.getItems().add(new MenuItem("save as"));
 
-        Menu editMenu = new Menu(editString);
-        editMenu.getItems().add(new MenuItem(clearString));
+        Menu editMenu = new Menu(languageController.getString("edit"));
+        editMenu.getItems().add(new MenuItem(languageController.getString("clear")));
         editMenu.getItems().add(new MenuItem("Tag"));
-        editMenu.getItems().add(new MenuItem(findString));
+        editMenu.getItems().add(new MenuItem(languageController.getString("find")));
 
-        Menu languageMenu = new Menu(langString);
+        Menu languageMenu = new Menu(languageController.getString("langu"));
         languageMenu.getItems().add(new MenuItem("Italiano"));
         languageMenu.getItems().add(new MenuItem("English"));
 
-        Menu preferencesMenu = new Menu(prefsString);
+        Menu preferencesMenu = new Menu(languageController.getString("prefs"));
         preferencesMenu.getItems().add(languageMenu);
-        preferencesMenu.getItems().add(new MenuItem(dirString));
+        preferencesMenu.getItems().add(new MenuItem(languageController.getString("dir")));
 
         editMenu.getItems().add(preferencesMenu);
 
-        Menu viewMenu = new Menu(viewString);
-        viewMenu.getItems().add(new MenuItem(galleryString));
-        viewMenu.getItems().add(new MenuItem(drawString));
+        Menu viewMenu = new Menu(languageController.getString("view"));
+        viewMenu.getItems().add(new MenuItem(languageController.getString("gallery")));
+        viewMenu.getItems().add(new MenuItem(languageController.getString("toDraw")));
 
 
-        Menu helpMenu = new Menu(helpString);
-        helpMenu.getItems().add(new MenuItem(aboutString));
+        Menu helpMenu = new Menu(languageController.getString("help"));
+        helpMenu.getItems().add(new MenuItem(languageController.getString("about")));
 
         this.getMenus().add(fileMenu);
         this.getMenus().add(editMenu);
@@ -109,6 +69,12 @@ public class PssMenuBar extends MenuBar {
             menus.get("Edit").getItems().get(2).setDisable(false);
             menus.get("View").getItems().get(0).setDisable(true);
             menus.get("View").getItems().get(1).setDisable(false);
+
+            if(languageController.getLocale().getLanguage().equals("en"))
+                menus.get("Language").getItems().get(1).setDisable(true);
+            else if(languageController.getLocale().getLanguage().equals("it"))
+                menus.get("Language").getItems().get(0).setDisable(true);
+
         } else {
             menus.get("File").getItems().forEach(i -> i.setDisable(false));
             menus.get("Edit").getItems().get(0).setDisable(false);
@@ -116,6 +82,11 @@ public class PssMenuBar extends MenuBar {
             menus.get("Edit").getItems().get(2).setDisable(true);
             menus.get("View").getItems().get(0).setDisable(false);
             menus.get("View").getItems().get(1).setDisable(true);
+
+            if(languageController.getLocale().getLanguage().equals("en"))
+                menus.get("Language").getItems().get(1).setDisable(true);
+            else if(languageController.getLocale().getLanguage().equals("it"))
+                menus.get("Language").getItems().get(0).setDisable(true);
         }
 
         controller = MenuBarController.getInstance();

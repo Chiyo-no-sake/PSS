@@ -1,8 +1,10 @@
 package ch.supsi.pss;
 
 import ch.supsi.pss.drawFrame.DrawingFrame;
+import ch.supsi.pss.helpers.Alerter;
 import ch.supsi.pss.menubar.PssMenuBar;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -12,6 +14,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class PssFX extends Application {
 
@@ -29,20 +32,19 @@ public class PssFX extends Application {
 
     @java.lang.Override
     public void start(Stage stage) {
-        PreferencesRepository.setDefaultLanguage(Locale.getDefault().getLanguage());
         PreferencesRepository.copyPropertiesFile();
-
+        LanguageController languageController = LanguageController.getIstance();
         stage.setTitle(title);
 
         // ------------ Gallery window settings and elements creation  -----------
         VBox VerticalBoxGallery = new VBox();
 
         // Label for the title of gallery mode
-        Label galleryTitle = new Label("Gallery Window");
+        Label galleryTitle = new Label(languageController.getString("gallery"));
 
         // Button-port to draw window
         Button drawBtn = new Button();
-        drawBtn.setText("Go to Draw Window");
+        drawBtn.setText(languageController.getString("toDraw"));
 
         // Search Field
         TextField search = new TextField();
@@ -57,7 +59,7 @@ public class PssFX extends Application {
         VBox VerticalBoxDraw = new VBox();
 
         // Label for the draw mode
-        Label drawTitle = new Label("Draw Window");
+        Label drawTitle = new Label(languageController.getString("draw"));
 
         //CanvasPane instantiation
         DrawingFrame drawFrame = new DrawingFrame(DRAW_WIDTH, DRAW_HEIGHT);
