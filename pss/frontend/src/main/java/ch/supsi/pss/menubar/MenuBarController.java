@@ -94,10 +94,14 @@ class MenuBarController {
         });
 
         // 'Help->About' listener
-        //TODO add a place in .properties were we take developer names of the app
         menus.get("Help").getItems().get(0).setOnAction(e -> {
-            Alerter.popInformationAlert("TODO","TODO","data must be read by properties file");
+            Alerter.popInformationAlert(
+                    languageController.getString("about_tab"),
+                    PreferencesRepository.getAllProperties(false).getProperty("application_title"),
+                    PreferencesRepository.getAllProperties(false).getProperty("authors") + " - v" + PreferencesRepository.getAllProperties(false).getProperty("current_version"));
         });
+
+
 
         // 'File->new' listener
         menus.get("File").getItems().get(0).setOnAction( e -> {

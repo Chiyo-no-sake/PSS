@@ -70,11 +70,6 @@ public class PssMenuBar extends MenuBar {
             menus.get("View").getItems().get(0).setDisable(true);
             menus.get("View").getItems().get(1).setDisable(false);
 
-            if(languageController.getLocale().getLanguage().equals("en"))
-                menus.get("Language").getItems().get(1).setDisable(true);
-            else if(languageController.getLocale().getLanguage().equals("it"))
-                menus.get("Language").getItems().get(0).setDisable(true);
-
         } else {
             menus.get("File").getItems().forEach(i -> i.setDisable(false));
             menus.get("Edit").getItems().get(0).setDisable(false);
@@ -82,12 +77,12 @@ public class PssMenuBar extends MenuBar {
             menus.get("Edit").getItems().get(2).setDisable(true);
             menus.get("View").getItems().get(0).setDisable(false);
             menus.get("View").getItems().get(1).setDisable(true);
-
-            if(languageController.getLocale().getLanguage().equals("en"))
-                menus.get("Language").getItems().get(1).setDisable(true);
-            else if(languageController.getLocale().getLanguage().equals("it"))
-                menus.get("Language").getItems().get(0).setDisable(true);
         }
+
+        if(languageController.getLocale().getLanguage().equals("en"))
+            menus.get("Language").getItems().get(1).setDisable(true);
+        else if(languageController.getLocale().getLanguage().equals("it"))
+            menus.get("Language").getItems().get(0).setDisable(true);
 
         controller = MenuBarController.getInstance();
         controller.setupController(controlledStage, galleryRoot, drawRoot, this);
