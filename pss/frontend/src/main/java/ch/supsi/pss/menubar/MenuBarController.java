@@ -104,6 +104,7 @@ class MenuBarController {
 
 
         // 'File->new' listener
+        // TODO, select mode: portrait or not
         menus.get("File").getItems().get(0).setOnAction( e -> {
             sketchController.set(new SketchController());
             if (Alerter.popConfirmDialog(languageController.getString("r_u_sure"), languageController.getString("erase"), languageController.getString("ok_with")))
