@@ -26,23 +26,19 @@ import java.util.ArrayList;
  * provide a toolbar with some tools in it and some buttons mapped to em.
  * provide also a portrait mode button, a clear button and a color picker.
  */
-class DrawToolbar extends ToolBar {
-    static final int BTN_SIZE = 40;
+public class DrawToolbar extends ToolBar {
+    private static final int BTN_SIZE = 40;
 
-    static final int STROKE_DEF_THICK = 3;
+    private static final int STROKE_DEF_THICK = 3;
 
-    static final String PENCIL_ICO = "/icons/pencil.png";
-    static final String SQUARE_ICO = "/icons/square.png";
-    static final String CIRCLE_ICO = "/icons/circle.png";
-    static final String LINE_ICO = "/icons/line.png";
-    static final String ERASER_ICO = "/icons/eraser.png";
-    static final String CLEAR_ICO = "/icons/clear.png";
-    static final String PORTAIT_OFF_ICO = "/icons/non_portrait.png";
-    static final String PORTAIT_ON_ICO = "/icons/portrait.png";
+    private static final String PENCIL_ICO = "/icons/pencil.png";
+    private static final String SQUARE_ICO = "/icons/square.png";
+    private static final String CIRCLE_ICO = "/icons/circle.png";
+    private static final String LINE_ICO = "/icons/line.png";
+    private static final String ERASER_ICO = "/icons/eraser.png";
 
     private final ArrayList<ImageButton> btnToolsList;
     private final ColorPicker colorPicker;
-    private final ImageButton portraitButton;
 
     private final DrawToolbarController controller;
     private final DrawCanvas connectedCanvas;
@@ -62,13 +58,6 @@ class DrawToolbar extends ToolBar {
         colorPicker.setPrefWidth(BTN_SIZE);
         colorPicker.setPrefHeight(BTN_SIZE);
         colorPicker.setValue(Color.BLACK);
-
-        portraitButton = new ImageButton(new ImageView(this.getClass().getResource(PORTAIT_OFF_ICO).toExternalForm()));
-        portraitButton.setPrefHeight(BTN_SIZE);
-        portraitButton.setPrefWidth(BTN_SIZE);
-
-        Region spacer = new Region();
-        spacer.setPrefHeight(50);
 
         Region spacer2 = new Region();
         spacer2.setPrefHeight(25);
@@ -92,6 +81,7 @@ class DrawToolbar extends ToolBar {
         strokeSlider.setShowTickLabels(true);
         connectedCanvas.getGraphicsContext2D().setLineWidth(strokeSlider.getValue());
 
+        updateButtonStatus();
 
         // ------------------ set toolbox properties ------------------------------
 
@@ -100,8 +90,6 @@ class DrawToolbar extends ToolBar {
 
 
         // ------------------ Add items to the toolbox -------------------------
-        this.getItems().add(portraitButton);
-        this.getItems().add(spacer);
         this.getItems().add(colorPicker);
         this.getItems().add(spacer2);
 
@@ -121,6 +109,11 @@ class DrawToolbar extends ToolBar {
         controller.setupListeners();
     }
 
+    public void updateButtonStatus(){
+        btnToolsList.forEach(b -> b.setDisable(!connectedCanvas.containsPaper()));
+    }
+
+
     public Slider getStrokeSlider(){
         return strokeSlider;
     }
@@ -137,19 +130,8 @@ class DrawToolbar extends ToolBar {
         return colorPicker;
     }
 
-    ImageButton getPortraitButton() {
-        return portraitButton;
-    }
-
     DrawCanvas getConnectedCanvas() {
         return connectedCanvas;
     }
 
-    static String getPortaitOffIco() {
-        return PORTAIT_OFF_ICO;
-    }
-
-    static String getPortaitOnIco() {
-        return PORTAIT_ON_ICO;
-    }
 }

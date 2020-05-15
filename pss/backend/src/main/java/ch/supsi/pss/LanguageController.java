@@ -14,7 +14,7 @@ public class LanguageController {
         resourceBundle = ResourceBundle.getBundle("myProps", locale);
     }
 
-    public static LanguageController getIstance() {
+    public static LanguageController getInstance() {
         if(istance == null)
             istance = new LanguageController();
 

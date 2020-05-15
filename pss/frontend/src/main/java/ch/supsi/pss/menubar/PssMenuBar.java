@@ -1,11 +1,12 @@
 package ch.supsi.pss.menubar;
 
 import ch.supsi.pss.LanguageController;
-import javafx.application.Platform;
+import ch.supsi.pss.drawFrame.DrawCanvasController;
 import javafx.scene.Node;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import java.util.HashMap;
 
@@ -16,11 +17,12 @@ public class PssMenuBar extends MenuBar {
 
     private HashMap<String, Menu> menus;
 
-    public PssMenuBar(Stage controlledStage, Node galleryRoot, Node drawRoot, boolean bGalleryView) {
-        Platform.runLater(() -> this.bGalleryView = bGalleryView);
+    public PssMenuBar(Stage controlledStage, VBox globalVBox, Node galleryRoot, Node drawRoot, boolean bGalleryView) {
+        //Platform.runLater(() -> this.bGalleryView = bGalleryView);
+        this.bGalleryView = bGalleryView;
         menus = new HashMap<>();
 
-        LanguageController languageController = LanguageController.getIstance();
+        LanguageController languageController = LanguageController.getInstance();
 
         Menu fileMenu = new Menu("File");
         fileMenu.getItems().add(new MenuItem(languageController.getString("newTab")));
@@ -62,30 +64,57 @@ public class PssMenuBar extends MenuBar {
         menus.put("Preferences", preferencesMenu);
         menus.put("Language", languageMenu);
 
-        if (bGalleryView) {
-            menus.get("File").getItems().forEach(i -> i.setDisable(true));
-            menus.get("Edit").getItems().get(0).setDisable(true);
-            menus.get("Edit").getItems().get(1).setDisable(true);
-            menus.get("Edit").getItems().get(2).setDisable(false);
-            menus.get("View").getItems().get(0).setDisable(true);
-            menus.get("View").getItems().get(1).setDisable(false);
+        updateClickableMenus();
 
-        } else {
-            menus.get("File").getItems().forEach(i -> i.setDisable(false));
-            menus.get("Edit").getItems().get(0).setDisable(false);
-            menus.get("Edit").getItems().get(1).setDisable(false);
-            menus.get("Edit").getItems().get(2).setDisable(true);
-            menus.get("View").getItems().get(0).setDisable(false);
-            menus.get("View").getItems().get(1).setDisable(true);
+        if(languageController.getLocale().getLanguage().equals("en")) {
+            menus.get("Language").getItems().get(1).setDisable(true);
+            menus.get("Language").getItems().get(0).setDisable(false);
+        }
+        else if(languageController.getLocale().getLanguage().equals("it")) {
+            menus.get("Language").getItems().get(0).setDisable(true);
+            menus.get("Language").getItems().get(1).setDisable(false);
         }
 
-        if(languageController.getLocale().getLanguage().equals("en"))
-            menus.get("Language").getItems().get(1).setDisable(true);
-        else if(languageController.getLocale().getLanguage().equals("it"))
-            menus.get("Language").getItems().get(0).setDisable(true);
-
         controller = MenuBarController.getInstance();
-        controller.setupController(controlledStage, galleryRoot, drawRoot, this);
+        controller.setupController(controlledStage, globalVBox, galleryRoot, drawRoot, this);
+    }
+
+    public void updateClickableMenus(){
+        if(bGalleryView){
+            setMenusForGallery();
+        }else{
+            setMenusForDraw();
+        }
+    }
+
+    void setBGalleryView(boolean bGalleryView){
+        this.bGalleryView = bGalleryView;
+    }
+
+    private void setMenusForDraw(){
+        menus.get("File").getItems().forEach(i -> i.setDisable(false));
+        menus.get("Edit").getItems().get(0).setDisable(false);
+        menus.get("Edit").getItems().get(1).setDisable(false);
+        menus.get("Edit").getItems().get(2).setDisable(true);
+        menus.get("View").getItems().get(0).setDisable(false);
+        menus.get("View").getItems().get(1).setDisable(true);
+
+        if(!DrawCanvasController.getInstance().getDrawCanvas().containsPaper()){
+            // paper isn't present, so can't edit draw
+            menus.get("File").getItems().get(1).setDisable(true);
+            menus.get("Edit").getItems().get(0).setDisable(true);
+            menus.get("Edit").getItems().get(1).setDisable(true);
+        }
+    }
+
+    private void setMenusForGallery(){
+        menus.get("File").getItems().forEach(i -> i.setDisable(true));
+        menus.get("Edit").getItems().get(0).setDisable(true);
+        menus.get("Edit").getItems().get(1).setDisable(true);
+        menus.get("Edit").getItems().get(2).setDisable(false);
+        menus.get("Edit").getItems().get(3).setDisable(false);
+        menus.get("View").getItems().get(0).setDisable(true);
+        menus.get("View").getItems().get(1).setDisable(false);
     }
 
     HashMap<String, Menu> getMenuMap() {

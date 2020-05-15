@@ -19,7 +19,7 @@ public class DrawingFrame extends BorderPane {
     private final DrawCanvas canvas;
 
     /**
-     * explicit size constructor
+     * explicit size constructor, instantly add a new non portrait paper to the canvas
      * @param draw_width explicit width of the draw
      * @param draw_height explicit height of the draw
      */
@@ -39,6 +39,31 @@ public class DrawingFrame extends BorderPane {
 
         toolbar = new DrawToolbar(canvas);
         toolbar.setPrefHeight(draw_height);
+
+        canvas.setConnectedToolbar(toolbar);
+
+        this.setCenter(canvasContainer);
+        this.setRight(toolbar);
+    }
+
+    /**
+     * create the frame with an empty canvas
+     */
+    public DrawingFrame() {
+        this.setPadding(new Insets(1, 1, 0, 1));
+
+        canvas = new DrawCanvas();
+        canvas.setStyle("-fx-border-style: solid;" +
+                "-fx-border-color: black;");
+
+        Pane drawZone = new Pane();
+        drawZone.getChildren().add(canvas);
+        drawZone.getChildren().add(canvas.getUpperCanvas());
+
+        canvasContainer = new ScrollPane(drawZone);
+        canvasContainer.setPadding(new Insets(10, 10, 10, 10));
+
+        toolbar = new DrawToolbar(canvas);
 
         canvas.setConnectedToolbar(toolbar);
 

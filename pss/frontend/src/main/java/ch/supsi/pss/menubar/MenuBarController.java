@@ -5,20 +5,22 @@ import ch.supsi.pss.PreferencesRepository;
 import ch.supsi.pss.SketchController;
 import ch.supsi.pss.drawFrame.DrawCanvasController;
 import ch.supsi.pss.helpers.Alerter;
-import javafx.application.Platform;
+import ch.supsi.pss.helpers.SketchCreator;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.control.Menu;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicReference;
 
-class MenuBarController {
-    private PssMenuBar connectedMenuBar;
+public class MenuBarController {
+    private PssMenuBar menuBar;
+    private VBox globalVBox;
     private Stage controlledScene;
     private Node galleryRoot, drawRoot;
+    private AtomicReference<SketchController> sketchController;
 
     private static MenuBarController instance;
 
@@ -30,33 +32,47 @@ class MenuBarController {
         return instance;
     }
 
+    public PssMenuBar getMenuBar() {
+        return menuBar;
+    }
+
+    public AtomicReference<SketchController> getSketchController() {
+        return sketchController;
+    }
+
     private MenuBarController() {
     }
 
-    public void setupController(Stage controlledStage, Node galleryRoot, Node drawRoot, PssMenuBar connectedMenuBar) {
-        this.connectedMenuBar = connectedMenuBar;
+    public void setupController(Stage controlledStage, VBox globalVBox, Node galleryRoot, Node drawRoot, PssMenuBar connectedMenuBar) {
+        this.menuBar = connectedMenuBar;
         this.controlledScene = controlledStage;
         this.drawRoot = drawRoot;
         this.galleryRoot = galleryRoot;
+        this.globalVBox = globalVBox;
 
-
-        LanguageController languageController = LanguageController.getIstance();
+        LanguageController languageController = LanguageController.getInstance();
         HashMap<String, Menu> menus = connectedMenuBar.getMenuMap();
 
-        AtomicReference<SketchController> sketchController = new AtomicReference<>();
+        sketchController = new AtomicReference<>(new SketchController());
         sketchController.set(new SketchController());
 
         //not implemented linsteners
         menus.values().forEach( m -> m.getItems().forEach( menuItem -> menuItem.setOnAction( e -> Alerter.popNotImlementedAlert())));
 
-        // 'View->gallery' listener
+        // 'View->gallery' listener, change to gallery scene
         menus.get("View").getItems().get(0).setOnAction(e -> {
-            controlledStage.getScene().setRoot((Parent) galleryRoot);
+            globalVBox.getChildren().remove(drawRoot);
+            globalVBox.getChildren().add(galleryRoot);
+            menuBar.setBGalleryView(true);
+            menuBar.updateClickableMenus();
         });
 
-        // 'View->draw' listener
+        // 'View->draw' listener, change to draw scene
         menus.get("View").getItems().get(1).setOnAction(e -> {
-            controlledStage.getScene().setRoot((Parent) drawRoot);
+            globalVBox.getChildren().remove(galleryRoot);
+            globalVBox.getChildren().add(drawRoot);
+            menuBar.setBGalleryView(false);
+            menuBar.updateClickableMenus();
         });
         
         // 'Edit->Clear' listener
@@ -104,11 +120,8 @@ class MenuBarController {
 
 
         // 'File->new' listener
-        // TODO, select mode: portrait or not
         menus.get("File").getItems().get(0).setOnAction( e -> {
-            sketchController.set(new SketchController());
-            if (Alerter.popConfirmDialog(languageController.getString("r_u_sure"), languageController.getString("erase"), languageController.getString("ok_with")))
-                DrawCanvasController.getInstance().getDrawCanvas().clearContent();
+            SketchCreator.newSketch();
         });
 
 

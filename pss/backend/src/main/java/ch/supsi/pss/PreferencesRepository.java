@@ -23,10 +23,10 @@ public class PreferencesRepository{
     }
 
 
-    public static Properties getAllProperties(final boolean flag){
+    public static Properties getAllProperties(final boolean fromProjectDir){
         Properties properties = new Properties();
 
-        if(flag){
+        if(fromProjectDir){
             try (InputStream input = PreferencesRepository.class.getClassLoader().getResourceAsStream("config.properties"))
             {
                 properties.load(input);

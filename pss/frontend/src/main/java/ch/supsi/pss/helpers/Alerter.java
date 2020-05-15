@@ -4,7 +4,9 @@ import ch.supsi.pss.LanguageController;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ChoiceDialog;
 
+import java.util.List;
 import java.util.Optional;
 
 public abstract class Alerter {
@@ -45,11 +47,25 @@ public abstract class Alerter {
         al.showAndWait();
     }
 
+    // return the index of the choice made, if none, return the index of the default
+    public static int popChoiceDialog(String title, String header, String text, List<String> choices){
+        ChoiceDialog<String> d = new ChoiceDialog<>(choices.get(0), choices);
+        d.setTitle(title);
+        d.setHeaderText(header);
+        d.setContentText(text);
+        d.setResizable(true);
+        Optional<String> res = d.showAndWait();
+        if(res.isPresent())
+            return choices.indexOf(res.get());
+        else
+            return 0;
+    }
+
     public static void popNotImlementedAlert(){
         Alert al = new Alert(Alert.AlertType.INFORMATION);
-        al.setTitle(LanguageController.getIstance().getString("comingSoon"));
-        al.setHeaderText(LanguageController.getIstance().getString("comingSoon"));
-        al.setContentText(LanguageController.getIstance().getString("waitNewV"));
+        al.setTitle(LanguageController.getInstance().getString("comingSoon"));
+        al.setHeaderText(LanguageController.getInstance().getString("comingSoon"));
+        al.setContentText(LanguageController.getInstance().getString("waitNewV"));
         al.setResizable(true);
         al.showAndWait();
     }

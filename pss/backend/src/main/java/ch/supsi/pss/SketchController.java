@@ -15,8 +15,8 @@ public class SketchController {
         return sketch;
     }
 
-    public void setSketch(Canvas skecth) {
-        this.sketch = skecth;
+    public void setSketch(Canvas sketch) {
+        this.sketch = sketch;
     }
 
     public SketchController() {

@@ -7,11 +7,12 @@ import javafx.scene.paint.Paint;
 
 /**
  * - not intended to use outside the package -
- * <p>
+ *
  * Provide a canvas intended to work with the class 'DrawToolbar'
  * those two items needs infact to be connected with the method: setConnectedToolbar.
  */
 public class DrawCanvas extends Canvas {
+    private boolean containsPaper;
     private boolean isPortrait;
     private DrawToolbar connectedToolbar;
     private Tool selectedTool;
@@ -22,6 +23,11 @@ public class DrawCanvas extends Canvas {
     // instad use DrawCanvasController.getDrawCanvas()
     private Canvas upperCanvas;
 
+    /**
+     * create a canvas containing an empty paper with the following data
+     * @param width of the new paper
+     * @param height of the new paper
+     */
     DrawCanvas(double width, double height) {
         super();
         this.setLayoutX(0);
@@ -29,6 +35,7 @@ public class DrawCanvas extends Canvas {
         this.setHeight(height);
         this.setWidth(width);
         this.isPortrait = false;
+        this.containsPaper = true;
 
         this.getGraphicsContext2D().setFill(Color.WHITE);
         this.getGraphicsContext2D().fillRect(0, 0, this.getWidth(), this.getHeight());
@@ -43,6 +50,29 @@ public class DrawCanvas extends Canvas {
         upperCanvas.setHeight(height);
     }
 
+    public boolean containsPaper(){
+        return this.containsPaper;
+    }
+
+    /**
+     * Constructor to create a canvas without any paper inside
+     */
+    DrawCanvas() {
+        super();
+        this.setLayoutX(0);
+        this.setLayoutY(0);
+        this.isPortrait = false;
+
+        this.containsPaper = false;
+
+        this.selectedTool = null;
+
+        this.controller = DrawCanvasController.getInstance();
+        controller.setDrawCanvas(this);
+
+        upperCanvas = new Canvas();
+    }
+
     void changeMode(boolean isPortrait) {
         double tmp;
 
@@ -55,6 +85,17 @@ public class DrawCanvas extends Canvas {
         this.setHeight(tmp);
         this.setLayoutX(0);
         this.setLayoutY(0);
+        this.getGraphicsContext2D().setFill(Color.WHITE);
+        this.getGraphicsContext2D().fillRect(0, 0, this.getWidth(), this.getHeight());
+    }
+
+    public void createPaper(double width, double height){
+        this.containsPaper = true;
+        this.setWidth(width);
+        this.setHeight(height);
+        this.upperCanvas.setWidth(width);
+        this.upperCanvas.setHeight(height);
+
         this.getGraphicsContext2D().setFill(Color.WHITE);
         this.getGraphicsContext2D().fillRect(0, 0, this.getWidth(), this.getHeight());
     }

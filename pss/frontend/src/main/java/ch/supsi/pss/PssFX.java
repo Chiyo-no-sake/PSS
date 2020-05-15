@@ -1,10 +1,9 @@
 package ch.supsi.pss;
 
 import ch.supsi.pss.drawFrame.DrawingFrame;
-import ch.supsi.pss.helpers.Alerter;
+import ch.supsi.pss.helpers.SketchCreator;
 import ch.supsi.pss.menubar.PssMenuBar;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -13,16 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import java.util.Locale;
-import java.util.ResourceBundle;
-
 public class PssFX extends Application {
-
-    private static final int DEF_WIN_WIDTH = 800;
-    private static final int DEF_WIN_HEIGHT = 600;
-
-    private static final int DRAW_WIDTH = 1366;
-    private static final int DRAW_HEIGHT = 768;
 
     private static final String title = "Personal Sketching System";
 
@@ -32,12 +22,21 @@ public class PssFX extends Application {
 
     @java.lang.Override
     public void start(Stage stage) {
+        final double DEF_WIN_WIDTH = Double.parseDouble(
+                PreferencesRepository.getAllProperties(true).getProperty("default_app_width"));
+
+        final double DEF_WIN_HEIGHT = Double.parseDouble(
+                PreferencesRepository.getAllProperties(true).getProperty("default_app_height"));
+
+
         PreferencesRepository.copyPropertiesFile();
-        LanguageController languageController = LanguageController.getIstance();
+        LanguageController languageController = LanguageController.getInstance();
         stage.setTitle(title);
 
+        VBox globalVBox = new VBox();
+
         // ------------ Gallery window settings and elements creation  -----------
-        VBox VerticalBoxGallery = new VBox();
+        VBox verticalBoxGallery = new VBox();
 
         // Label for the title of gallery mode
         Label galleryTitle = new Label(languageController.getString("gallery"));
@@ -50,49 +49,52 @@ public class PssFX extends Application {
         TextField search = new TextField();
 
         // Gallery Window Layout
-        VerticalBoxGallery.setAlignment(Pos.TOP_CENTER);
-        VerticalBoxGallery.prefWidthProperty().bind(stage.widthProperty());
-        VerticalBoxGallery.prefHeightProperty().bind(stage.heightProperty());
-        VerticalBoxGallery.setSpacing(20);
+        verticalBoxGallery.setAlignment(Pos.TOP_CENTER);
+        verticalBoxGallery.prefWidthProperty().bind(stage.widthProperty());
+        verticalBoxGallery.prefHeightProperty().bind(stage.heightProperty());
+        verticalBoxGallery.setSpacing(20);
 
         // ----------------- Draw window settings and elements creation  ----------------
-        VBox VerticalBoxDraw = new VBox();
+        VBox verticalBoxDraw = new VBox();
 
         // Label for the draw mode
         Label drawTitle = new Label(languageController.getString("draw"));
 
         //CanvasPane instantiation
-        DrawingFrame drawFrame = new DrawingFrame(DRAW_WIDTH, DRAW_HEIGHT);
+        DrawingFrame drawFrame = new DrawingFrame();
         drawFrame.setStyle("-fx-border-style: solid;" +
                 "-fx-border-color: black;" +
                 "-fx-background-color: #c0c0c0;");
 
-        drawFrame.bindSizeTo(VerticalBoxDraw);
+        drawFrame.bindSizeTo(verticalBoxDraw);
 
         // DrawPane will automatically resize basing on stage size
-        VerticalBoxDraw.setAlignment(Pos.TOP_CENTER);
-        VerticalBoxDraw.setSpacing(20);
-        VerticalBoxDraw.prefHeightProperty().bind(stage.heightProperty());
-        VerticalBoxDraw.prefWidthProperty().bind(stage.widthProperty());
+        verticalBoxDraw.setAlignment(Pos.TOP_CENTER);
+        verticalBoxDraw.setSpacing(20);
+        verticalBoxDraw.prefHeightProperty().bind(stage.heightProperty());
+        verticalBoxDraw.prefWidthProperty().bind(stage.widthProperty());
 
         // ------------------- Scene creation ------------------------------------
-        Scene defaultScene = new Scene(VerticalBoxDraw, DEF_WIN_WIDTH, DEF_WIN_HEIGHT);
+        Scene defaultScene = new Scene(globalVBox, DEF_WIN_WIDTH, DEF_WIN_HEIGHT);
 
         // -------------------- Menu bars ----------------------------------------
-        PssMenuBar menuBar_draw = new PssMenuBar(stage, VerticalBoxGallery, VerticalBoxDraw, false);
-        PssMenuBar menuBar_gallery = new PssMenuBar(stage, VerticalBoxGallery, VerticalBoxDraw, true);
+        PssMenuBar menuBar= new PssMenuBar(stage, globalVBox, verticalBoxGallery, verticalBoxDraw, false);
 
         //----------------- adding elements to Gallery view -------------------
         //TODO gallery pane insertion, when gallery is ready
-        VerticalBoxGallery.getChildren().addAll(menuBar_gallery, galleryTitle, search);
+        verticalBoxGallery.getChildren().addAll(galleryTitle, search);
 
 
         //----------------- adding elements to draw view -------------------
-        VerticalBoxDraw.getChildren().addAll(menuBar_draw, drawTitle, drawFrame);
+        verticalBoxDraw.getChildren().addAll(drawTitle, drawFrame);
 
+        //----------------- adding to global vbox --------------------------
+        globalVBox.getChildren().addAll(menuBar, verticalBoxDraw);
         stage.setScene(defaultScene);
         stage.sizeToScene();
         stage.show();
+
+        SketchCreator.newSketch();
     }
 
 }

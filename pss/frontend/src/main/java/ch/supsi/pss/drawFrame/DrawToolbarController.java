@@ -3,7 +3,6 @@ package ch.supsi.pss.drawFrame;
 import ch.supsi.pss.drawFrame.tools.*;
 import ch.supsi.pss.helpers.Alerter;
 import javafx.event.Event;
-import javafx.scene.image.ImageView;
 
 
 public class DrawToolbarController {
@@ -11,7 +10,8 @@ public class DrawToolbarController {
     DrawToolbar tb;
     static DrawToolbarController instance;
 
-    private DrawToolbarController() { }
+    private DrawToolbarController() {
+    }
 
     public static DrawToolbarController getInstance() {
         if (instance == null) {
@@ -21,11 +21,11 @@ public class DrawToolbarController {
         return instance;
     }
 
-    public void setToolBar(DrawToolbar tb){
+    public void setToolBar(DrawToolbar tb) {
         this.tb = tb;
     }
 
-    public DrawToolbar getToolBar(){
+    public DrawToolbar getToolBar() {
         return this.tb;
     }
 
@@ -43,19 +43,6 @@ public class DrawToolbarController {
         // Color picker listener
         tb.getColorPicker().setOnAction(e -> {
             tb.getConnectedCanvas().setColor(tb.getColorPicker().getValue());
-        });
-
-        // PortraitMode button listener
-        tb.getPortraitButton().setOnMouseClicked(e -> {
-            if (Alerter.popConfirmDialog("Are you sure?", "This operation will erase your work", "Are you ok with this?")) {
-                tb.getConnectedCanvas().clearContent();
-                tb.getConnectedCanvas().changeMode(tb.getConnectedCanvas().isPortrait());
-                if (tb.getConnectedCanvas().isPortrait()) {
-                    tb.getPortraitButton().changeImage(new ImageView(this.getClass().getResource(DrawToolbar.getPortaitOnIco()).toExternalForm()));
-                } else {
-                    tb.getPortraitButton().changeImage(new ImageView(this.getClass().getResource(DrawToolbar.getPortaitOffIco()).toExternalForm()));
-                }
-            }
         });
 
         // freeDraw button listener
@@ -84,7 +71,7 @@ public class DrawToolbarController {
         });
 
         // stroke slider listener
-        tb.getStrokeSlider().valueProperty().addListener(e->{
+        tb.getStrokeSlider().valueProperty().addListener(e -> {
             tb.getConnectedCanvas().getGraphicsContext2D().setLineWidth(tb.getStrokeSlider().getValue());
         });
     }
