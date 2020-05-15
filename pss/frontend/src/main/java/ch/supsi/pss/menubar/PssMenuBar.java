@@ -46,7 +46,7 @@ public class PssMenuBar extends MenuBar {
 
         Menu viewMenu = new Menu(languageController.getString("view"));
         viewMenu.getItems().add(new MenuItem(languageController.getString("gallery")));
-        viewMenu.getItems().add(new MenuItem(languageController.getString("toDraw")));
+        viewMenu.getItems().add(new MenuItem(languageController.getString("draw")));
 
 
         Menu helpMenu = new Menu(languageController.getString("help"));

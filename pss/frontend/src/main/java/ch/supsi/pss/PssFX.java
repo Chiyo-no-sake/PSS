@@ -41,10 +41,6 @@ public class PssFX extends Application {
         // Label for the title of gallery mode
         Label galleryTitle = new Label(languageController.getString("gallery"));
 
-        // Button-port to draw window
-        Button drawBtn = new Button();
-        drawBtn.setText(languageController.getString("toDraw"));
-
         // Search Field
         TextField search = new TextField();
 
