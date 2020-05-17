@@ -47,7 +47,7 @@ public abstract class Alerter {
         al.showAndWait();
     }
 
-    // return the index of the choice made, if none, return the index of the default
+    // return the index of the choice made, if none, return negative number
     public static int popChoiceDialog(String title, String header, String text, List<String> choices){
         ChoiceDialog<String> d = new ChoiceDialog<>(choices.get(0), choices);
         d.setTitle(title);
@@ -55,10 +55,8 @@ public abstract class Alerter {
         d.setContentText(text);
         d.setResizable(true);
         Optional<String> res = d.showAndWait();
-        if(res.isPresent())
-            return choices.indexOf(res.get());
-        else
-            return 0;
+
+        return res.map(choices::indexOf).orElse(-1);
     }
 
     public static void popNotImlementedAlert(){
