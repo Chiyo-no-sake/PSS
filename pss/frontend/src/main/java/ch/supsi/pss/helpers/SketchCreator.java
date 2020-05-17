@@ -15,27 +15,38 @@ public class SketchCreator {
         LinkedList<String> choices = new LinkedList<>();
         choices.add(LanguageController.getInstance().getString("non_portrait_text"));
         choices.add(LanguageController.getInstance().getString("portrait_text"));
-        boolean bPortrait = Alerter.popChoiceDialog(LanguageController.getInstance().getString("new_draw_header"),
+
+        int dialogResult = Alerter.popChoiceDialog(LanguageController.getInstance().getString("new_draw_header"),
                 LanguageController.getInstance().getString("new_draw_header"),
                 LanguageController.getInstance().getString("mode_select_text"),
-                choices) == 1;
+                choices);
 
-        MenuBarController.getInstance().getSketchController().set(new SketchController());
+        if(dialogResult>=0) {
+            boolean bPortrait = dialogResult == 1;
 
-        if(DrawCanvasController.getInstance().getDrawCanvas().containsPaper())
-            if (!Alerter.popConfirmDialog(LanguageController.getInstance().getString("r_u_sure"),
-                    LanguageController.getInstance().getString("erase"),
-                    LanguageController.getInstance().getString("ok_with"))) {
-                return;
-            }
+            MenuBarController.getInstance().getSketchController().set(new SketchController());
 
-        double width = Double.parseDouble(bPortrait ? PreferencesRepository.getAllProperties(true).getProperty("portrait_draw_width")
-                : PreferencesRepository.getAllProperties(true).getProperty("horizontal_draw_width"));
+            if (DrawCanvasController.getInstance().getDrawCanvas().containsPaper())
+                if (!Alerter.popConfirmDialog(LanguageController.getInstance().getString("r_u_sure"),
+                        LanguageController.getInstance().getString("erase"),
+                        LanguageController.getInstance().getString("ok_with"))) {
+                    return;
+                }
 
-        double height = Double.parseDouble(bPortrait ? PreferencesRepository.getAllProperties(true).getProperty("portrait_draw_height")
-                : PreferencesRepository.getAllProperties(true).getProperty("horizontal_draw_height"));
+            double width = Double.parseDouble(bPortrait ? PreferencesRepository.getAllProperties(true).getProperty("portrait_draw_width")
+                    : PreferencesRepository.getAllProperties(true).getProperty("horizontal_draw_width"));
 
-        DrawCanvasController.getInstance().getDrawCanvas().createPaper(width, height);
+            double height = Double.parseDouble(bPortrait ? PreferencesRepository.getAllProperties(true).getProperty("portrait_draw_height")
+                    : PreferencesRepository.getAllProperties(true).getProperty("horizontal_draw_height"));
+
+            DrawCanvasController.getInstance().getDrawCanvas().createPaper(width, height);
+        }else{
+            // Closed dialog without a choice
+            Alerter.popInformationAlert(LanguageController.getInstance().getString("new_draw_header"),
+                    LanguageController.getInstance().getString("not_new_draw_header"),
+                    LanguageController.getInstance().getString("not_new_draw_text"));
+        }
+
         DrawToolbarController.getInstance().getToolBar().updateButtonStatus();
         MenuBarController.getInstance().getMenuBar().updateClickableMenus();
     }
