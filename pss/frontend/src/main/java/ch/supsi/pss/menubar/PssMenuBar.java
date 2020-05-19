@@ -2,24 +2,23 @@ package ch.supsi.pss.menubar;
 
 import ch.supsi.pss.LanguageController;
 import ch.supsi.pss.drawFrame.DrawCanvasController;
-import javafx.scene.Node;
+import ch.supsi.pss.views.DrawView;
+import ch.supsi.pss.views.GalleryView;
+import ch.supsi.pss.views.ViewManager;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
 import java.util.HashMap;
 
 
 public class PssMenuBar extends MenuBar {
-    private MenuBarController controller;
-    private boolean bGalleryView;
+    private final MenuBarController controller;
 
-    private HashMap<String, Menu> menus;
+    private final HashMap<String, Menu> menus;
 
-    public PssMenuBar(Stage controlledStage, VBox globalVBox, Node galleryRoot, Node drawRoot, boolean bGalleryView) {
-        //Platform.runLater(() -> this.bGalleryView = bGalleryView);
-        this.bGalleryView = bGalleryView;
+    public PssMenuBar(Stage controlledStage) {
         menus = new HashMap<>();
 
         LanguageController languageController = LanguageController.getInstance();
@@ -66,32 +65,29 @@ public class PssMenuBar extends MenuBar {
 
         updateClickableMenus();
 
-        if(languageController.getLocale().getLanguage().equals("en")) {
+        if (languageController.getLocale().getLanguage().equals("en")) {
             menus.get("Language").getItems().get(1).setDisable(true);
             menus.get("Language").getItems().get(0).setDisable(false);
-        }
-        else if(languageController.getLocale().getLanguage().equals("it")) {
+        } else if (languageController.getLocale().getLanguage().equals("it")) {
             menus.get("Language").getItems().get(0).setDisable(true);
             menus.get("Language").getItems().get(1).setDisable(false);
         }
 
         controller = MenuBarController.getInstance();
-        controller.setupController(controlledStage, globalVBox, galleryRoot, drawRoot, this);
+        controller.setupController(controlledStage, this);
     }
 
-    public void updateClickableMenus(){
-        if(bGalleryView){
+    public void updateClickableMenus() {
+        if (ViewManager.getInstance().getCurrView() instanceof GalleryView) {
             setMenusForGallery();
-        }else{
+        } else if (ViewManager.getInstance().getCurrView() instanceof DrawView){
             setMenusForDraw();
+        } else {
+            setMenusForTags();
         }
     }
 
-    void setBGalleryView(boolean bGalleryView){
-        this.bGalleryView = bGalleryView;
-    }
-
-    private void setMenusForDraw(){
+    private void setMenusForDraw() {
         menus.get("File").getItems().forEach(i -> i.setDisable(false));
         menus.get("Edit").getItems().get(0).setDisable(false);
         menus.get("Edit").getItems().get(1).setDisable(false);
@@ -99,7 +95,7 @@ public class PssMenuBar extends MenuBar {
         menus.get("View").getItems().get(0).setDisable(false);
         menus.get("View").getItems().get(1).setDisable(true);
 
-        if(!DrawCanvasController.getInstance().getDrawCanvas().containsPaper()){
+        if (!DrawCanvasController.getInstance().getDrawCanvas().containsPaper()) {
             // paper isn't present, so can't edit draw
             menus.get("File").getItems().get(1).setDisable(true);
             menus.get("Edit").getItems().get(0).setDisable(true);
@@ -107,7 +103,7 @@ public class PssMenuBar extends MenuBar {
         }
     }
 
-    private void setMenusForGallery(){
+    private void setMenusForGallery() {
         menus.get("File").getItems().forEach(i -> i.setDisable(true));
         menus.get("Edit").getItems().get(0).setDisable(true);
         menus.get("Edit").getItems().get(1).setDisable(true);
@@ -115,6 +111,19 @@ public class PssMenuBar extends MenuBar {
         menus.get("Edit").getItems().get(3).setDisable(false);
         menus.get("View").getItems().get(0).setDisable(true);
         menus.get("View").getItems().get(1).setDisable(false);
+    }
+
+    private void setMenusForTags() {
+        menus.get("Edit").getItems().get(0).setDisable(true);
+        menus.get("Edit").getItems().get(1).setDisable(true);
+        menus.get("Edit").getItems().get(2).setDisable(true);
+        menus.get("Edit").getItems().get(3).setDisable(false);
+
+        menus.get("File").getItems().get(0).setDisable(true);
+        menus.get("File").getItems().get(1).setDisable(true);
+
+        menus.get("View").getItems().get(0).setDisable(true);
+        menus.get("View").getItems().get(1).setDisable(true);
     }
 
     HashMap<String, Menu> getMenuMap() {

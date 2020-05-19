@@ -3,35 +3,42 @@ package ch.supsi.pss;
 
 import javafx.scene.canvas.Canvas;
 
-import java.util.UUID;
+import java.util.*;
 
 public class SketchController {
 
     private SketchService sketchService;
-    private String uuid;
-    private Canvas sketch;
+
+    private final String uuid;
+    private final Canvas sketch;
+    private final Set<String> tags;
+
+    private boolean bAlreadySaved;
 
     public Canvas getSketch() {
         return sketch;
     }
 
-    public void setSketch(Canvas sketch) {
-        this.sketch = sketch;
-    }
-
-    public SketchController() {
-        uuid = UUID.randomUUID().toString();
-        sketchService = new SketchService(uuid);
-    }
-
     public SketchController(final Canvas sketch) {
         uuid = UUID.randomUUID().toString();
+        sketchService = new SketchService(uuid);
         this.sketch = sketch;
-        //sketchService = new SketchService(sketch, uuid);
+
+        tags = new TreeSet<>();
+
+        bAlreadySaved = false;
     }
 
-    public void newUUID(){
+    // to initialize some start tags
+    public SketchController(final Canvas sketch, Collection<String> tags) {
         uuid = UUID.randomUUID().toString();
+        sketchService = new SketchService(uuid);
+        this.sketch = sketch;
+
+        bAlreadySaved = false;
+
+        this.tags = new TreeSet<>();
+        this.tags.addAll(tags);
     }
 
     public boolean saveSketch(){
@@ -44,5 +51,32 @@ public class SketchController {
 
     public SketchService getSketchService() {
         return sketchService;
+    }
+
+    public boolean addTag(String tag){
+        return tags.add(tag);
+    }
+
+    public Set<String> getTags() {
+        return tags;
+    }
+
+    public boolean isAlreadySaved() {
+        return bAlreadySaved;
+    }
+
+    public void setAlreadySaved(boolean bAlreadySaved) {
+        this.bAlreadySaved = bAlreadySaved;
+    }
+
+    public String getTagsAsString(){
+        StringBuilder sb = new StringBuilder();
+
+        tags.forEach(t->{
+            sb.append(t);
+            sb.append("\n");
+        });
+
+        return sb.toString();
     }
 }

@@ -1,5 +1,6 @@
 package ch.supsi.pss.drawFrame;
 
+import ch.supsi.pss.SketchController;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 
@@ -8,6 +9,7 @@ import javafx.scene.input.MouseEvent;
  */
 public class DrawCanvasController {
     private DrawCanvas dc;
+    private SketchController sketchController;
 
     private EventHandler<MouseEvent> activeEventOnDown;
     private EventHandler<MouseEvent> activeEventOnDrag;
@@ -27,6 +29,14 @@ public class DrawCanvasController {
         activeEventOnUp = null;
         activeEventOnDrag = null;
         activeEventOnDown = null;
+    }
+
+    public void setSketchController(SketchController sketchController){
+        this.sketchController = sketchController;
+    }
+
+    public SketchController getSketchController(){
+        return sketchController;
     }
 
     public void setDrawCanvas(DrawCanvas dc) {

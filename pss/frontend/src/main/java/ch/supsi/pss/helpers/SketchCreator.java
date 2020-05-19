@@ -3,15 +3,19 @@ package ch.supsi.pss.helpers;
 import ch.supsi.pss.LanguageController;
 import ch.supsi.pss.PreferencesRepository;
 import ch.supsi.pss.SketchController;
+import ch.supsi.pss.drawFrame.DrawCanvas;
 import ch.supsi.pss.drawFrame.DrawCanvasController;
 import ch.supsi.pss.drawFrame.DrawToolbarController;
 import ch.supsi.pss.helpers.Alerter;
 import ch.supsi.pss.menubar.MenuBarController;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.LinkedList;
 
 public class SketchCreator {
     public static void newSketch(){
+        // prompt multi-choice dialog
         LinkedList<String> choices = new LinkedList<>();
         choices.add(LanguageController.getInstance().getString("non_portrait_text"));
         choices.add(LanguageController.getInstance().getString("portrait_text"));
@@ -21,10 +25,16 @@ public class SketchCreator {
                 LanguageController.getInstance().getString("mode_select_text"),
                 choices);
 
+        // dialog has a choice, creating sketch
         if(dialogResult>=0) {
             boolean bPortrait = dialogResult == 1;
 
-            MenuBarController.getInstance().getSketchController().set(new SketchController());
+            // get current weekDay for first tag
+            ArrayList<String> tags = new ArrayList<>();
+            tags.add(LanguageController.getInstance().getString(WeekDays.toString(Calendar.getInstance().get(Calendar.DAY_OF_WEEK))));
+
+            // create a new sketch controller aka new UUID and empty tag list
+            DrawCanvasController.getInstance().setSketchController(new SketchController(DrawCanvasController.getInstance().getDrawCanvas(), tags));
 
             if (DrawCanvasController.getInstance().getDrawCanvas().containsPaper())
                 if (!Alerter.popConfirmDialog(LanguageController.getInstance().getString("r_u_sure"),

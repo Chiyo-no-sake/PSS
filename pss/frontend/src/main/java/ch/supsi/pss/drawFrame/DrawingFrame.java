@@ -18,7 +18,7 @@ public class DrawingFrame extends BorderPane {
     private final DrawToolbar toolbar;
     private final DrawCanvas canvas;
 
-    /**
+    /*
      * explicit size constructor, instantly add a new non portrait paper to the canvas
      * @param draw_width explicit width of the draw
      * @param draw_height explicit height of the draw

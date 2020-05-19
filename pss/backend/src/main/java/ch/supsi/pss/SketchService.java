@@ -16,7 +16,6 @@ public class SketchService{
     private static final int WIDTH = 1366;
     private static final int HEIGHT = 768;
 
-    private final Set<String> tags = new TreeSet<>();
     private String uuid ;
 
     public SketchService(String uuid) {
@@ -60,11 +59,4 @@ public class SketchService{
         return false;
     }
 
-    public boolean addTag(String tag){
-        return tags.add(tag);
-    }
-
-    public Set<String> getTags() {
-        return tags;
-    }
 }

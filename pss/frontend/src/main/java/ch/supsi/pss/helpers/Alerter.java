@@ -1,10 +1,7 @@
 package ch.supsi.pss.helpers;
 
 import ch.supsi.pss.LanguageController;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.ChoiceDialog;
+import javafx.scene.control.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -66,5 +63,18 @@ public abstract class Alerter {
         al.setContentText(LanguageController.getInstance().getString("waitNewV"));
         al.setResizable(true);
         al.showAndWait();
+    }
+
+    public static void popTagDial(String text){
+        TextInputDialog tagDial = new TextInputDialog();
+        tagDial.setTitle(LanguageController.getInstance().getString("tag_dialog_title"));
+        tagDial.setHeaderText(LanguageController.getInstance().getString("tag_dialog_header"));
+        tagDial.setContentText(text);
+        tagDial.setResizable(true);
+
+        tagDial.getEditor().prefWidthProperty().bind(tagDial.widthProperty());
+        tagDial.getEditor().prefHeight(400);
+
+        tagDial.showAndWait();
     }
 }
