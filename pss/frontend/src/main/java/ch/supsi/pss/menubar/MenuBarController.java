@@ -1,12 +1,13 @@
 package ch.supsi.pss.menubar;
 
-import ch.supsi.pss.LanguageController;
-import ch.supsi.pss.PreferencesRepository;
-import ch.supsi.pss.SketchController;
+import ch.supsi.pss.misc.LanguageController;
+import ch.supsi.pss.misc.PreferencesRepository;
+import ch.supsi.pss.sketch.SketchController;
 import ch.supsi.pss.drawFrame.DrawCanvasController;
 import ch.supsi.pss.helpers.Alerter;
-import ch.supsi.pss.helpers.SketchCreator;
+import ch.supsi.pss.sketch.SketchCreator;
 import ch.supsi.pss.views.*;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Menu;
 import javafx.stage.Stage;
 
@@ -123,6 +124,15 @@ public class MenuBarController {
                     Alerter.popInformationAlert(null, null, languageController.getString("saved"));
                 else
                     Alerter.popInformationAlert(null, null, languageController.getString("updated"));
+            }else{
+                System.out.println("Error saving the draw. See stack trace");
+                Alert al = new Alert(Alert.AlertType.ERROR);
+                al.setTitle(LanguageController.getInstance().getString("error"));
+                al.setHeaderText(LanguageController.getInstance().getString("error_saving_header"));
+                al.setContentText(LanguageController.getInstance().getString("error_saving_text"));
+                al.setResizable(true);
+                al.showAndWait();
+
             }
 
             System.out.println("Drawing saved");

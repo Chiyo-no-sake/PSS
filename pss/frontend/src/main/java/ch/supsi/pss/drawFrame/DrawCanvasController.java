@@ -1,6 +1,6 @@
 package ch.supsi.pss.drawFrame;
 
-import ch.supsi.pss.SketchController;
+import ch.supsi.pss.sketch.SketchController;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 

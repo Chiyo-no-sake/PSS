@@ -1,6 +1,6 @@
 package ch.supsi.pss.menubar;
 
-import ch.supsi.pss.LanguageController;
+import ch.supsi.pss.misc.LanguageController;
 import ch.supsi.pss.drawFrame.DrawCanvasController;
 import ch.supsi.pss.views.DrawView;
 import ch.supsi.pss.views.GalleryView;

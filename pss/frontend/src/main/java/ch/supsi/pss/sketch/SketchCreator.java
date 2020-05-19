@@ -1,12 +1,11 @@
-package ch.supsi.pss.helpers;
+package ch.supsi.pss.sketch;
 
-import ch.supsi.pss.LanguageController;
-import ch.supsi.pss.PreferencesRepository;
-import ch.supsi.pss.SketchController;
-import ch.supsi.pss.drawFrame.DrawCanvas;
+import ch.supsi.pss.misc.LanguageController;
+import ch.supsi.pss.misc.PreferencesRepository;
 import ch.supsi.pss.drawFrame.DrawCanvasController;
 import ch.supsi.pss.drawFrame.DrawToolbarController;
 import ch.supsi.pss.helpers.Alerter;
+import ch.supsi.pss.helpers.WeekDays;
 import ch.supsi.pss.menubar.MenuBarController;
 
 import java.util.ArrayList;

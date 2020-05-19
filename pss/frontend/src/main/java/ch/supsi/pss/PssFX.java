@@ -1,15 +1,11 @@
 package ch.supsi.pss;
 
-import ch.supsi.pss.drawFrame.DrawingFrame;
-import ch.supsi.pss.helpers.SketchCreator;
+import ch.supsi.pss.misc.PreferencesRepository;
+import ch.supsi.pss.sketch.SketchCreator;
 import ch.supsi.pss.menubar.PssMenuBar;
 import ch.supsi.pss.views.*;
 import javafx.application.Application;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 

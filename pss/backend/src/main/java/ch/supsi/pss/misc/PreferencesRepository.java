@@ -1,4 +1,4 @@
-package ch.supsi.pss;
+package ch.supsi.pss.misc;
 
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;

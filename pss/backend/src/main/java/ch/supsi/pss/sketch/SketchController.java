@@ -1,4 +1,4 @@
-package ch.supsi.pss;
+package ch.supsi.pss.sketch;
 
 
 import javafx.scene.canvas.Canvas;
@@ -42,7 +42,7 @@ public class SketchController {
     }
 
     public boolean saveSketch(){
-        return sketchService.saveSketch(sketch);
+        return sketchService.saveSketch(sketch, tags);
     }
 
     public void setSketchService(SketchService sketchService) {

@@ -1,4 +1,4 @@
-package ch.supsi.pss;
+package ch.supsi.pss.misc;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
