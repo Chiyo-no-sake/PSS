@@ -5,8 +5,8 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
-public class GalleryView extends View {
 
+public class GalleryView extends View {
     // TODO: layout
     //  Searchbar to fliter tags after every digit (caption: "gallery_searchbar_caption"
     //  FlowPane that contains all sketches found in the directory
@@ -33,5 +33,6 @@ public class GalleryView extends View {
 
         this.getChildren().addAll(galleryTitle, search);
         GalleryViewController.getInstance().setGalleryView(this);
+
     }
 }

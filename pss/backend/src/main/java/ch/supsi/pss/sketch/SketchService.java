@@ -3,6 +3,7 @@ package ch.supsi.pss.sketch;
 import ch.supsi.pss.misc.PreferencesRepository;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 
 import javax.imageio.ImageIO;
@@ -11,7 +12,9 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.io.Writer;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public class SketchService {
 

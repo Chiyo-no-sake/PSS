@@ -6,6 +6,7 @@ import ch.supsi.pss.sketch.SketchController;
 import ch.supsi.pss.drawFrame.DrawCanvasController;
 import ch.supsi.pss.helpers.Alerter;
 import ch.supsi.pss.sketch.SketchCreator;
+import ch.supsi.pss.sketch.SketchReader;
 import ch.supsi.pss.views.*;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Menu;
