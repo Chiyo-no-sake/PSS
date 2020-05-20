@@ -28,6 +28,9 @@ import java.util.ArrayList;
  */
 public class DrawToolbar extends ToolBar {
     private static final int BTN_SIZE = 40;
+    private static final int SLIDER_HEIGHT = 150;
+    private static final int SPACER1_HEIGHT = 12;
+    private static final int SPACER2_HEIGHT = 12;
 
     private static final int STROKE_DEF_THICK = 3;
 
@@ -59,8 +62,8 @@ public class DrawToolbar extends ToolBar {
         colorPicker.setPrefHeight(BTN_SIZE);
         colorPicker.setValue(Color.BLACK);
 
-        Region spacer2 = new Region();
-        spacer2.setPrefHeight(25);
+        Region spacer1 = new Region();
+        spacer1.setPrefHeight(SPACER1_HEIGHT);
 
         btnToolsList.add(new ImageButton(new ImageView(this.getClass().getResource(PENCIL_ICO).toExternalForm())));
         btnToolsList.add(new ImageButton(new ImageView(this.getClass().getResource(LINE_ICO).toExternalForm())));
@@ -68,15 +71,15 @@ public class DrawToolbar extends ToolBar {
         btnToolsList.add(new ImageButton(new ImageView(this.getClass().getResource(CIRCLE_ICO).toExternalForm())));
         btnToolsList.add(new ImageButton(new ImageView(this.getClass().getResource(ERASER_ICO).toExternalForm())));
 
-        Region spacer3 = new Region();
-        spacer3.setPrefHeight(25);
+        Region spacer2 = new Region();
+        spacer2.setPrefHeight(SPACER2_HEIGHT);
 
         strokeSlider = new Slider();
         strokeSlider.setMin(1);
         strokeSlider.setMax(25);
         strokeSlider.setValue(STROKE_DEF_THICK);
         strokeSlider.setOrientation(Orientation.VERTICAL);
-        strokeSlider.setPrefHeight(200);
+        strokeSlider.setPrefHeight(SLIDER_HEIGHT);
         strokeSlider.setShowTickMarks(true);
         strokeSlider.setShowTickLabels(true);
         connectedCanvas.getGraphicsContext2D().setLineWidth(strokeSlider.getValue());
@@ -91,7 +94,7 @@ public class DrawToolbar extends ToolBar {
 
         // ------------------ Add items to the toolbox -------------------------
         this.getItems().add(colorPicker);
-        this.getItems().add(spacer2);
+        this.getItems().add(spacer1);
 
         btnToolsList.forEach(b -> {
             this.getItems().add(b);
@@ -100,7 +103,7 @@ public class DrawToolbar extends ToolBar {
             b.setPrefHeight(BTN_SIZE);
         });
 
-        this.getItems().add(spacer3);
+        this.getItems().add(spacer2);
         this.getItems().add(strokeSlider);
 
         // ---------------- Create Controller -----------------------------------
