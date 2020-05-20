@@ -1,4 +1,4 @@
-package ch.supsi.pss.views;
+package ch.supsi.pss.view;
 
 import ch.supsi.pss.misc.LanguageController;
 import javafx.geometry.Pos;

@@ -1,7 +1,7 @@
-package ch.supsi.pss.views;
+package ch.supsi.pss.view;
 
 import ch.supsi.pss.misc.LanguageController;
-import ch.supsi.pss.drawFrame.DrawCanvasController;
+import ch.supsi.pss.model.drawFrame.DrawCanvasController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;

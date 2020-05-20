@@ -42,7 +42,12 @@ public class SketchController {
     }
 
     public boolean saveSketch(){
-        return sketchService.saveSketch(sketch, tags);
+        if(sketchService.saveSketch(sketch, tags)) {
+            bAlreadySaved = true;
+            return true;
+        }
+
+        return false;
     }
 
     public void setSketchService(SketchService sketchService) {

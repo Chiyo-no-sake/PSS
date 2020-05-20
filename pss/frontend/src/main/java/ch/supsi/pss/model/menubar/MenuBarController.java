@@ -1,13 +1,12 @@
-package ch.supsi.pss.menubar;
+package ch.supsi.pss.model.menubar;
 
 import ch.supsi.pss.misc.LanguageController;
 import ch.supsi.pss.misc.PreferencesRepository;
 import ch.supsi.pss.sketch.SketchController;
-import ch.supsi.pss.drawFrame.DrawCanvasController;
-import ch.supsi.pss.helpers.Alerter;
+import ch.supsi.pss.model.drawFrame.DrawCanvasController;
+import ch.supsi.pss.misc.Alerter;
 import ch.supsi.pss.sketch.SketchCreator;
-import ch.supsi.pss.sketch.SketchReader;
-import ch.supsi.pss.views.*;
+import ch.supsi.pss.view.*;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Menu;
 import javafx.stage.Stage;

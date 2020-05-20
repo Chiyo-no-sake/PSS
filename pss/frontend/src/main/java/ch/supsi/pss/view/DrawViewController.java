@@ -1,4 +1,4 @@
-package ch.supsi.pss.views;
+package ch.supsi.pss.view;
 
 public class DrawViewController {
     private static DrawViewController instance;

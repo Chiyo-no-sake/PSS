@@ -1,7 +1,7 @@
-package ch.supsi.pss.views;
+package ch.supsi.pss.view;
 
 import ch.supsi.pss.misc.LanguageController;
-import ch.supsi.pss.drawFrame.DrawingFrame;
+import ch.supsi.pss.model.drawFrame.DrawingFrame;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 

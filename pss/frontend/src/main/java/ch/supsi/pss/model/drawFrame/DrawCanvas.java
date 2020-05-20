@@ -1,6 +1,6 @@
-package ch.supsi.pss.drawFrame;
+package ch.supsi.pss.model.drawFrame;
 
-import ch.supsi.pss.drawFrame.tools.Tool;
+import ch.supsi.pss.model.drawFrame.tools.Tool;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;

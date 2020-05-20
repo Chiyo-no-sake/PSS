@@ -1,10 +1,10 @@
-package ch.supsi.pss.menubar;
+package ch.supsi.pss.model.menubar;
 
 import ch.supsi.pss.misc.LanguageController;
-import ch.supsi.pss.drawFrame.DrawCanvasController;
-import ch.supsi.pss.views.DrawView;
-import ch.supsi.pss.views.GalleryView;
-import ch.supsi.pss.views.ViewManager;
+import ch.supsi.pss.model.drawFrame.DrawCanvasController;
+import ch.supsi.pss.view.DrawView;
+import ch.supsi.pss.view.GalleryView;
+import ch.supsi.pss.view.ViewManager;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;

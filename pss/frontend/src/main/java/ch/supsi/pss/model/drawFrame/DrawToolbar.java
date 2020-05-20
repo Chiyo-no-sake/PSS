@@ -1,4 +1,4 @@
-package ch.supsi.pss.drawFrame;
+package ch.supsi.pss.model.drawFrame;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
