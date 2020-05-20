@@ -3,8 +3,14 @@ package ch.supsi.pss.sketch;
 import ch.supsi.pss.misc.PreferencesRepository;
 import javafx.scene.image.Image;
 
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 public class SketchReader {
     private static Map<Image, Set<String>> sketches = new HashMap<>();
@@ -56,6 +62,26 @@ public class SketchReader {
         return tags;
     }
 
+    public Set<Image> searchByTag(String tag){
+
+        Set<Image> imageSet = new HashSet<>();
+        for (Image image : sketches.keySet())
+            if (sketches.get(image).contains(tag))
+                imageSet.add(image);
+
+        return imageSet;
+    }
+
+    public Set<Image> searchByTags(Set<String> tags){
+
+        Set<Image> imageSet = new HashSet<>();
+        for (Image image : sketches.keySet())
+            for (String tag : tags)
+                if(sketches.get(image).contains(tag))
+                    imageSet.add(image);
+
+        return imageSet;
+    }
 
     public Set<Image> getImages(){
         return sketches.keySet();
