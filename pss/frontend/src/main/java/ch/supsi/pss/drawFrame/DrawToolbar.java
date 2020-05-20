@@ -1,5 +1,6 @@
 package ch.supsi.pss.drawFrame;
 
+import ch.supsi.pss.misc.PreferencesRepository;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.control.ColorPicker;
@@ -12,27 +13,20 @@ import javafx.scene.paint.Color;
 import java.util.ArrayList;
 
 /**
- *
- * TODO: adjust portrait icons to be bigger
- *
- */
-
-
-/**
- * - not intended to use outside the package -
- *
  * intended to work with a connected DrawCanvas, this last need to be passed in the constructor
  *
  * provide a toolbar with some tools in it and some buttons mapped to em.
  * provide also a portrait mode button, a clear button and a color picker.
  */
 public class DrawToolbar extends ToolBar {
-    private static final int BTN_SIZE = 40;
-    private static final int SLIDER_HEIGHT = 150;
-    private static final int SPACER1_HEIGHT = 12;
-    private static final int SPACER2_HEIGHT = 12;
-
-    private static final int STROKE_DEF_THICK = 3;
+    private static final int BTN_SIZE = Integer.parseInt(
+            PreferencesRepository.getAllProperties(true).getProperty("toolbar_btn_size"));
+    private static final int SLIDER_HEIGHT = Integer.parseInt(
+            PreferencesRepository.getAllProperties(true).getProperty("toolbar_slider_height"));
+    private static final int SPACER_HEIGHT = Integer.parseInt(
+            PreferencesRepository.getAllProperties(true).getProperty("toolbar_spacer_height"));
+    private static final int STROKE_DEF_THICK =Integer.parseInt(
+            PreferencesRepository.getAllProperties(true).getProperty("default_stroke_thick"));
 
     private static final String PENCIL_ICO = "/icons/pencil.png";
     private static final String SQUARE_ICO = "/icons/square.png";
@@ -63,7 +57,7 @@ public class DrawToolbar extends ToolBar {
         colorPicker.setValue(Color.BLACK);
 
         Region spacer1 = new Region();
-        spacer1.setPrefHeight(SPACER1_HEIGHT);
+        spacer1.setPrefHeight(SPACER_HEIGHT);
 
         btnToolsList.add(new ImageButton(new ImageView(this.getClass().getResource(PENCIL_ICO).toExternalForm())));
         btnToolsList.add(new ImageButton(new ImageView(this.getClass().getResource(LINE_ICO).toExternalForm())));
@@ -72,7 +66,7 @@ public class DrawToolbar extends ToolBar {
         btnToolsList.add(new ImageButton(new ImageView(this.getClass().getResource(ERASER_ICO).toExternalForm())));
 
         Region spacer2 = new Region();
-        spacer2.setPrefHeight(SPACER2_HEIGHT);
+        spacer2.setPrefHeight(SPACER_HEIGHT);
 
         strokeSlider = new Slider();
         strokeSlider.setMin(1);

@@ -44,6 +44,7 @@ public class TagView extends View {
 
         this.setAlignment(Pos.TOP_CENTER);
         this.setSpacing(20);
+        this.setPadding(new Insets(10,10,10,10));
 
         TagViewController.getInstance().setTagView(this);
         TagViewController.getInstance().setupEvents();
