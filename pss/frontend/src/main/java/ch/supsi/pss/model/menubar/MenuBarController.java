@@ -46,20 +46,16 @@ public class MenuBarController {
         // 'View->gallery' listener, change to gallery scene
         menus.get("View").getItems().get(0).setOnAction(e -> {
             ViewManager.getInstance().toView(GalleryViewController.getInstance().getGalleryView());
-            menuBar.updateClickableMenus();
         });
 
         // 'View->draw' listener, change to draw scene
         menus.get("View").getItems().get(1).setOnAction(e -> {
             ViewManager.getInstance().toView(DrawViewController.getInstance().getDrawView());
-            menuBar.updateClickableMenus();
         });
 
         // 'Edit->Tag' listener
         menus.get("Edit").getItems().get(1).setOnAction(e -> {
            ViewManager.getInstance().toView(TagViewController.getInstance().getTagView());
-           menuBar.updateClickableMenus();
-           TagViewController.getInstance().getTagView().updateContent();
         });
 
         // 'Edit->Clear' listener
@@ -70,7 +66,7 @@ public class MenuBarController {
         });
 
         // 'Edit->Preferences' listener
-        menus.get("Edit").getItems().get(3).setOnAction(e -> {
+        menus.get("Edit").getItems().get(2).setOnAction(e -> {
         });
 
         // 'Edit->Preferences->Language' listener

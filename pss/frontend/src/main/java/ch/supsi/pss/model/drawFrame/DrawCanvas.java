@@ -91,8 +91,12 @@ public class DrawCanvas extends Canvas {
 
     public void createPaper(double width, double height){
         this.containsPaper = true;
+
+        this.clearContent();
+
         this.setWidth(width);
         this.setHeight(height);
+
         this.upperCanvas.setWidth(width);
         this.upperCanvas.setHeight(height);
 

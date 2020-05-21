@@ -17,10 +17,6 @@ import java.util.Collection;
 import java.util.List;
 
 public class SketchService {
-
-    private static final int WIDTH = 1366;
-    private static final int HEIGHT = 768;
-
     private String uuid;
 
     public SketchService(String uuid) {
@@ -37,7 +33,9 @@ public class SketchService {
     private boolean saveDraw(final String uuid, final Canvas sketch) {
         File file = new File(PreferencesRepository.getDrawsPath() + File.separator + uuid + ".png");
         try {
-            WritableImage writableImage = new WritableImage(WIDTH, HEIGHT);
+            WritableImage writableImage = new WritableImage(
+                    (int)sketch.getWidth(),
+                    (int)sketch.getHeight());
             sketch.snapshot(null, writableImage);
 
             RenderedImage renderedImage = SwingFXUtils.fromFXImage(writableImage, null);

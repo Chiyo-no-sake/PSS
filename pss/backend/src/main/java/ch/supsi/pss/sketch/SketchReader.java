@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class SketchReader {
-    private static Map<Image, Set<String>> sketches = new HashMap<>();
+    private static final Map<Image, Set<String>> sketches = new HashMap<>();
     private static SketchReader instance;
 
     public SketchReader() {}
@@ -29,16 +29,22 @@ public class SketchReader {
 
         File[] listOfFiles = drawsFolder.listFiles();
 
-        for (File file : listOfFiles) {
-            if (file.isFile()) {
-                String path = file.toString();
-                Image image = new Image("file:" + path);
-                String uuid = path.replace( PreferencesRepository.getDrawsPath(), "").replace(".png", "");
-                sketches.put(image, getTags(uuid));
+        if(listOfFiles != null)
+            for (File file : listOfFiles) {
+                if (file.isFile()) {
+                    String path = file.toString();
+                    Image image = new Image("file:" + path);
+                    String uuid = path.replace( PreferencesRepository.getDrawsPath(), "").replace(".png", "");
 
-                sketches.get(image).forEach(System.out::println);
+                    Set<String> tags = getTags(uuid);
+
+                    if(!tags.isEmpty()) {
+                        sketches.put(image, tags);
+                    }else{
+                        System.out.println("Can't find metadata for draw: " + uuid);
+                    }
+                }
             }
-        }
     }
 
     private Set<String> getTags(String uuid){
@@ -47,18 +53,20 @@ public class SketchReader {
 
         Set<String> tags = new HashSet<>();
 
-        for (File file : listOfFiles){
-            if (file.isFile() && file.getAbsolutePath().contains(uuid))
-                try(BufferedReader br = new BufferedReader(new FileReader(file))){
-                    String line = br.readLine();
-                    while (line != null){
-                        tags.add(line);
-                        line = br.readLine();
+        if(listOfFiles != null)
+            for (File file : listOfFiles){
+                if (file.isFile() && file.getAbsolutePath().contains(uuid))
+                    try(BufferedReader br = new BufferedReader(new FileReader(file))){
+                        String line = br.readLine();
+                        while (line != null){
+                            tags.add(line);
+                            line = br.readLine();
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-        }
+            }
+
         return tags;
     }
 

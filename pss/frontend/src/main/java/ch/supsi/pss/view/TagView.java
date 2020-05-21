@@ -2,6 +2,7 @@ package ch.supsi.pss.view;
 
 import ch.supsi.pss.misc.LanguageController;
 import ch.supsi.pss.model.drawFrame.DrawCanvasController;
+import ch.supsi.pss.model.menubar.MenuBarController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -25,7 +26,7 @@ public class TagView extends View {
         Label text = new Label(LanguageController.getInstance().getString("tag_title"));
 
         tags = new TextArea();
-        tags.setPrefWidth(this.getWidth()-50);
+        tags.setPrefWidth(this.getWidth() - 50);
         tags.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
         tags.setPrefHeight(500);
         tags.setEditable(false);
@@ -65,10 +66,21 @@ public class TagView extends View {
         return doneBtn;
     }
 
-    public void updateContent(){
-        if(DrawCanvasController.getInstance().getSketchController() == null)
+    public void updateContent() {
+        if (DrawCanvasController.getInstance().getSketchController() == null)
             tags.setText("");
         else
             tags.setText(DrawCanvasController.getInstance().getSketchController().getTagsAsString());
+    }
+
+    @Override
+    public void onShow() {
+        MenuBarController.getInstance().getMenuBar().updateClickableMenus();
+        TagViewController.getInstance().getTagView().updateContent();
+    }
+
+    @Override
+    public void onHide() {
+
     }
 }

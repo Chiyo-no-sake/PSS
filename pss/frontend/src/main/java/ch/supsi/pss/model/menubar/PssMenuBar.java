@@ -31,7 +31,6 @@ public class PssMenuBar extends MenuBar {
         Menu editMenu = new Menu(languageController.getString("edit"));
         editMenu.getItems().add(new MenuItem(languageController.getString("clear")));
         editMenu.getItems().add(new MenuItem("Tag"));
-        editMenu.getItems().add(new MenuItem(languageController.getString("find")));
 
         Menu languageMenu = new Menu(languageController.getString("langu"));
         languageMenu.getItems().add(new MenuItem("Italiano"));
@@ -91,7 +90,6 @@ public class PssMenuBar extends MenuBar {
         menus.get("File").getItems().forEach(i -> i.setDisable(false));
         menus.get("Edit").getItems().get(0).setDisable(false);
         menus.get("Edit").getItems().get(1).setDisable(false);
-        menus.get("Edit").getItems().get(2).setDisable(true);
         menus.get("View").getItems().get(0).setDisable(false);
         menus.get("View").getItems().get(1).setDisable(true);
 
@@ -107,8 +105,6 @@ public class PssMenuBar extends MenuBar {
         menus.get("File").getItems().forEach(i -> i.setDisable(true));
         menus.get("Edit").getItems().get(0).setDisable(true);
         menus.get("Edit").getItems().get(1).setDisable(true);
-        menus.get("Edit").getItems().get(2).setDisable(false);
-        menus.get("Edit").getItems().get(3).setDisable(false);
         menus.get("View").getItems().get(0).setDisable(true);
         menus.get("View").getItems().get(1).setDisable(false);
     }
@@ -116,8 +112,7 @@ public class PssMenuBar extends MenuBar {
     private void setMenusForTags() {
         menus.get("Edit").getItems().get(0).setDisable(true);
         menus.get("Edit").getItems().get(1).setDisable(true);
-        menus.get("Edit").getItems().get(2).setDisable(true);
-        menus.get("Edit").getItems().get(3).setDisable(false);
+        menus.get("Edit").getItems().get(2).setDisable(false);
 
         menus.get("File").getItems().get(0).setDisable(true);
         menus.get("File").getItems().get(1).setDisable(true);

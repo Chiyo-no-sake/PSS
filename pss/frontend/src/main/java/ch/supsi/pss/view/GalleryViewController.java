@@ -1,5 +1,9 @@
 package ch.supsi.pss.view;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 public class GalleryViewController {
     private static GalleryViewController instance;
     private GalleryView galleryView;
@@ -20,5 +24,10 @@ public class GalleryViewController {
     public GalleryView getGalleryView() {
         return galleryView;
     }
+
+    public void setUpListeners(){
+        galleryView.getSearchBar().setOnKeyReleased( e -> galleryView.updateGalleryContent());
+    }
+
 
 }
