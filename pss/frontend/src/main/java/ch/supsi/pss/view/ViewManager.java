@@ -29,9 +29,9 @@ public class ViewManager {
 
     public void toView(View v){
         resetScene();
-        v.onShow();
         this.root.getChildren().add(v);
         this.currView = v;
+        v.onShow();
     }
 
     private void resetScene() {

@@ -17,12 +17,14 @@ import javafx.scene.paint.Color;
 
 public class TagView extends View {
 
-    private TextArea tags;
-    private TextField addTags;
-    private Button addBtn;
-    private Button doneBtn;
+    private final TextArea tags;
+    private final TextField addTags;
+    private final Button addBtn;
+    private final Button doneBtn;
 
     public TagView() {
+        this.setPadding(new Insets(10, 10, 10, 10));
+
         Label text = new Label(LanguageController.getInstance().getString("tag_title"));
 
         tags = new TextArea();
@@ -71,6 +73,17 @@ public class TagView extends View {
             tags.setText("");
         else
             tags.setText(DrawCanvasController.getInstance().getSketchController().getTagsAsString());
+    }
+
+    public void submitTag(){
+        String newTag = addTags.getText();
+        if(!newTag.isEmpty())
+            DrawCanvasController.getInstance().getSketchController().addTag(newTag);
+        else
+            addTags.setPromptText(LanguageController.getInstance().getString("tag_caption"));
+
+        addTags.clear();
+        updateContent();
     }
 
     @Override

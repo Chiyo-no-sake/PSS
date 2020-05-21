@@ -106,14 +106,23 @@ public class GalleryView extends View {
     public void updateGalleryContent() {
         clearGallery();
         gallery.setAlignment(Pos.TOP_LEFT);
+        ArrayList<SketchPreview> allSketches = takeAllSketches();
         if (getSearchBar().getText().equals("")) {
-            gallery.getChildren().addAll(takeAllSketches());
-        } else {
-            Set<String> tags = new HashSet<String>(Arrays.asList(getSearchBar().getText().split(" ")));
-            Set<SketchPreview> res = filterSketches(takeAllSketches(), tags);
-            if (res.isEmpty()) {
+            // no filter entered
+            if(allSketches.isEmpty()) {
+                // empty gallery
                 gallery.setAlignment(Pos.CENTER);
-                // TODO: dk why not showing text
+                gallery.getChildren().add(new Label(LanguageController.getInstance().getString("gallery_no_sketch")));
+            }else {
+                gallery.getChildren().addAll(allSketches);
+            }
+        } else {
+            // filter results
+            Set<String> tags = new HashSet<>(Arrays.asList(getSearchBar().getText().split(" ")));
+            Set<SketchPreview> res = filterSketches(allSketches, tags);
+            if (res.isEmpty()) {
+                // no results from search
+                gallery.setAlignment(Pos.CENTER);
                 gallery.getChildren().add(new Label(LanguageController.getInstance().getString("gallery_no_result")));
             } else
                 gallery.getChildren().addAll(res);

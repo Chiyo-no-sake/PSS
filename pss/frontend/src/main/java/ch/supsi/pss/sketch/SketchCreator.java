@@ -30,7 +30,7 @@ public class SketchCreator {
 
             // get current weekDay for first tag
             ArrayList<String> tags = new ArrayList<>();
-            tags.add(LanguageController.getInstance().getString(WeekDays.toString(Calendar.getInstance().get(Calendar.DAY_OF_WEEK))));
+            tags.add(LanguageController.getInstance().getString(WeekDays.toString(Calendar.getInstance().get(Calendar.DAY_OF_WEEK)-1)));
 
             // create a new sketch controller aka new UUID and empty tag list
             DrawCanvasController.getInstance().setSketchController(new SketchController(DrawCanvasController.getInstance().getDrawCanvas(), tags));

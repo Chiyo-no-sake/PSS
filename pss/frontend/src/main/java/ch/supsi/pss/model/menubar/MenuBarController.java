@@ -99,7 +99,7 @@ public class MenuBarController {
             Alerter.popInformationAlert(
                     languageController.getString("about_tab"),
                     PreferencesRepository.getAllProperties(false).getProperty("application_title"),
-                    PreferencesRepository.getAllProperties(false).getProperty("authors") + " - v" + PreferencesRepository.getAllProperties(false).getProperty("current_version"));
+                    PreferencesRepository.getAllProperties(false).getProperty("authors") + " - v" + PreferencesRepository.getAllProperties(true).getProperty("current_version"));
         });
 
 
@@ -115,11 +115,13 @@ public class MenuBarController {
 
             SketchController sketchController = DrawCanvasController.getInstance().getSketchController();
 
+            boolean already_saved = sketchController.isAlreadySaved();
             if (sketchController.saveSketch()) {
-                if (!sketchController.isAlreadySaved())
-                    Alerter.popInformationAlert(null, null, languageController.getString("saved"));
+                if (!already_saved)
+                    Alerter.popInformationAlert(languageController.getString("saved_title"), null, languageController.getString("saved"));
                 else
-                    Alerter.popInformationAlert(null, null, languageController.getString("updated"));
+                    Alerter.popInformationAlert(languageController.getString("updated_title"), null, languageController.getString("updated"));
+                sketchController.setAlreadySaved(true);
             }else{
                 System.out.println("Error saving the draw. See stack trace");
                 Alert al = new Alert(Alert.AlertType.ERROR);

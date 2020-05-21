@@ -3,7 +3,9 @@ package ch.supsi.pss.sketch;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.BorderStroke;
 
 import java.util.Set;
 
@@ -15,6 +17,8 @@ public class SketchPreview extends BorderPane implements Comparable<SketchPrevie
         this.img = img;
         ImageView imgView = new ImageView(img);
         imgView.setPreserveRatio(true);
+
+        this.setStyle("-fx-border-color: darkgrey");
 
         if (img.getWidth() > img.getHeight()) {
             imgView.setFitWidth(width);

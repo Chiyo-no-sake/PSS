@@ -4,6 +4,7 @@ import ch.supsi.pss.misc.LanguageController;
 import ch.supsi.pss.model.drawFrame.DrawCanvasController;
 import ch.supsi.pss.view.DrawView;
 import ch.supsi.pss.view.GalleryView;
+import ch.supsi.pss.view.TagView;
 import ch.supsi.pss.view.ViewManager;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -81,7 +82,7 @@ public class PssMenuBar extends MenuBar {
             setMenusForGallery();
         } else if (ViewManager.getInstance().getCurrView() instanceof DrawView){
             setMenusForDraw();
-        } else {
+        } else if (ViewManager.getInstance().getCurrView() instanceof TagView){
             setMenusForTags();
         }
     }

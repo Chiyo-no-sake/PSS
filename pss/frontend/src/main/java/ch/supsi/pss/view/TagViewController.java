@@ -2,6 +2,7 @@ package ch.supsi.pss.view;
 
 import ch.supsi.pss.model.drawFrame.DrawCanvasController;
 import ch.supsi.pss.model.menubar.MenuBarController;
+import javafx.scene.input.KeyCode;
 
 public class TagViewController {
     private static TagViewController instance;
@@ -18,9 +19,12 @@ public class TagViewController {
 
     public void setupEvents(){
         tagView.getAddBtn().setOnAction(e -> {
-            String newTag = tagView.getAddTags().getText();
-            DrawCanvasController.getInstance().getSketchController().addTag(newTag);
-            tagView.updateContent();
+            getTagView().submitTag();
+        });
+
+        tagView.getAddTags().setOnKeyReleased( e -> {
+            if(e.getCode().equals(KeyCode.ENTER))
+                tagView.submitTag();
         });
 
         tagView.getDoneBtn().setOnAction(e -> {

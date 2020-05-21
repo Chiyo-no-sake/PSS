@@ -25,6 +25,8 @@ public class SketchReader {
     }
 
     public void refreshSketches(){
+        sketches.clear();
+
         File drawsFolder = new File(PreferencesRepository.getDrawsPath());
 
         File[] listOfFiles = drawsFolder.listFiles();
