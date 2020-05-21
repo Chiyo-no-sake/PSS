@@ -23,8 +23,8 @@ public abstract class PreferencesRepository{
     }
 
     public static void setPaths(){
-        drawsPath =  properties.getProperty("path") + "/draws";
-        metadataPath = properties.getProperty("path") + "/metadata";
+        drawsPath =  properties.getProperty("path") + File.separator + "draws";
+        metadataPath = properties.getProperty("path") + File.separator + "metadata";
     }
 
 

@@ -18,14 +18,6 @@ import java.util.*;
 
 
 public class GalleryView extends View {
-    // TODO: layout
-    //  Searchbar listener to filter sketches on each digit
-    //      clicking on an item will open another view with full sized image and bottom TextArea to show tags of the draw
-    //      this view will be a SketchView
-    //
-    // TODO: display a semi-transparent centered text instead of the FlowPane either:
-    //      - if there are no sketch to show ("gallery_no_sketch")
-    //      - if there are no result from the searchbar ("gallery_no_result")
 
     private final TextField searchBar;
     private final FlowPane gallery;
@@ -51,8 +43,8 @@ public class GalleryView extends View {
 
         // Search Field
         searchBar = new TextField();
-        searchBar.setPromptText(PreferencesRepository.getAllProperties(true).getProperty("gallery_searchbar_caption"));
-
+        searchBar.setPromptText(LanguageController.getInstance().getString("gallery_searchbar_caption"));
+        searchBar.setFocusTraversable(false);
         // Gallery flowpane to display previews
         gallery = new FlowPane(Orientation.HORIZONTAL);
         gallery.setHgap(10);
@@ -139,6 +131,7 @@ public class GalleryView extends View {
 
     @Override
     public void onShow() {
+        searchBar.clear();
         SketchReader.getInstance().refreshSketches();
         this.updateGalleryContent();
         MenuBarController.getInstance().getMenuBar().updateClickableMenus();
