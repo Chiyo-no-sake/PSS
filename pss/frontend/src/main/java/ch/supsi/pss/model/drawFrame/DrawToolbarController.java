@@ -1,7 +1,7 @@
-package ch.supsi.pss.drawFrame;
+package ch.supsi.pss.model.drawFrame;
 
-import ch.supsi.pss.drawFrame.tools.*;
-import ch.supsi.pss.helpers.Alerter;
+import ch.supsi.pss.model.drawFrame.tools.*;
+import ch.supsi.pss.misc.Alerter;
 import javafx.event.Event;
 
 

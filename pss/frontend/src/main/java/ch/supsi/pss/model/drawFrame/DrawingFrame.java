@@ -1,7 +1,6 @@
-package ch.supsi.pss.drawFrame;
+package ch.supsi.pss.model.drawFrame;
 
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;

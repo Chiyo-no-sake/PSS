@@ -1,12 +1,12 @@
-package ch.supsi.pss.menubar;
+package ch.supsi.pss.model.menubar;
 
 import ch.supsi.pss.misc.LanguageController;
 import ch.supsi.pss.misc.PreferencesRepository;
 import ch.supsi.pss.sketch.SketchController;
-import ch.supsi.pss.drawFrame.DrawCanvasController;
-import ch.supsi.pss.helpers.Alerter;
+import ch.supsi.pss.model.drawFrame.DrawCanvasController;
+import ch.supsi.pss.misc.Alerter;
 import ch.supsi.pss.sketch.SketchCreator;
-import ch.supsi.pss.views.*;
+import ch.supsi.pss.view.*;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Menu;
 import javafx.stage.Stage;
@@ -46,20 +46,16 @@ public class MenuBarController {
         // 'View->gallery' listener, change to gallery scene
         menus.get("View").getItems().get(0).setOnAction(e -> {
             ViewManager.getInstance().toView(GalleryViewController.getInstance().getGalleryView());
-            menuBar.updateClickableMenus();
         });
 
         // 'View->draw' listener, change to draw scene
         menus.get("View").getItems().get(1).setOnAction(e -> {
             ViewManager.getInstance().toView(DrawViewController.getInstance().getDrawView());
-            menuBar.updateClickableMenus();
         });
 
         // 'Edit->Tag' listener
         menus.get("Edit").getItems().get(1).setOnAction(e -> {
            ViewManager.getInstance().toView(TagViewController.getInstance().getTagView());
-           menuBar.updateClickableMenus();
-           TagViewController.getInstance().getTagView().updateContent();
         });
 
         // 'Edit->Clear' listener
@@ -70,7 +66,7 @@ public class MenuBarController {
         });
 
         // 'Edit->Preferences' listener
-        menus.get("Edit").getItems().get(3).setOnAction(e -> {
+        menus.get("Edit").getItems().get(2).setOnAction(e -> {
         });
 
         // 'Edit->Preferences->Language' listener
@@ -102,8 +98,8 @@ public class MenuBarController {
         menus.get("Help").getItems().get(0).setOnAction(e -> {
             Alerter.popInformationAlert(
                     languageController.getString("about_tab"),
-                    PreferencesRepository.getAllProperties(true).getProperty("application_title"),
-                    PreferencesRepository.getAllProperties(true).getProperty("authors") + " - v" + PreferencesRepository.getAllProperties(true).getProperty("current_version"));
+                    PreferencesRepository.getAllProperties(false).getProperty("application_title"),
+                    PreferencesRepository.getAllProperties(false).getProperty("authors") + " - v" + PreferencesRepository.getAllProperties(true).getProperty("current_version"));
         });
 
 
@@ -119,11 +115,13 @@ public class MenuBarController {
 
             SketchController sketchController = DrawCanvasController.getInstance().getSketchController();
 
+            boolean already_saved = sketchController.isAlreadySaved();
             if (sketchController.saveSketch()) {
-                if (!sketchController.isAlreadySaved())
-                    Alerter.popInformationAlert(null, null, languageController.getString("saved"));
+                if (!already_saved)
+                    Alerter.popInformationAlert(languageController.getString("saved_title"), null, languageController.getString("saved"));
                 else
-                    Alerter.popInformationAlert(null, null, languageController.getString("updated"));
+                    Alerter.popInformationAlert(languageController.getString("updated_title"), null, languageController.getString("updated"));
+                sketchController.setAlreadySaved(true);
             }else{
                 System.out.println("Error saving the draw. See stack trace");
                 Alert al = new Alert(Alert.AlertType.ERROR);

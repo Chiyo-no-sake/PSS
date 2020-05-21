@@ -1,6 +1,5 @@
-package ch.supsi.pss.helpers;
+package ch.supsi.pss.misc;
 
-import ch.supsi.pss.misc.LanguageController;
 import javafx.scene.control.*;
 
 import java.util.List;

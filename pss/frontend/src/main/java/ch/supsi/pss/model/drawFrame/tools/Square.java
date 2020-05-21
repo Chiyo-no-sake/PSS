@@ -1,15 +1,16 @@
-package ch.supsi.pss.drawFrame.tools;
+package ch.supsi.pss.model.drawFrame.tools;
 
-import ch.supsi.pss.drawFrame.DrawCanvas;
-import ch.supsi.pss.drawFrame.DrawCanvasController;
+import ch.supsi.pss.model.drawFrame.DrawCanvas;
+import ch.supsi.pss.model.drawFrame.DrawCanvasController;
 import javafx.scene.paint.Color;
 
-public class Circle extends Tool {
+
+public class Square extends Tool {
     double originX;
     double originY;
 
-    public Circle(){
-        super("circle");
+    public Square() {
+        super("square");
     }
 
     @Override
@@ -47,7 +48,7 @@ public class Circle extends Tool {
             double width = nowX - oldX;
             double height = nowY - oldY;
 
-            c.renderTempOval(oldX, oldY, width, height, Color.GRAY);
+            c.renderTempSquare(oldX, oldY, width, height, Color.GRAY);
         };
     }
 
@@ -63,13 +64,13 @@ public class Circle extends Tool {
             double nowX = event.getX();
             double nowY = event.getY();
 
-            if (oldX > nowX) {
+            if(oldX > nowX){
                 double tmp = oldX;
                 oldX = nowX;
                 nowX = tmp;
             }
 
-            if (oldY > nowY) {
+            if(oldY > nowY){
                 double tmp = oldY;
                 oldY = nowY;
                 nowY = tmp;
@@ -78,7 +79,7 @@ public class Circle extends Tool {
             double width = nowX - oldX;
             double height = nowY - oldY;
 
-            c.getGraphicsContext2D().strokeOval(oldX, oldY, width, height);
+            c.getGraphicsContext2D().strokeRect(oldX, oldY, width, height);
         };
     }
 }

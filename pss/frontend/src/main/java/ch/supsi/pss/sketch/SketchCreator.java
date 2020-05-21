@@ -2,11 +2,11 @@ package ch.supsi.pss.sketch;
 
 import ch.supsi.pss.misc.LanguageController;
 import ch.supsi.pss.misc.PreferencesRepository;
-import ch.supsi.pss.drawFrame.DrawCanvasController;
-import ch.supsi.pss.drawFrame.DrawToolbarController;
-import ch.supsi.pss.helpers.Alerter;
-import ch.supsi.pss.helpers.WeekDays;
-import ch.supsi.pss.menubar.MenuBarController;
+import ch.supsi.pss.model.drawFrame.DrawCanvasController;
+import ch.supsi.pss.model.drawFrame.DrawToolbarController;
+import ch.supsi.pss.misc.Alerter;
+import ch.supsi.pss.misc.WeekDays;
+import ch.supsi.pss.model.menubar.MenuBarController;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -30,7 +30,7 @@ public class SketchCreator {
 
             // get current weekDay for first tag
             ArrayList<String> tags = new ArrayList<>();
-            tags.add(LanguageController.getInstance().getString(WeekDays.toString(Calendar.getInstance().get(Calendar.DAY_OF_WEEK))));
+            tags.add(LanguageController.getInstance().getString(WeekDays.toString(Calendar.getInstance().get(Calendar.DAY_OF_WEEK)-1)));
 
             // create a new sketch controller aka new UUID and empty tag list
             DrawCanvasController.getInstance().setSketchController(new SketchController(DrawCanvasController.getInstance().getDrawCanvas(), tags));

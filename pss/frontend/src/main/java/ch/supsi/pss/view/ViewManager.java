@@ -1,4 +1,4 @@
-package ch.supsi.pss.views;
+package ch.supsi.pss.view;
 
 import javafx.scene.layout.Pane;
 
@@ -31,6 +31,7 @@ public class ViewManager {
         resetScene();
         this.root.getChildren().add(v);
         this.currView = v;
+        v.onShow();
     }
 
     private void resetScene() {

@@ -1,7 +1,8 @@
-package ch.supsi.pss.views;
+package ch.supsi.pss.view;
 
 import ch.supsi.pss.misc.LanguageController;
-import ch.supsi.pss.drawFrame.DrawingFrame;
+import ch.supsi.pss.model.drawFrame.DrawingFrame;
+import ch.supsi.pss.model.menubar.MenuBarController;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 
@@ -25,5 +26,15 @@ public class DrawView extends View {
         this.setSpacing(20);
 
         DrawViewController.getInstance().setDrawView(this);
+    }
+
+    @Override
+    public void onShow() {
+        MenuBarController.getInstance().getMenuBar().updateClickableMenus();
+    }
+
+    @Override
+    public void onHide() {
+
     }
 }

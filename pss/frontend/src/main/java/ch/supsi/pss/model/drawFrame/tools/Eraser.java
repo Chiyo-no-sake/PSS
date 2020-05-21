@@ -1,7 +1,7 @@
-package ch.supsi.pss.drawFrame.tools;
+package ch.supsi.pss.model.drawFrame.tools;
 
-import ch.supsi.pss.drawFrame.DrawCanvas;
-import ch.supsi.pss.drawFrame.DrawCanvasController;
+import ch.supsi.pss.model.drawFrame.DrawCanvas;
+import ch.supsi.pss.model.drawFrame.DrawCanvasController;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;

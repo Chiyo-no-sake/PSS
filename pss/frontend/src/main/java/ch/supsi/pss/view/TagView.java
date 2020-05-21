@@ -1,7 +1,8 @@
-package ch.supsi.pss.views;
+package ch.supsi.pss.view;
 
 import ch.supsi.pss.misc.LanguageController;
-import ch.supsi.pss.drawFrame.DrawCanvasController;
+import ch.supsi.pss.model.drawFrame.DrawCanvasController;
+import ch.supsi.pss.model.menubar.MenuBarController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -16,16 +17,18 @@ import javafx.scene.paint.Color;
 
 public class TagView extends View {
 
-    private TextArea tags;
-    private TextField addTags;
-    private Button addBtn;
-    private Button doneBtn;
+    private final TextArea tags;
+    private final TextField addTags;
+    private final Button addBtn;
+    private final Button doneBtn;
 
     public TagView() {
+        this.setPadding(new Insets(10, 10, 10, 10));
+
         Label text = new Label(LanguageController.getInstance().getString("tag_title"));
 
         tags = new TextArea();
-        tags.setPrefWidth(this.getWidth()-50);
+        tags.setPrefWidth(this.getWidth() - 50);
         tags.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
         tags.setPrefHeight(500);
         tags.setEditable(false);
@@ -66,10 +69,32 @@ public class TagView extends View {
         return doneBtn;
     }
 
-    public void updateContent(){
-        if(DrawCanvasController.getInstance().getSketchController() == null)
+    public void updateContent() {
+        if (DrawCanvasController.getInstance().getSketchController() == null)
             tags.setText("");
         else
             tags.setText(DrawCanvasController.getInstance().getSketchController().getTagsAsString());
+    }
+
+    public void submitTag(){
+        String newTag = addTags.getText();
+        if(!newTag.isEmpty())
+            DrawCanvasController.getInstance().getSketchController().addTag(newTag);
+        else
+            addTags.setPromptText(LanguageController.getInstance().getString("tag_caption"));
+
+        addTags.clear();
+        updateContent();
+    }
+
+    @Override
+    public void onShow() {
+        MenuBarController.getInstance().getMenuBar().updateClickableMenus();
+        TagViewController.getInstance().getTagView().updateContent();
+    }
+
+    @Override
+    public void onHide() {
+
     }
 }

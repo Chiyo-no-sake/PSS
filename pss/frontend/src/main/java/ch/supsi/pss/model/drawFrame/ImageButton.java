@@ -1,4 +1,4 @@
-package ch.supsi.pss.drawFrame;
+package ch.supsi.pss.model.drawFrame;
 
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;

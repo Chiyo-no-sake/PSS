@@ -1,6 +1,6 @@
-package ch.supsi.pss.drawFrame;
+package ch.supsi.pss.model.drawFrame;
 
-import ch.supsi.pss.drawFrame.tools.Tool;
+import ch.supsi.pss.model.drawFrame.tools.Tool;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -91,8 +91,12 @@ public class DrawCanvas extends Canvas {
 
     public void createPaper(double width, double height){
         this.containsPaper = true;
+
+        this.clearContent();
+
         this.setWidth(width);
         this.setHeight(height);
+
         this.upperCanvas.setWidth(width);
         this.upperCanvas.setHeight(height);
 

@@ -2,8 +2,8 @@ package ch.supsi.pss;
 
 import ch.supsi.pss.misc.PreferencesRepository;
 import ch.supsi.pss.sketch.SketchCreator;
-import ch.supsi.pss.menubar.PssMenuBar;
-import ch.supsi.pss.views.*;
+import ch.supsi.pss.model.menubar.PssMenuBar;
+import ch.supsi.pss.view.*;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;

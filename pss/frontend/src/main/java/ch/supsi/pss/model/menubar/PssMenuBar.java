@@ -1,10 +1,11 @@
-package ch.supsi.pss.menubar;
+package ch.supsi.pss.model.menubar;
 
 import ch.supsi.pss.misc.LanguageController;
-import ch.supsi.pss.drawFrame.DrawCanvasController;
-import ch.supsi.pss.views.DrawView;
-import ch.supsi.pss.views.GalleryView;
-import ch.supsi.pss.views.ViewManager;
+import ch.supsi.pss.model.drawFrame.DrawCanvasController;
+import ch.supsi.pss.view.DrawView;
+import ch.supsi.pss.view.GalleryView;
+import ch.supsi.pss.view.TagView;
+import ch.supsi.pss.view.ViewManager;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -31,7 +32,6 @@ public class PssMenuBar extends MenuBar {
         Menu editMenu = new Menu(languageController.getString("edit"));
         editMenu.getItems().add(new MenuItem(languageController.getString("clear")));
         editMenu.getItems().add(new MenuItem("Tag"));
-        editMenu.getItems().add(new MenuItem(languageController.getString("find")));
 
         Menu languageMenu = new Menu(languageController.getString("langu"));
         languageMenu.getItems().add(new MenuItem("Italiano"));
@@ -82,7 +82,7 @@ public class PssMenuBar extends MenuBar {
             setMenusForGallery();
         } else if (ViewManager.getInstance().getCurrView() instanceof DrawView){
             setMenusForDraw();
-        } else {
+        } else if (ViewManager.getInstance().getCurrView() instanceof TagView){
             setMenusForTags();
         }
     }
@@ -91,7 +91,6 @@ public class PssMenuBar extends MenuBar {
         menus.get("File").getItems().forEach(i -> i.setDisable(false));
         menus.get("Edit").getItems().get(0).setDisable(false);
         menus.get("Edit").getItems().get(1).setDisable(false);
-        menus.get("Edit").getItems().get(2).setDisable(true);
         menus.get("View").getItems().get(0).setDisable(false);
         menus.get("View").getItems().get(1).setDisable(true);
 
@@ -107,8 +106,6 @@ public class PssMenuBar extends MenuBar {
         menus.get("File").getItems().forEach(i -> i.setDisable(true));
         menus.get("Edit").getItems().get(0).setDisable(true);
         menus.get("Edit").getItems().get(1).setDisable(true);
-        menus.get("Edit").getItems().get(2).setDisable(false);
-        menus.get("Edit").getItems().get(3).setDisable(false);
         menus.get("View").getItems().get(0).setDisable(true);
         menus.get("View").getItems().get(1).setDisable(false);
     }
@@ -116,8 +113,7 @@ public class PssMenuBar extends MenuBar {
     private void setMenusForTags() {
         menus.get("Edit").getItems().get(0).setDisable(true);
         menus.get("Edit").getItems().get(1).setDisable(true);
-        menus.get("Edit").getItems().get(2).setDisable(true);
-        menus.get("Edit").getItems().get(3).setDisable(false);
+        menus.get("Edit").getItems().get(2).setDisable(false);
 
         menus.get("File").getItems().get(0).setDisable(true);
         menus.get("File").getItems().get(1).setDisable(true);

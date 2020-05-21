@@ -1,4 +1,4 @@
-package ch.supsi.pss.drawFrame;
+package ch.supsi.pss.model.drawFrame;
 
 import ch.supsi.pss.misc.PreferencesRepository;
 import javafx.geometry.Insets;

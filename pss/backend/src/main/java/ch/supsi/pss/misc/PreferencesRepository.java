@@ -8,7 +8,7 @@ import java.nio.file.Paths;
 import java.util.Properties;
 
 
-public class PreferencesRepository{
+public abstract class PreferencesRepository{
 
     private static final String CONFIG_PROPERTIES = System.getProperty("user.home") + File.separator + ".pss" + File.separator + "config.properties"  ;
     private static String drawsPath, metadataPath;
@@ -20,6 +20,11 @@ public class PreferencesRepository{
 
     public static String getLanguage(){
         return properties.getProperty("current_language");
+    }
+
+    public static void setPaths(){
+        drawsPath =  properties.getProperty("path") + "/draws";
+        metadataPath = properties.getProperty("path") + "/metadata";
     }
 
 
@@ -59,11 +64,12 @@ public class PreferencesRepository{
 
         if(file.exists()){
             setProperties(false);
+            setPaths();
             return;
         }
 
-
         setProperties(true);
+        setPaths();
         try{
             if (file.createNewFile()){
                 FileOutputStream out = new FileOutputStream(file);
@@ -102,8 +108,7 @@ public class PreferencesRepository{
             e.printStackTrace();
         }
 
-        drawsPath =  properties.getProperty("path") + "/draws";
-        metadataPath = properties.getProperty("path") + "/metadata";
+        setPaths();
 
         new File( drawsPath).mkdir();
         new File( metadataPath ).mkdir();
@@ -126,8 +131,7 @@ public class PreferencesRepository{
             }
         }
 
-        drawsPath =  properties.getProperty("path") + "/draws";
-        metadataPath = properties.getProperty("path") + "/metadata";
+        setPaths();
 
         new File( drawsPath).mkdir();
         new File( metadataPath ).mkdir();
