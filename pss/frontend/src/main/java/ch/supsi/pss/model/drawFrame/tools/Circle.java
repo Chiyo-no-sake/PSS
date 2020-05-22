@@ -10,19 +10,13 @@ public class Circle extends Tool {
 
     public Circle(){
         super("circle");
-    }
 
-    @Override
-    void setOnMousePressed() {
-        super.onMousePressed = event -> {
+        this.setOnMousePressed(event -> {
             originX = event.getX();
             originY = event.getY();
-        };
-    }
+        });
 
-    @Override
-    void setOnMouseDragged() {
-        super.onMouseDragged = event -> {
+        this.setOnMouseDragged(event -> {
             DrawCanvas c = DrawCanvasController.getInstance().getDrawCanvas();
 
             c.clearAllTemp();
@@ -48,12 +42,9 @@ public class Circle extends Tool {
             double height = nowY - oldY;
 
             c.renderTempOval(oldX, oldY, width, height, Color.GRAY);
-        };
-    }
+        });
 
-    @Override
-    void setOnMouseReleased() {
-        super.onMouseReleased = event -> {
+        this.setOnMouseReleased(event -> {
             DrawCanvas c = DrawCanvasController.getInstance().getDrawCanvas();
 
             c.clearAllTemp();
@@ -79,6 +70,6 @@ public class Circle extends Tool {
             double height = nowY - oldY;
 
             c.getGraphicsContext2D().strokeOval(oldX, oldY, width, height);
-        };
+        });
     }
 }

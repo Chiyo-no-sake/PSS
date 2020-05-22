@@ -8,33 +8,23 @@ public class Pencil extends Tool {
 
     public Pencil() {
         super("pencil");
-    }
 
-    @Override
-    public void setOnMousePressed() {
-        super.onMousePressed = (event) -> {
+        this.setOnMousePressed((event) -> {
             Canvas src = DrawCanvasController.getInstance().getDrawCanvas();
             src.getGraphicsContext2D().moveTo(event.getX(), event.getY());
             src.getGraphicsContext2D().stroke();
             prevX = event.getX();
             prevY = event.getY();
-        };
-    }
+        });
 
-    @Override
-    public void setOnMouseReleased() {
-        super.onMouseReleased = (event) -> {
-            //NOP
-        };
-    }
-
-    @Override
-    public void setOnMouseDragged() {
-        super.onMouseDragged = (event) -> {
+        this.setOnMouseDragged(event -> {
             Canvas src = DrawCanvasController.getInstance().getDrawCanvas();
-            src.getGraphicsContext2D().strokeLine(prevX,prevY,event.getX(),event.getY());
+            src.getGraphicsContext2D().strokeLine(prevX, prevY, event.getX(), event.getY());
             prevX = event.getX();
             prevY = event.getY();
-        };
+        });
+
+        this.setOnMouseReleased(e -> {
+        });
     }
 }

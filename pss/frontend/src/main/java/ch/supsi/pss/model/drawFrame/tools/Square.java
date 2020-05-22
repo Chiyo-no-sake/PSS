@@ -11,19 +11,13 @@ public class Square extends Tool {
 
     public Square() {
         super("square");
-    }
 
-    @Override
-    void setOnMousePressed() {
-        super.onMousePressed = event -> {
+        this.setOnMousePressed(event -> {
             originX = event.getX();
             originY = event.getY();
-        };
-    }
+        });
 
-    @Override
-    void setOnMouseDragged() {
-        super.onMouseDragged = event -> {
+        this.setOnMouseDragged(event -> {
             DrawCanvas c = DrawCanvasController.getInstance().getDrawCanvas();
 
             c.clearAllTemp();
@@ -49,12 +43,9 @@ public class Square extends Tool {
             double height = nowY - oldY;
 
             c.renderTempSquare(oldX, oldY, width, height, Color.GRAY);
-        };
-    }
+        });
 
-    @Override
-    void setOnMouseReleased() {
-        super.onMouseReleased = event -> {
+        this.setOnMouseReleased(event -> {
             DrawCanvas c = DrawCanvasController.getInstance().getDrawCanvas();
 
             c.clearAllTemp();
@@ -80,6 +71,6 @@ public class Square extends Tool {
             double height = nowY - oldY;
 
             c.getGraphicsContext2D().strokeRect(oldX, oldY, width, height);
-        };
+        });
     }
 }

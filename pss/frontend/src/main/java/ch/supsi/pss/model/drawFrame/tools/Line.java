@@ -11,34 +11,25 @@ public class Line extends Tool {
 
     public Line() {
         super("line");
-    }
 
-    @Override
-    void setOnMousePressed() {
-        super.onMousePressed = e -> {
+        this.setOnMousePressed(e -> {
             originX = e.getX();
             originY = e.getY();
-        };
-    }
+        });
 
-    @Override
-    void setOnMouseDragged() {
-        super.onMouseDragged = e -> {
+        this.setOnMouseDragged(e -> {
             DrawCanvas c = DrawCanvasController.getInstance().getDrawCanvas();
 
             c.clearAllTemp();
             c.renderTempLine(originX, originY, e.getX(), e.getY(), Color.GRAY);
-        };
-    }
+        });
 
-    @Override
-    void setOnMouseReleased() {
-        super.onMouseReleased = e -> {
+        this.setOnMouseReleased(e -> {
             DrawCanvas c = DrawCanvasController.getInstance().getDrawCanvas();
             GraphicsContext gc = c.getGraphicsContext2D();
 
             c.clearAllTemp();
             gc.strokeLine(originX, originY, e.getX(), e.getY());
-        };
+        });
     }
 }

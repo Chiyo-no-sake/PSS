@@ -10,4 +10,10 @@ public interface Drawable {
     public EventHandler<MouseEvent> getOnMouseDragged();
 
     public EventHandler<MouseEvent> getOnMouseReleased();
+
+    void setOnMousePressed(EventHandler<MouseEvent> onMousePressed);
+
+    void setOnMouseDragged(EventHandler<MouseEvent> onMouseDragged);
+
+    void setOnMouseReleased(EventHandler<MouseEvent> onMouseReleased);
 }
