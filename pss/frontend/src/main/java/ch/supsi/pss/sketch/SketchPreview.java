@@ -1,12 +1,10 @@
 package ch.supsi.pss.sketch;
 
+import ch.supsi.pss.view.ViewManager;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.BorderStroke;
-
 import java.util.Set;
 
 public class SketchPreview extends BorderPane implements Comparable<SketchPreview>{
@@ -32,6 +30,10 @@ public class SketchPreview extends BorderPane implements Comparable<SketchPrevie
         this.setPrefWidth(width);
         this.setPrefHeight(height);
         BorderPane.setAlignment(imgView, Pos.CENTER);
+
+        this.setOnMouseClicked( e -> {
+            ViewManager.getInstance().toView(new SketchView(img, tags));
+        });
     }
 
     public Set<String> getTags(){
