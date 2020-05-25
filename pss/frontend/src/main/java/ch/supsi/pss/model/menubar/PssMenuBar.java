@@ -2,6 +2,7 @@ package ch.supsi.pss.model.menubar;
 
 import ch.supsi.pss.misc.LanguageController;
 import ch.supsi.pss.model.drawFrame.DrawCanvasController;
+import ch.supsi.pss.sketch.SketchView;
 import ch.supsi.pss.view.DrawView;
 import ch.supsi.pss.view.GalleryView;
 import ch.supsi.pss.view.TagView;
@@ -84,6 +85,8 @@ public class PssMenuBar extends MenuBar {
             setMenusForDraw();
         } else if (ViewManager.getInstance().getCurrView() instanceof TagView){
             setMenusForTags();
+        } else if (ViewManager.getInstance().getCurrView() instanceof SketchView){
+            setMenusForTags();
         }
     }
 
@@ -108,6 +111,14 @@ public class PssMenuBar extends MenuBar {
         menus.get("Edit").getItems().get(1).setDisable(true);
         menus.get("View").getItems().get(0).setDisable(true);
         menus.get("View").getItems().get(1).setDisable(false);
+    }
+
+    private void setMenusForSkechView() {
+        menus.get("File").getItems().forEach(i -> i.setDisable(true));
+        menus.get("Edit").getItems().get(0).setDisable(true);
+        menus.get("Edit").getItems().get(1).setDisable(true);
+        menus.get("View").getItems().get(0).setDisable(true);
+        menus.get("View").getItems().get(1).setDisable(true);
     }
 
     private void setMenusForTags() {
