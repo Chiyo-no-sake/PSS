@@ -37,6 +37,12 @@ public class PssFX extends Application {
         // root of the window
         VBox globalVBox = new VBox();
 
+        //  Menu bar
+        PssMenuBar menuBar = new PssMenuBar(stage);
+
+        // Root Scene creation
+        Scene defaultScene = new Scene(globalVBox, DEF_WIN_WIDTH, DEF_WIN_HEIGHT);
+
         // Gallery window settings
         galleryView = new GalleryView();
 
@@ -53,11 +59,6 @@ public class PssFX extends Application {
         drawView.prefHeightProperty().bind(stage.heightProperty());
         drawView.prefWidthProperty().bind(stage.widthProperty());
 
-        //  Menu bar
-        PssMenuBar menuBar = new PssMenuBar(stage);
-
-        // Root Scene creation
-        Scene defaultScene = new Scene(globalVBox, DEF_WIN_WIDTH, DEF_WIN_HEIGHT);
 
 
         //----------------- adding to menuBar to the scene --------------------------

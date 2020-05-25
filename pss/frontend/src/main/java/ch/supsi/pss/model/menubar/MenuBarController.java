@@ -9,6 +9,9 @@ import ch.supsi.pss.sketch.SketchCreator;
 import ch.supsi.pss.view.*;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Menu;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
 
 import java.util.HashMap;
@@ -16,6 +19,7 @@ import java.util.Locale;
 
 public class MenuBarController {
     private PssMenuBar menuBar;
+    private Stage stage;
 
     private static MenuBarController instance;
 
@@ -36,6 +40,7 @@ public class MenuBarController {
 
     public void setupController(Stage controlledStage, PssMenuBar connectedMenuBar) {
         this.menuBar = connectedMenuBar;
+        this.stage = controlledStage;
 
         LanguageController languageController = LanguageController.getInstance();
         HashMap<String, Menu> menus = connectedMenuBar.getMenuMap();
@@ -47,11 +52,13 @@ public class MenuBarController {
         menus.get("View").getItems().get(0).setOnAction(e -> {
             ViewManager.getInstance().toView(GalleryViewController.getInstance().getGalleryView());
         });
+        menus.get("View").getItems().get(0).setAccelerator(new KeyCodeCombination(KeyCode.G, KeyCombination.CONTROL_DOWN));
 
         // 'View->draw' listener, change to draw scene
         menus.get("View").getItems().get(1).setOnAction(e -> {
             ViewManager.getInstance().toView(DrawViewController.getInstance().getDrawView());
         });
+        menus.get("View").getItems().get(1).setAccelerator(new KeyCodeCombination(KeyCode.D, KeyCombination.CONTROL_DOWN));
 
         // 'Edit->Tag' listener
         menus.get("Edit").getItems().get(1).setOnAction(e -> {
@@ -64,6 +71,7 @@ public class MenuBarController {
                 DrawCanvasController.getInstance().getDrawCanvas().clearContent();
             }
         });
+        menus.get("Edit").getItems().get(0).setAccelerator(new KeyCodeCombination(KeyCode.DELETE, KeyCombination.CONTROL_DOWN));
 
         // 'Edit->Preferences' listener
         menus.get("Edit").getItems().get(2).setOnAction(e -> {
@@ -107,6 +115,7 @@ public class MenuBarController {
         menus.get("File").getItems().get(0).setOnAction(e -> {
             SketchCreator.newSketch();
         });
+        menus.get("File").getItems().get(0).setAccelerator(new KeyCodeCombination(KeyCode.N, KeyCombination.CONTROL_DOWN));
 
 
         // 'File->save' listener
@@ -135,6 +144,11 @@ public class MenuBarController {
 
             System.out.println("Drawing saved");
         });
+        menus.get("File").getItems().get(1).setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN));
 
+    }
+
+    public Stage getStage(){
+        return stage;
     }
 }
