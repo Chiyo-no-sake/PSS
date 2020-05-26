@@ -3,6 +3,8 @@ package ch.supsi.pss.sketch;
 
 import javafx.scene.canvas.Canvas;
 
+import javax.xml.crypto.Data;
+import java.time.LocalDate;
 import java.util.*;
 
 public class SketchController {
@@ -38,6 +40,7 @@ public class SketchController {
         bAlreadySaved = false;
 
         this.tags = new TreeSet<>();
+        this.tags.add(LocalDate.now().toString());
         this.tags.addAll(tags);
     }
 

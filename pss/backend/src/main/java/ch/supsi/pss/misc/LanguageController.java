@@ -6,8 +6,8 @@ import java.util.ResourceBundle;
 public class LanguageController {
     private static LanguageController istance;
 
-    private Locale locale;
-    private ResourceBundle resourceBundle;
+    private final Locale locale;
+    private final ResourceBundle resourceBundle;
 
     private LanguageController(){
         locale = new Locale(PreferencesRepository.getLanguage());

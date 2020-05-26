@@ -14,7 +14,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import java.util.ArrayList;
 import java.util.Set;
@@ -39,20 +38,15 @@ public class SketchView extends View {
         ListView<String> listView = new ListView<>(observableList);
         listView.setEditable(false);
 
-        AnchorPane anchorPane = new AnchorPane();
         Button back = new Button(LanguageController.getInstance().getString("back"));
-
         back.setOnAction(e ->{
             ViewManager.getInstance().toView(GalleryViewController.getInstance().getGalleryView());
         });
 
-        AnchorPane.setRightAnchor(back, 0.0);
-
-        anchorPane.getChildren().add(back);
-
         Insets insets = new Insets(10);
 
         BorderPane borderPane = new BorderPane();
+        BorderPane.setAlignment(back, Pos.CENTER);
 
         borderPane.prefWidthProperty().bind(MenuBarController.getInstance().getStage().widthProperty());
         borderPane.prefHeightProperty().bind(MenuBarController.getInstance().getStage().heightProperty());
@@ -61,7 +55,7 @@ public class SketchView extends View {
 
         borderPane.setRight(listView);
 
-        borderPane.setBottom(anchorPane);
+        borderPane.setBottom(back);
 
         borderPane.getChildren().forEach( node -> {
             BorderPane.setMargin(node,insets);

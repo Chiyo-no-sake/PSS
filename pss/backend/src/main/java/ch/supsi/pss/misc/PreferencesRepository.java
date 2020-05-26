@@ -10,7 +10,11 @@ import java.util.Properties;
 
 public abstract class PreferencesRepository{
 
-    private static final String CONFIG_PROPERTIES = System.getProperty("user.home") + File.separator + ".pss" + File.separator + "config.properties"  ;
+    private static final String CONFIG_PROPERTIES =
+            System.getProperty("user.home")
+                    + File.separator + ".pss"
+                    + File.separator + "config.properties"  ;
+
     private static String drawsPath, metadataPath;
     private static Properties properties = null;
 
@@ -31,28 +35,19 @@ public abstract class PreferencesRepository{
     public static Properties getAllProperties(final boolean fromProjectDir){
         Properties properties = new Properties();
 
-        if(fromProjectDir){
-            try (InputStream input = PreferencesRepository.class.getClassLoader().getResourceAsStream("config.properties"))
-            {
-                properties.load(input);
-                return properties;
+        try(InputStream inputStream =
+                    fromProjectDir ?
+                    PreferencesRepository.class.getClassLoader().getResourceAsStream("config.properties"):
+                    new FileInputStream(CONFIG_PROPERTIES))
+        {
+            properties.load(inputStream);
+            return properties;
 
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
+        }catch (IOException e){
+            e.printStackTrace();
         }
-        else {
-            try (InputStream input = new FileInputStream(CONFIG_PROPERTIES))
-            {
-                properties.load(input);
-                return properties;
 
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
+        return null;
     }
 
     public static void copyPropertiesFile() {
@@ -127,7 +122,7 @@ public abstract class PreferencesRepository{
                 properties.setProperty("path", directory.getAbsolutePath());
                 properties.store(out, null);
             } catch (IOException e) {
-                e.printStackTrace();
+                //e.printStackTrace();
             }
         }
 
