@@ -1,6 +1,8 @@
 package ch.supsi.pss.misc;
 
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
 
 import java.util.List;
 import java.util.Optional;
@@ -30,6 +32,12 @@ public abstract class Alerter {
 
         alert.setResizable(true);
 
+        ((Stage)alert.getDialogPane()
+                .getScene()
+                .getWindow())
+                .getIcons()
+                .add(new Image(Alerter.class.getResourceAsStream("/icons/logo.png")));
+
         final Optional<ButtonType> result = alert.showAndWait();
         return result.isPresent() && result.get() == ButtonType.YES;
     }
@@ -40,6 +48,13 @@ public abstract class Alerter {
         al.setHeaderText(header);
         al.setContentText(content);
         al.setResizable(true);
+
+        ((Stage)al.getDialogPane()
+                .getScene()
+                .getWindow())
+                .getIcons()
+                .add(new Image(Alerter.class.getResourceAsStream("/icons/logo.png")));
+
         al.showAndWait();
     }
 
@@ -50,6 +65,13 @@ public abstract class Alerter {
         d.setHeaderText(header);
         d.setContentText(text);
         d.setResizable(true);
+
+        ((Stage)d.getDialogPane()
+                .getScene()
+                .getWindow())
+                .getIcons()
+                .add(new Image(Alerter.class.getResourceAsStream("/icons/logo.png")));
+
         Optional<String> res = d.showAndWait();
 
         return res.map(choices::indexOf).orElse(-1);
@@ -61,19 +83,13 @@ public abstract class Alerter {
         al.setHeaderText(LanguageController.getInstance().getString("comingSoon"));
         al.setContentText(LanguageController.getInstance().getString("waitNewV"));
         al.setResizable(true);
+
+        ((Stage)al.getDialogPane()
+                .getScene()
+                .getWindow())
+                .getIcons()
+                .add(new Image(Alerter.class.getResourceAsStream("/icons/logo.png")));
+
         al.showAndWait();
-    }
-
-    public static void popTagDial(String text){
-        TextInputDialog tagDial = new TextInputDialog();
-        tagDial.setTitle(LanguageController.getInstance().getString("tag_dialog_title"));
-        tagDial.setHeaderText(LanguageController.getInstance().getString("tag_dialog_header"));
-        tagDial.setContentText(text);
-        tagDial.setResizable(true);
-
-        tagDial.getEditor().prefWidthProperty().bind(tagDial.widthProperty());
-        tagDial.getEditor().prefHeight(400);
-
-        tagDial.showAndWait();
     }
 }

@@ -5,9 +5,13 @@ import ch.supsi.pss.sketch.SketchCreator;
 import ch.supsi.pss.model.menubar.PssMenuBar;
 import ch.supsi.pss.view.*;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
+import java.util.ResourceBundle;
 
 public class PssFX extends Application {
 
@@ -63,11 +67,15 @@ public class PssFX extends Application {
 
         //----------------- adding to menuBar to the scene --------------------------
         globalVBox.getChildren().addAll(menuBar);
+        stage.getIcons().add(new Image(this.getClass().getResourceAsStream("/icons/logo.png")));
+
+
+        //---------------- view changer setup -----------------------------
         stage.setScene(defaultScene);
         stage.sizeToScene();
         stage.show();
+        stage.toFront();
 
-        //---------------- view changer setup -----------------------------
         ViewManager.getInstance().setRoot(globalVBox);
 
         // display draw view
@@ -75,6 +83,7 @@ public class PssFX extends Application {
 
         // create new sketch
         SketchCreator.newSketch();
+
     }
 
 }
