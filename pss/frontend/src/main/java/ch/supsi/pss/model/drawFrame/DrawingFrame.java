@@ -1,6 +1,7 @@
 package ch.supsi.pss.model.drawFrame;
 
 import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
@@ -63,11 +64,13 @@ public class DrawingFrame extends BorderPane {
         canvasContainer.setPadding(new Insets(10, 10, 10, 10));
 
         toolbar = new DrawToolbar(canvas);
+        toolbar.setOrientation(Orientation.VERTICAL);
+        toolbar.prefWidthProperty().setValue(30);
 
         canvas.setConnectedToolbar(toolbar);
 
         this.setCenter(canvasContainer);
-        this.setRight(toolbar);
+        this.setLeft(toolbar);
     }
 
     public void bindSizeTo(Pane parent){

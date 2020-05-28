@@ -43,6 +43,8 @@ public class DrawToolbarController {
         // Color picker listener
         tb.getColorPicker().setOnAction(e -> {
             tb.getConnectedCanvas().setColor(tb.getColorPicker().getValue());
+            StrokeSliderController.getInstance().getStrokeSlider().setColor(tb.getSelectedColor());
+            StrokeSliderController.getInstance().getStrokeSlider().updateSquareView();
         });
 
         // freeDraw button listener
@@ -71,7 +73,7 @@ public class DrawToolbarController {
         });
 
         // stroke slider listener
-        tb.getStrokeSlider().valueProperty().addListener(e -> {
+        tb.getStrokeSlider().getSlider().valueProperty().addListener(e -> {
             tb.getConnectedCanvas().getGraphicsContext2D().setLineWidth(tb.getStrokeSlider().getValue());
         });
     }

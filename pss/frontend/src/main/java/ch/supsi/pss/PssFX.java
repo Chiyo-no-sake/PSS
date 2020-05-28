@@ -1,17 +1,14 @@
 package ch.supsi.pss;
 
 import ch.supsi.pss.misc.PreferencesRepository;
-import ch.supsi.pss.sketch.SketchCreator;
 import ch.supsi.pss.model.menubar.PssMenuBar;
+import ch.supsi.pss.sketch.SketchCreator;
 import ch.supsi.pss.view.*;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
-import java.util.ResourceBundle;
 
 public class PssFX extends Application {
 
@@ -62,7 +59,6 @@ public class PssFX extends Application {
         drawView = new DrawView();
         drawView.prefHeightProperty().bind(stage.heightProperty());
         drawView.prefWidthProperty().bind(stage.widthProperty());
-
 
 
         //----------------- adding to menuBar to the scene --------------------------
