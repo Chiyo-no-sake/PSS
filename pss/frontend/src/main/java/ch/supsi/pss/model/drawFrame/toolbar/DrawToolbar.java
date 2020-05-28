@@ -1,7 +1,9 @@
-package ch.supsi.pss.model.drawFrame;
+package ch.supsi.pss.model.drawFrame.toolbar;
 
 import ch.supsi.pss.misc.LanguageController;
 import ch.supsi.pss.misc.PreferencesRepository;
+import ch.supsi.pss.model.drawFrame.canvas.DrawCanvas;
+import ch.supsi.pss.model.drawFrame.canvas.DrawCanvasController;
 import javafx.geometry.Insets;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
@@ -34,18 +36,15 @@ public class DrawToolbar extends ToolBar {
     private final ColorPicker colorPicker;
 
     private final DrawToolbarController controller;
-    private final DrawCanvas connectedCanvas;
 
     private final StrokeSlider strokeSlider;
 
     /**
      * @param connectedCanvas the canvas connected to the Toolbar
      */
-    DrawToolbar(DrawCanvas connectedCanvas) {
+    public DrawToolbar(DrawCanvas connectedCanvas) {
         this.btnToolsList = new ArrayList<>();
         this.colorPicker = new ColorPicker();
-
-        this.connectedCanvas = connectedCanvas;
 
         // ----------------- create items and set properties --------------------------
         Label colorLabel = new Label();
@@ -99,7 +98,7 @@ public class DrawToolbar extends ToolBar {
     }
 
     public void updateButtonStatus() {
-        btnToolsList.forEach(b -> b.setDisable(!connectedCanvas.containsPaper()));
+        btnToolsList.forEach(b -> b.setDisable(!DrawCanvasController.getInstance().getDrawCanvas().containsPaper()));
     }
 
 
@@ -107,7 +106,7 @@ public class DrawToolbar extends ToolBar {
         return strokeSlider;
     }
 
-    Color getSelectedColor() {
+    public Color getSelectedColor() {
         return colorPicker.getValue();
     }
 
@@ -115,12 +114,7 @@ public class DrawToolbar extends ToolBar {
         return this.btnToolsList;
     }
 
-    ColorPicker getColorPicker() {
+    public ColorPicker getColorPicker() {
         return colorPicker;
     }
-
-    DrawCanvas getConnectedCanvas() {
-        return connectedCanvas;
-    }
-
 }

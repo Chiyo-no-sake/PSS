@@ -1,8 +1,8 @@
 package ch.supsi.pss.model.menubar;
 
 import ch.supsi.pss.misc.LanguageController;
-import ch.supsi.pss.model.drawFrame.DrawCanvasController;
-import ch.supsi.pss.sketch.SketchView;
+import ch.supsi.pss.model.drawFrame.canvas.DrawCanvasController;
+import ch.supsi.pss.view.SketchView;
 import ch.supsi.pss.view.DrawView;
 import ch.supsi.pss.view.GalleryView;
 import ch.supsi.pss.view.TagView;
@@ -16,7 +16,6 @@ import java.util.HashMap;
 
 
 public class PssMenuBar extends MenuBar {
-    private final MenuBarController controller;
 
     private final HashMap<String, Menu> menus;
 
@@ -74,7 +73,7 @@ public class PssMenuBar extends MenuBar {
             menus.get("Language").getItems().get(1).setDisable(false);
         }
 
-        controller = MenuBarController.getInstance();
+        MenuBarController controller = MenuBarController.getInstance();
         controller.setupController(controlledStage, this);
     }
 

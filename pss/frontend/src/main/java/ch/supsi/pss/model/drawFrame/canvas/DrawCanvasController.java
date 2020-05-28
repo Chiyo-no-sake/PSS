@@ -1,4 +1,4 @@
-package ch.supsi.pss.model.drawFrame;
+package ch.supsi.pss.model.drawFrame.canvas;
 
 import ch.supsi.pss.sketch.SketchController;
 import javafx.event.EventHandler;

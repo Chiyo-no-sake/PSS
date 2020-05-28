@@ -1,4 +1,4 @@
-package ch.supsi.pss.sketch;
+package ch.supsi.pss.view;
 
 import ch.supsi.pss.misc.LanguageController;
 import ch.supsi.pss.model.menubar.MenuBarController;

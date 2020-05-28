@@ -1,8 +1,4 @@
-package ch.supsi.pss.model.drawFrame;
-
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
+package ch.supsi.pss.model.drawFrame.toolbar;
 
 public class StrokeSliderController {
     private StrokeSlider ss;

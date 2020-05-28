@@ -1,7 +1,7 @@
 package ch.supsi.pss.view;
 
 import ch.supsi.pss.misc.LanguageController;
-import ch.supsi.pss.model.drawFrame.DrawCanvasController;
+import ch.supsi.pss.model.drawFrame.canvas.DrawCanvasController;
 import ch.supsi.pss.model.menubar.MenuBarController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

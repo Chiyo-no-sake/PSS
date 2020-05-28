@@ -3,7 +3,7 @@ package ch.supsi.pss.view;
 import ch.supsi.pss.misc.LanguageController;
 import ch.supsi.pss.misc.PreferencesRepository;
 import ch.supsi.pss.model.menubar.MenuBarController;
-import ch.supsi.pss.sketch.SketchPreview;
+import ch.supsi.pss.model.gallery.SketchPreview;
 import ch.supsi.pss.sketch.SketchReader;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;

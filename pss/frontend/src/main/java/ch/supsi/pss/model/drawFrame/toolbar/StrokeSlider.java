@@ -1,8 +1,7 @@
-package ch.supsi.pss.model.drawFrame;
+package ch.supsi.pss.model.drawFrame.toolbar;
 
 import ch.supsi.pss.misc.LanguageController;
 import ch.supsi.pss.misc.PreferencesRepository;
-import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;

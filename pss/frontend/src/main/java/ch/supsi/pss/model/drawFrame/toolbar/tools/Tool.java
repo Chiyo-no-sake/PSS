@@ -1,4 +1,4 @@
-package ch.supsi.pss.model.drawFrame.tools;
+package ch.supsi.pss.model.drawFrame.toolbar.tools;
 
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;

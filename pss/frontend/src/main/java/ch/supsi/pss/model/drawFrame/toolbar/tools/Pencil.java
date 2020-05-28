@@ -1,6 +1,6 @@
-package ch.supsi.pss.model.drawFrame.tools;
+package ch.supsi.pss.model.drawFrame.toolbar.tools;
 
-import ch.supsi.pss.model.drawFrame.DrawCanvasController;
+import ch.supsi.pss.model.drawFrame.canvas.DrawCanvasController;
 import javafx.scene.canvas.Canvas;
 
 public class Pencil extends Tool {

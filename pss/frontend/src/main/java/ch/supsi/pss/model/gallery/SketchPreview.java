@@ -1,5 +1,6 @@
-package ch.supsi.pss.sketch;
+package ch.supsi.pss.model.gallery;
 
+import ch.supsi.pss.view.SketchView;
 import ch.supsi.pss.view.ViewManager;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;

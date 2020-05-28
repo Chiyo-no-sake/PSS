@@ -2,8 +2,8 @@ package ch.supsi.pss.sketch;
 
 import ch.supsi.pss.misc.LanguageController;
 import ch.supsi.pss.misc.PreferencesRepository;
-import ch.supsi.pss.model.drawFrame.DrawCanvasController;
-import ch.supsi.pss.model.drawFrame.DrawToolbarController;
+import ch.supsi.pss.model.drawFrame.canvas.DrawCanvasController;
+import ch.supsi.pss.model.drawFrame.toolbar.DrawToolbarController;
 import ch.supsi.pss.misc.Alerter;
 import ch.supsi.pss.misc.WeekDays;
 import ch.supsi.pss.model.menubar.MenuBarController;

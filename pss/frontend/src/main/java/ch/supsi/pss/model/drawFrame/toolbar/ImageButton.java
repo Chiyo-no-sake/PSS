@@ -1,4 +1,4 @@
-package ch.supsi.pss.model.drawFrame;
+package ch.supsi.pss.model.drawFrame.toolbar;
 
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
@@ -42,7 +42,7 @@ class ImageButton extends Button {
         setSelected(false);
     }
 
-    void setSelected(boolean selected){
+    public void setSelected(boolean selected){
         this.isSelected=selected;
         this.setStyle(isSelected ? selectedStyle : defaultStyle);
     }

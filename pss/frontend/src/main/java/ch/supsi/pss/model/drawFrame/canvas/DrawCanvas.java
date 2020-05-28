@@ -1,27 +1,20 @@
-package ch.supsi.pss.model.drawFrame;
+package ch.supsi.pss.model.drawFrame.canvas;
 
-import ch.supsi.pss.model.drawFrame.tools.Tool;
+import ch.supsi.pss.model.drawFrame.toolbar.tools.Tool;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
-/**
- * - not intended to use outside the package -
- *
- * Provide a canvas intended to work with the class 'DrawToolbar'
- * those two items needs infact to be connected with the method: setConnectedToolbar.
- */
 public class DrawCanvas extends Canvas {
     private boolean containsPaper;
-    private boolean isPortrait;
-    private DrawToolbar connectedToolbar;
+    private final boolean isPortrait;
     private Tool selectedTool;
 
-    private DrawCanvasController controller;
+    private final DrawCanvasController controller;
 
     // Upper canvas will catch all events, in canvasController, don't use event.src()
-    // instad use DrawCanvasController.getDrawCanvas()
-    private Canvas upperCanvas;
+    // instead use DrawCanvasController.getDrawCanvas()
+    private final Canvas upperCanvas;
 
     /**
      * create a canvas containing an empty paper with the following data
@@ -57,7 +50,7 @@ public class DrawCanvas extends Canvas {
     /**
      * Constructor to create a canvas without any paper inside
      */
-    DrawCanvas() {
+    public DrawCanvas() {
         super();
         this.setLayoutX(0);
         this.setLayoutY(0);
@@ -71,22 +64,6 @@ public class DrawCanvas extends Canvas {
         controller.setDrawCanvas(this);
 
         upperCanvas = new Canvas();
-    }
-
-    void changeMode(boolean isPortrait) {
-        double tmp;
-
-        this.isPortrait = !isPortrait;
-
-        this.getGraphicsContext2D().clearRect(0, 0, this.getWidth(), this.getHeight());
-
-        tmp = this.getWidth();
-        this.setWidth(this.getHeight());
-        this.setHeight(tmp);
-        this.setLayoutX(0);
-        this.setLayoutY(0);
-        this.getGraphicsContext2D().setFill(Color.WHITE);
-        this.getGraphicsContext2D().fillRect(0, 0, this.getWidth(), this.getHeight());
     }
 
     public void createPaper(double width, double height){
@@ -104,11 +81,11 @@ public class DrawCanvas extends Canvas {
         this.getGraphicsContext2D().fillRect(0, 0, this.getWidth(), this.getHeight());
     }
 
-    Canvas getUpperCanvas() {
+    public Canvas getUpperCanvas() {
         return upperCanvas;
     }
 
-    void setTool(Tool t) {
+    public void setTool(Tool t) {
         if (this.selectedTool != null) {
             controller.resetMouseHandlers();
         }
@@ -117,11 +94,7 @@ public class DrawCanvas extends Canvas {
         controller.setMouseHandlers(t.getOnMousePressed(), t.getOnMouseDragged(), t.getOnMouseReleased());
     }
 
-    void setConnectedToolbar(DrawToolbar connectedToolbar) {
-        this.connectedToolbar = connectedToolbar;
-    }
-
-    void setColor(Color c) {
+    public void setColor(Paint c) {
         this.getGraphicsContext2D().setStroke(c);
     }
 
@@ -130,9 +103,10 @@ public class DrawCanvas extends Canvas {
     }
 
     public void clearContent() {
+        Paint selectedColor = this.getGraphicsContext2D().getFill();
         this.getGraphicsContext2D().setFill(Color.WHITE);
         this.getGraphicsContext2D().fillRect(0, 0, this.getWidth(), this.getHeight());
-        this.setColor(connectedToolbar.getSelectedColor());
+        this.setColor(selectedColor);
     }
 
     public void renderTempOval(double x, double y, double width, double height, Paint color) {

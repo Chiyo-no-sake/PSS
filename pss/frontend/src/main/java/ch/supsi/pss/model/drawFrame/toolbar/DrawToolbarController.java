@@ -1,8 +1,15 @@
-package ch.supsi.pss.model.drawFrame;
+package ch.supsi.pss.model.drawFrame.toolbar;
 
-import ch.supsi.pss.model.drawFrame.tools.*;
+import ch.supsi.pss.model.drawFrame.canvas.DrawCanvas;
+import ch.supsi.pss.model.drawFrame.canvas.DrawCanvasController;
+import ch.supsi.pss.model.drawFrame.toolbar.tools.*;
 import ch.supsi.pss.misc.Alerter;
+import javafx.beans.InvalidationListener;
+import javafx.beans.value.ChangeListener;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 
 
 public class DrawToolbarController {
@@ -29,6 +36,14 @@ public class DrawToolbarController {
         return this.tb;
     }
 
+    public void setOnColorChange(EventHandler<ActionEvent> eventHandler){
+        tb.getColorPicker().addEventHandler(ActionEvent.ACTION, eventHandler);
+    }
+
+    public void setOnSliderChange(InvalidationListener listener){
+        tb.getStrokeSlider().getSlider().valueProperty().addListener(listener);
+    }
+
     /**
      * setup all listeners in the given drawToolBar
      */
@@ -42,7 +57,6 @@ public class DrawToolbarController {
 
         // Color picker listener
         tb.getColorPicker().setOnAction(e -> {
-            tb.getConnectedCanvas().setColor(tb.getColorPicker().getValue());
             StrokeSliderController.getInstance().getStrokeSlider().setColor(tb.getSelectedColor());
             StrokeSliderController.getInstance().getStrokeSlider().updateSquareView();
         });
@@ -72,11 +86,9 @@ public class DrawToolbarController {
             selectBtnAs(new Eraser(), e);
         });
 
-        // stroke slider listener
-        tb.getStrokeSlider().getSlider().valueProperty().addListener(e -> {
-            tb.getConnectedCanvas().getGraphicsContext2D().setLineWidth(tb.getStrokeSlider().getValue());
-        });
     }
+
+
 
     private void resetButtonStatus() {
         tb.getBtnToolsList().forEach(b -> {
@@ -87,7 +99,7 @@ public class DrawToolbarController {
     private void selectBtnAs(Tool t, Event e) {
         resetButtonStatus();
         ((ImageButton) e.getSource()).setSelected(true);
-        tb.getConnectedCanvas().setTool(t);
+        DrawCanvasController.getInstance().getDrawCanvas().setTool(t);
     }
 }
 

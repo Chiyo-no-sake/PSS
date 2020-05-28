@@ -1,5 +1,10 @@
 package ch.supsi.pss.model.drawFrame;
 
+import ch.supsi.pss.model.drawFrame.canvas.DrawCanvas;
+import ch.supsi.pss.model.drawFrame.canvas.DrawCanvasController;
+import ch.supsi.pss.model.drawFrame.toolbar.DrawToolbar;
+import ch.supsi.pss.model.drawFrame.toolbar.DrawToolbarController;
+import ch.supsi.pss.model.drawFrame.toolbar.StrokeSliderController;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.control.ScrollPane;
@@ -14,37 +19,12 @@ import javafx.scene.layout.Pane;
  */
 public class DrawingFrame extends BorderPane {
 
-    private final ScrollPane canvasContainer;
+    /*  GENERIFY:
+        Here we could generify these 3 objects with 3 interfaces that make you implement the methods that we are
+        using inside this class. Then we would create a new class that handle real objects passed to this
+     */
     private final DrawToolbar toolbar;
     private final DrawCanvas canvas;
-
-    /*
-     * explicit size constructor, instantly add a new non portrait paper to the canvas
-     * @param draw_width explicit width of the draw
-     * @param draw_height explicit height of the draw
-     */
-    public DrawingFrame(double draw_width, double draw_height) {
-        this.setPadding(new Insets(1, 1, 0, 1));
-
-        canvas = new DrawCanvas(draw_width, draw_height);
-        canvas.setStyle("-fx-border-style: solid;" +
-                "-fx-border-color: black;");
-
-        Pane drawZone = new Pane();
-        drawZone.getChildren().add(canvas);
-        drawZone.getChildren().add(canvas.getUpperCanvas());
-
-        canvasContainer = new ScrollPane(drawZone);
-        canvasContainer.setPadding(new Insets(10, 10, 10, 10));
-
-        toolbar = new DrawToolbar(canvas);
-        toolbar.setPrefHeight(draw_height);
-
-        canvas.setConnectedToolbar(toolbar);
-
-        this.setCenter(canvasContainer);
-        this.setRight(toolbar);
-    }
 
     /**
      * create the frame with an empty canvas
@@ -60,14 +40,14 @@ public class DrawingFrame extends BorderPane {
         drawZone.getChildren().add(canvas);
         drawZone.getChildren().add(canvas.getUpperCanvas());
 
-        canvasContainer = new ScrollPane(drawZone);
+        final ScrollPane canvasContainer = new ScrollPane(drawZone);
         canvasContainer.setPadding(new Insets(10, 10, 10, 10));
 
         toolbar = new DrawToolbar(canvas);
         toolbar.setOrientation(Orientation.VERTICAL);
         toolbar.prefWidthProperty().setValue(30);
 
-        canvas.setConnectedToolbar(toolbar);
+        setupToolbarEvents();
 
         this.setCenter(canvasContainer);
         this.setLeft(toolbar);
@@ -76,5 +56,15 @@ public class DrawingFrame extends BorderPane {
     public void bindSizeTo(Pane parent){
         this.prefWidthProperty().bind(parent.widthProperty());
         this.prefHeightProperty().bind(parent.heightProperty());
+    }
+
+    private void setupToolbarEvents(){
+        DrawToolbarController.getInstance().setOnColorChange(e->{
+            canvas.setColor(toolbar.getColorPicker().getValue());
+        });
+
+        DrawToolbarController.getInstance().setOnSliderChange(e -> {
+            canvas.getGraphicsContext2D().setLineWidth(toolbar.getStrokeSlider().getValue());
+        });
     }
 }
