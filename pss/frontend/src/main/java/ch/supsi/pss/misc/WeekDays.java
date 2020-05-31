@@ -8,45 +8,23 @@ public enum WeekDays {
         this.day = day;
     }
 
-
-    @Override
-    public String toString() {
-        switch(day){
-            case 1:
-                return "MON";
-            case 2:
-                return "TUE";
-            case 3:
-                return "WED";
-            case 4:
-                return "THU";
-            case 5:
-                return "FRI";
-            case 6:
-                return "SAT";
-            case 7:
-                return "SUN";
-        }
-
-        return "NONE";
-    }
-
     public static String toString(int day) {
         switch(day){
             case 1:
-                return "MON";
-            case 2:
-                return "TUE";
-            case 3:
-                return "WED";
-            case 4:
-                return "THU";
-            case 5:
-                return "FRI";
-            case 6:
-                return "SAT";
-            case 7:
                 return "SUN";
+            case 2:
+                return "MON";
+            case 3:
+                return "TUE";
+            case 4:
+                return "WED";
+            case 5:
+                return "THU";
+            case 6:
+                return "FRI";
+            case 7:
+                return "SAT";
+
         }
 
         return "NONE";
