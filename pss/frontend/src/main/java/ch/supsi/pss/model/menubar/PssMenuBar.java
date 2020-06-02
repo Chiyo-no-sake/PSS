@@ -77,6 +77,8 @@ public class PssMenuBar extends MenuBar {
         controller.setupController(controlledStage, this);
     }
 
+    // TODO: Liskov Substitution Principle Violation
+    // add interface
     public void updateClickableMenus() {
         if (ViewManager.getInstance().getCurrView() instanceof GalleryView) {
             setMenusForGallery();

@@ -88,8 +88,6 @@ public class DrawToolbarController {
 
     }
 
-
-
     private void resetButtonStatus() {
         tb.getBtnToolsList().forEach(b -> {
             b.setSelected(false);
