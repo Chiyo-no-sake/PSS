@@ -1,10 +1,8 @@
 package ch.supsi.pss.sketch;
 
 import ch.supsi.pss.misc.PreferencesRepository;
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.RenderedImage;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.Collection;
@@ -16,17 +14,17 @@ public class SketchService {
         this.uuid = uuid;
     }
 
-    public boolean saveSketch(final Image sketch, final Collection<String> tags) {
+    public boolean saveSketch(final byte[]sketch, final Collection<String> tags) {
         if (saveDraw(uuid, sketch) && saveMetadata(uuid, tags))
             return true;
 
         return false;
     }
 
-    private boolean saveDraw(final String uuid, final Image sketch) {
+    private boolean saveDraw(final String uuid, final byte[] sketch) {
         File file = new File(PreferencesRepository.getDrawsPath() + File.separator + uuid + ".png");
-        try {
-            ImageIO.write((RenderedImage) sketch, "png", file);
+        try (FileOutputStream stream = new FileOutputStream(file)){
+            stream.write(sketch);
             return true;
 
         } catch (Exception e) {

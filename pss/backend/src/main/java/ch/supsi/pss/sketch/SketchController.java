@@ -1,5 +1,4 @@
 package ch.supsi.pss.sketch;
-import java.awt.*;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -8,16 +7,21 @@ public class SketchController {
     private SketchService sketchService;
 
     private final String uuid;
-    private final Image sketch;
+    private byte[] sketch;
     private final Set<String> tags;
 
     private boolean bAlreadySaved;
 
-    public Image getSketch() {
+    public void setSketch(byte[] sketch) {
+        this.sketch = sketch;
+    }
+
+    public byte[] getSketch() {
         return sketch;
     }
 
-    public SketchController(final Image sketch) {
+
+    public SketchController(final byte[] sketch) {
         uuid = UUID.randomUUID().toString();
         sketchService = new SketchService(uuid);
         this.sketch = sketch;
@@ -28,7 +32,7 @@ public class SketchController {
     }
 
     // to initialize some start tags
-    public SketchController(final Image sketch, Collection<String> tags) {
+    public SketchController(final byte[] sketch, Collection<String> tags) {
         uuid = UUID.randomUUID().toString();
         sketchService = new SketchService(uuid);
         this.sketch = sketch;

@@ -51,7 +51,7 @@ public class SketchCreator {
             DrawCanvasController.getInstance().getDrawCanvas().createPaper(width, height);
 
             // create a new sketch controller aka new UUID and empty tag list
-            DrawCanvasController.getInstance().setSketchController(new SketchController(DrawCanvasController.getInstance().getCanvasSnapshot(), tags));
+            DrawCanvasController.getInstance().setSketchController(new SketchController(null, tags));
 
         }else{
             // Closed dialog without a choice

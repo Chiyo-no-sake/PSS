@@ -6,7 +6,11 @@ import javafx.event.EventHandler;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 /**
  * singleton class for canvas controller
@@ -40,6 +44,7 @@ public class DrawCanvasController {
     }
 
     public SketchController getSketchController(){
+        sketchController.setSketch(getCanvasSnapshot());
         return sketchController;
     }
 
@@ -51,13 +56,21 @@ public class DrawCanvasController {
         return dc;
     }
 
-    public Image getCanvasSnapshot(){
+    private byte[] getCanvasSnapshot(){
         WritableImage writableImage = new WritableImage(
                 (int)dc.getWidth(),
                 (int)dc.getHeight());
         dc.snapshot(null, writableImage);
 
-        return SwingFXUtils.fromFXImage(writableImage, null);
+        BufferedImage buff = SwingFXUtils.fromFXImage(writableImage, null);
+
+        try(ByteArrayOutputStream baos = new ByteArrayOutputStream()){
+            ImageIO.write(buff, "png", baos);
+            return baos.toByteArray();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     void setMouseHandlers(EventHandler<MouseEvent> onDown, EventHandler<MouseEvent> onDrag, EventHandler<MouseEvent> onUp){
@@ -84,6 +97,4 @@ public class DrawCanvasController {
         activeEventOnDrag = null;
         activeEventOnDown = null;
     }
-
-
 }
