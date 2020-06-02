@@ -116,8 +116,8 @@ public class MenuBarController {
         menus.get("Help").getItems().get(0).setOnAction(e -> {
             Alerter.popInformationAlert(
                     languageController.getString("about_tab"),
-                    PreferencesRepository.getAllProperties(false).getProperty("application_title"),
-                    PreferencesRepository.getAllProperties(false).getProperty("authors") + " - v" + PreferencesRepository.getAllProperties(true).getProperty("current_version"));
+                    PreferencesRepository.getAllProperties(false).getProperty("application_title")+ " - v" + PreferencesRepository.getAllProperties(true).getProperty("current_version"),
+                    PreferencesRepository.getAllProperties(false).getProperty("authors") );
         });
 
 

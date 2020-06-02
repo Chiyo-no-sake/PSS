@@ -18,7 +18,11 @@
             <artifactId>javafx-controls</artifactId>
             <version>11</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-swing</artifactId>
+            <version>15-ea+4</version>
+        </dependency>
         <dependency>
             <groupId>ch.supsi.pss</groupId>
             <artifactId>pss-project-backend</artifactId>
