@@ -1,8 +1,13 @@
 package ch.supsi.pss.model.drawFrame.canvas;
 
 import ch.supsi.pss.sketch.SketchController;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.EventHandler;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
+
+import java.awt.*;
+import java.awt.image.RenderedImage;
 
 /**
  * singleton class for canvas controller
@@ -47,6 +52,15 @@ public class DrawCanvasController {
         return dc;
     }
 
+    public Image getCanvasSnapshot(){
+        WritableImage writableImage = new WritableImage(
+                (int)dc.getWidth(),
+                (int)dc.getHeight());
+        dc.snapshot(null, writableImage);
+
+        return SwingFXUtils.fromFXImage(writableImage, null);
+    }
+
     void setMouseHandlers(EventHandler<MouseEvent> onDown, EventHandler<MouseEvent> onDrag, EventHandler<MouseEvent> onUp){
         activeEventOnDown = onDown;
         activeEventOnDrag = onDrag;
@@ -71,4 +85,6 @@ public class DrawCanvasController {
         activeEventOnDrag = null;
         activeEventOnDown = null;
     }
+
+
 }

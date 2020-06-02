@@ -35,9 +35,6 @@ public class SketchCreator {
                     getString(WeekDays.
                             toString(Calendar.getInstance().get(Calendar.DAY_OF_WEEK))));
 
-            // create a new sketch controller aka new UUID and empty tag list
-            DrawCanvasController.getInstance().setSketchController(new SketchController(DrawCanvasController.getInstance().getDrawCanvas(), tags));
-
             if (DrawCanvasController.getInstance().getDrawCanvas().containsPaper())
                 if (!Alerter.popConfirmDialog(LanguageController.getInstance().getString("r_u_sure"),
                         LanguageController.getInstance().getString("erase"),
@@ -52,6 +49,10 @@ public class SketchCreator {
                     : PreferencesRepository.getAllProperties(true).getProperty("horizontal_draw_height"));
 
             DrawCanvasController.getInstance().getDrawCanvas().createPaper(width, height);
+            
+            // create a new sketch controller aka new UUID and empty tag list
+            DrawCanvasController.getInstance().setSketchController(new SketchController(DrawCanvasController.getInstance().getCanvasSnapshot(), tags));
+
         }else{
             // Closed dialog without a choice
             Alerter.popInformationAlert(LanguageController.getInstance().getString("new_draw_header"),
