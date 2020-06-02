@@ -89,7 +89,7 @@ public class MenuBarController {
         // 'Edit->Preferences->Language->Italiano' listener
         menus.get("Language").getItems().get(0).setOnAction(e -> {
             if (Alerter.popConfirmDialog(languageController.getString("restart"), languageController.getString("restart_mes"), languageController.getString("r_u_sure"))) {
-                PreferencesRepository.changeFiel("current_language", Locale.ITALIAN.getLanguage());
+                PreferencesRepository.changeField("current_language", Locale.ITALIAN.getLanguage());
                 controlledStage.close();
             }
         });
@@ -97,7 +97,7 @@ public class MenuBarController {
         // 'Edit->Preferences->Language->English' listener
         menus.get("Language").getItems().get(1).setOnAction(e -> {
             if (Alerter.popConfirmDialog(languageController.getString("restart"), languageController.getString("restart_mes"), languageController.getString("r_u_sure"))) {
-                PreferencesRepository.changeFiel("current_language", Locale.ENGLISH.getLanguage());
+                PreferencesRepository.changeField("current_language", Locale.ENGLISH.getLanguage());
                 controlledStage.close();
             }
         });

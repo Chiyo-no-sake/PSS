@@ -10,10 +10,12 @@ import java.util.Properties;
 
 public abstract class PreferencesRepository{
 
+    private static final String USER_HOME = System.getProperty("user.home");
     private static final String CONFIG_PROPERTIES =
-            System.getProperty("user.home")
+            USER_HOME
                     + File.separator + ".pss"
                     + File.separator + "config.properties"  ;
+
 
     private static String drawsPath, metadataPath;
     private static Properties properties = null;
@@ -75,7 +77,7 @@ public abstract class PreferencesRepository{
         }
     }
 
-    public static void changeFiel(final String field, final String str){
+    public static void changeField(final String field, final String str){
         try (FileOutputStream out = new FileOutputStream(CONFIG_PROPERTIES)){
             properties.setProperty(field, str);
             properties.store(out,null);
@@ -93,6 +95,7 @@ public abstract class PreferencesRepository{
 
         DirectoryChooser directoryChooser = new DirectoryChooser();
         Path path = Paths.get(properties.getProperty("path"));
+
         directoryChooser.setInitialDirectory(new File(path.getParent().toString()));
         File directory = directoryChooser.showDialog(stage);
 
@@ -109,12 +112,14 @@ public abstract class PreferencesRepository{
         new File( metadataPath ).mkdir();
     }
 
+
     public static void setDirectory(final Stage stage) {
 
         setProperties(false);
 
         if(!properties.containsKey("path") || !(new File(properties.getProperty("path")).exists())){
             DirectoryChooser directoryChooser = new DirectoryChooser();
+
             directoryChooser.setInitialDirectory(new File(System.getProperty("user.home")));
             File directory = directoryChooser.showDialog(stage);
 

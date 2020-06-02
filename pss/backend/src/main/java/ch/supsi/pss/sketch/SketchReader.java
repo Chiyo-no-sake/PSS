@@ -1,19 +1,19 @@
 package ch.supsi.pss.sketch;
 
 import ch.supsi.pss.misc.PreferencesRepository;
-import javafx.scene.image.Image;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
 public class SketchReader {
-    private static final Map<Image, Set<String>> sketches = new HashMap<>();
+    private static final Map<byte[], Set<String>> sketches = new HashMap<>();
     private static SketchReader instance;
 
     public SketchReader() {}
@@ -35,15 +35,21 @@ public class SketchReader {
             for (File file : listOfFiles) {
                 if (file.isFile()) {
                     String path = file.toString();
-                    Image image = new Image("file:" + path);
                     String uuid = path.replace( PreferencesRepository.getDrawsPath(), "").replace(".png", "");
 
-                    Set<String> tags = getTags(uuid);
+                    try{
+                        byte[] bytes = Files.readAllBytes(Paths.get(path));
 
-                    if(!tags.isEmpty()) {
-                        sketches.put(image, tags);
-                    }else{
-                        System.out.println("Can't find metadata for draw: " + uuid);
+                        Set<String> tags = getTags(uuid);
+
+                        if(!tags.isEmpty()) {
+                            sketches.put(bytes, tags);
+                        }else{
+                            System.out.println("Can't find metadata for draw: " + uuid);
+                        }
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
                 }
             }
@@ -72,36 +78,7 @@ public class SketchReader {
         return tags;
     }
 
-    public Set<Image> searchByTag(String tag){
-
-        Set<Image> imageSet = new HashSet<>();
-        for (Image image : sketches.keySet())
-            if (sketches.get(image).contains(tag))
-                imageSet.add(image);
-
-        return imageSet;
-    }
-
-    public Set<Image> searchByTags(Set<String> tags){
-
-        Set<Image> imageSet = new HashSet<>();
-        for (Image image : sketches.keySet())
-            for (String tag : tags)
-                if(sketches.get(image).contains(tag))
-                    imageSet.add(image);
-
-        return imageSet;
-    }
-
-    public Set<Image> getImages(){
-        return sketches.keySet();
-    }
-
-    public Set<String> getTags(Image image){
-        return sketches.get(image);
-    }
-
-    public Map<Image, Set<String>> getSketches() {
+    public Map<byte[], Set<String>> getSketches() {
         return sketches;
     }
 }

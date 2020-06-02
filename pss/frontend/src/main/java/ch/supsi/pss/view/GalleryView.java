@@ -14,6 +14,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.FlowPane;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.*;
 
 
@@ -80,7 +83,17 @@ public class GalleryView extends View {
     }
 
     private ArrayList<SketchPreview> takeAllSketches() {
-        Map<Image, Set<String>> sketches = SketchReader.getInstance().getSketches();
+        Map<byte[], Set<String>> tmp = SketchReader.getInstance().getSketches();
+
+        Map<Image, Set<String>> sketches = new HashMap<>();
+        tmp.keySet().forEach((bytes -> {
+            try(InputStream in = new ByteArrayInputStream(bytes);) {
+                sketches.put(new Image(in), tmp.get(bytes));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }));
+
 
         ArrayList<SketchPreview> sketchPreviews = new ArrayList<>();
 
