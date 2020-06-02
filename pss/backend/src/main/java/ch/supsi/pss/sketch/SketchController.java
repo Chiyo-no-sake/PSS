@@ -1,4 +1,5 @@
 package ch.supsi.pss.sketch;
+
 import java.time.LocalDate;
 import java.util.*;
 
@@ -20,14 +21,12 @@ public class SketchController {
         return sketch;
     }
 
-
     public SketchController(final byte[] sketch) {
         uuid = UUID.randomUUID().toString();
         sketchService = new SketchService(uuid);
         this.sketch = sketch;
 
         tags = new TreeSet<>();
-
         bAlreadySaved = false;
     }
 

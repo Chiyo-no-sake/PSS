@@ -12,8 +12,12 @@ import javafx.scene.control.Menu;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 
+import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Locale;
 
@@ -83,13 +87,19 @@ public class MenuBarController {
 
         // 'Edit->Preferences->Folder' listener
         menus.get("Preferences").getItems().get(1).setOnAction(e -> {
-            PreferencesRepository.updateDirectory(controlledStage);
+            if(PreferencesRepository.propertiesExistsOrNotContainsKey())
+                setDirectory();
+            else{
+                Path path = Paths.get(PreferencesRepository.getProperties().getProperty("path"));
+                File tmp = directoryChooser(path.getParent().toString());
+                PreferencesRepository.updateDirectory(tmp);
+            }
         });
 
         // 'Edit->Preferences->Language->Italiano' listener
         menus.get("Language").getItems().get(0).setOnAction(e -> {
             if (Alerter.popConfirmDialog(languageController.getString("restart"), languageController.getString("restart_mes"), languageController.getString("r_u_sure"))) {
-                PreferencesRepository.changeFiel("current_language", Locale.ITALIAN.getLanguage());
+                PreferencesRepository.changeField("current_language", Locale.ITALIAN.getLanguage());
                 controlledStage.close();
             }
         });
@@ -97,7 +107,7 @@ public class MenuBarController {
         // 'Edit->Preferences->Language->English' listener
         menus.get("Language").getItems().get(1).setOnAction(e -> {
             if (Alerter.popConfirmDialog(languageController.getString("restart"), languageController.getString("restart_mes"), languageController.getString("r_u_sure"))) {
-                PreferencesRepository.changeFiel("current_language", Locale.ENGLISH.getLanguage());
+                PreferencesRepository.changeField("current_language", Locale.ENGLISH.getLanguage());
                 controlledStage.close();
             }
         });
@@ -120,8 +130,8 @@ public class MenuBarController {
 
         // 'File->save' listener
         menus.get("File").getItems().get(1).setOnAction(e -> {
-            PreferencesRepository.setDirectory(controlledStage);
 
+            setDirectory();
             SketchController sketchController = DrawCanvasController.getInstance().getSketchController();
 
             boolean already_saved = sketchController.isAlreadySaved();
@@ -150,5 +160,20 @@ public class MenuBarController {
 
     public Stage getStage(){
         return stage;
+    }
+
+    private void setDirectory(){
+        PreferencesRepository.setProperties(false);
+        if(PreferencesRepository.containsPathOrFolderNotExists())
+            PreferencesRepository.setDirectory(directoryChooser(PreferencesRepository.getUserHome()));
+        PreferencesRepository.setOrCreateFolders();
+    }
+
+    public File directoryChooser(final String path ){
+        DirectoryChooser dir = new DirectoryChooser();
+        if(path != null)
+            dir.setInitialDirectory(new File(path));
+
+        return dir.showDialog(stage);
     }
 }

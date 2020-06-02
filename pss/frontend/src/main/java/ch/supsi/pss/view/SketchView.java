@@ -2,9 +2,6 @@ package ch.supsi.pss.view;
 
 import ch.supsi.pss.misc.LanguageController;
 import ch.supsi.pss.model.menubar.MenuBarController;
-import ch.supsi.pss.view.GalleryViewController;
-import ch.supsi.pss.view.View;
-import ch.supsi.pss.view.ViewManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
