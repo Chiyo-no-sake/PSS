@@ -7,7 +7,6 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 
 import java.awt.*;
-import java.awt.image.RenderedImage;
 
 /**
  * singleton class for canvas controller

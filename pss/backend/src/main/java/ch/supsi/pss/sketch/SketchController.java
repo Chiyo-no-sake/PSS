@@ -1,8 +1,4 @@
 package ch.supsi.pss.sketch;
-
-
-import javafx.scene.canvas.Canvas;
-
 import java.awt.*;
 import java.time.LocalDate;
 import java.util.*;

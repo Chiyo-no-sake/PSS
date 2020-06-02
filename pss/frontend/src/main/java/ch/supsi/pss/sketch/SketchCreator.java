@@ -49,7 +49,7 @@ public class SketchCreator {
                     : PreferencesRepository.getAllProperties(true).getProperty("horizontal_draw_height"));
 
             DrawCanvasController.getInstance().getDrawCanvas().createPaper(width, height);
-            
+
             // create a new sketch controller aka new UUID and empty tag list
             DrawCanvasController.getInstance().setSketchController(new SketchController(DrawCanvasController.getInstance().getCanvasSnapshot(), tags));
 

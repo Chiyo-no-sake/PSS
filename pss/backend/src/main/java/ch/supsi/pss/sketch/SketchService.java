@@ -27,7 +27,6 @@ public class SketchService {
         File file = new File(PreferencesRepository.getDrawsPath() + File.separator + uuid + ".png");
         try {
             ImageIO.write((RenderedImage) sketch, "png", file);
-
             return true;
 
         } catch (Exception e) {
