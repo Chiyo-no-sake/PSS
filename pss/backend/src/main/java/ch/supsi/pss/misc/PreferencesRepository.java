@@ -1,7 +1,5 @@
 package ch.supsi.pss.misc;
 
-import javafx.stage.DirectoryChooser;
-import javafx.stage.Stage;
 import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -11,16 +9,31 @@ import java.util.Properties;
 public abstract class PreferencesRepository{
 
     private static final String USER_HOME = System.getProperty("user.home");
+    private static String drawsPath = null, metadataPath = null;
+    private static Properties properties = new Properties();
+
+    static {
+        try {
+            properties.load(PreferencesRepository.class.getClassLoader().getResourceAsStream("config.properties"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     private static final String CONFIG_PROPERTIES =
             USER_HOME
-                    + File.separator + ".pss"
+                    + File.separator + ".pss" + properties.getProperty("current_version")
                     + File.separator + "config.properties"  ;
 
+    public static String getUserHome() {
+        return USER_HOME;
+    }
 
-    private static String drawsPath, metadataPath;
-    private static Properties properties = null;
+    public static Properties getProperties() {
+        return properties;
+    }
 
-    private static void setProperties(final boolean flag){
+    public static void setProperties(final boolean flag){
         properties = getAllProperties(flag);
     }
 
@@ -86,18 +99,19 @@ public abstract class PreferencesRepository{
         }
     }
 
-    public static void updateDirectory(final Stage stage){
+    public static void setOrCreateFolders(){
+        setPaths();
 
-        if(properties == null || !properties.containsKey("path")){
-            setDirectory(stage);
-            return;
-        }
+        new File( drawsPath).mkdir();
+        new File( metadataPath ).mkdir();
+    }
 
-        DirectoryChooser directoryChooser = new DirectoryChooser();
-        Path path = Paths.get(properties.getProperty("path"));
+    public static boolean propertiesExistsOrNotContainsKey(){
+        return (properties == null || !properties.containsKey("path"));
+    }
 
-        directoryChooser.setInitialDirectory(new File(path.getParent().toString()));
-        File directory = directoryChooser.showDialog(stage);
+
+    public static void updateDirectory(final File directory){
 
         try (FileOutputStream out = new FileOutputStream(CONFIG_PROPERTIES)){
             properties.setProperty("path", directory.getAbsolutePath());
@@ -105,36 +119,20 @@ public abstract class PreferencesRepository{
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        setPaths();
-
-        new File( drawsPath).mkdir();
-        new File( metadataPath ).mkdir();
+        setOrCreateFolders();
     }
 
+    public static boolean containsPathOrFolderNotExists(){
+        return (!properties.containsKey("path") || !(new File(properties.getProperty("path")).exists()));
+    }
 
-    public static void setDirectory(final Stage stage) {
-
-        setProperties(false);
-
-        if(!properties.containsKey("path") || !(new File(properties.getProperty("path")).exists())){
-            DirectoryChooser directoryChooser = new DirectoryChooser();
-
-            directoryChooser.setInitialDirectory(new File(System.getProperty("user.home")));
-            File directory = directoryChooser.showDialog(stage);
-
-            try(FileOutputStream out = new FileOutputStream(CONFIG_PROPERTIES);){
-                properties.setProperty("path", directory.getAbsolutePath());
-                properties.store(out, null);
-            } catch (IOException e) {
-                //e.printStackTrace();
-            }
+    public static void setDirectory(final File directory) {
+        try(FileOutputStream out = new FileOutputStream(CONFIG_PROPERTIES);){
+            properties.setProperty("path", directory.getAbsolutePath());
+            properties.store(out, null);
+        } catch (IOException e) {
+            //e.printStackTrace();
         }
-
-        setPaths();
-
-        new File( drawsPath).mkdir();
-        new File( metadataPath ).mkdir();
     }
 
     public static String getDrawsPath() {
