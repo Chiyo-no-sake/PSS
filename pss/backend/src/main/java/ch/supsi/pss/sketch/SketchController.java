@@ -1,9 +1,4 @@
 package ch.supsi.pss.sketch;
-
-
-import javafx.scene.canvas.Canvas;
-
-import javax.xml.crypto.Data;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -12,16 +7,21 @@ public class SketchController {
     private SketchService sketchService;
 
     private final String uuid;
-    private final Canvas sketch;
+    private byte[] sketch;
     private final Set<String> tags;
 
     private boolean bAlreadySaved;
 
-    public Canvas getSketch() {
+    public void setSketch(byte[] sketch) {
+        this.sketch = sketch;
+    }
+
+    public byte[] getSketch() {
         return sketch;
     }
 
-    public SketchController(final Canvas sketch) {
+
+    public SketchController(final byte[] sketch) {
         uuid = UUID.randomUUID().toString();
         sketchService = new SketchService(uuid);
         this.sketch = sketch;
@@ -32,7 +32,7 @@ public class SketchController {
     }
 
     // to initialize some start tags
-    public SketchController(final Canvas sketch, Collection<String> tags) {
+    public SketchController(final byte[] sketch, Collection<String> tags) {
         uuid = UUID.randomUUID().toString();
         sketchService = new SketchService(uuid);
         this.sketch = sketch;
