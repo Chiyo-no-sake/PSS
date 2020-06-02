@@ -103,10 +103,10 @@ public class DrawCanvas extends Canvas {
     }
 
     public void clearContent() {
-        Paint selectedColor = this.getGraphicsContext2D().getFill();
+        Paint selectedFillColor = this.getGraphicsContext2D().getFill();
         this.getGraphicsContext2D().setFill(Color.WHITE);
         this.getGraphicsContext2D().fillRect(0, 0, this.getWidth(), this.getHeight());
-        this.setColor(selectedColor);
+        this.getGraphicsContext2D().setFill(selectedFillColor);
     }
 
     public void renderTempOval(double x, double y, double width, double height, Paint color) {
