@@ -134,13 +134,13 @@ public class MenuBarController {
             setDirectory();
             SketchController sketchController = DrawCanvasController.getInstance().getSketchController();
 
-            boolean already_saved = sketchController.isAlreadySaved();
+            boolean already_saved = SketchController.isAlreadySaved();
             if (sketchController.saveSketch()) {
                 if (!already_saved)
                     Alerter.popInformationAlert(languageController.getString("saved_title"), null, languageController.getString("saved"));
                 else
                     Alerter.popInformationAlert(languageController.getString("updated_title"), null, languageController.getString("updated"));
-                sketchController.setAlreadySaved(true);
+                SketchController.setAlreadySaved(true);
             }else{
                 System.out.println("Error saving the draw. See stack trace");
                 Alert al = new Alert(Alert.AlertType.ERROR);
@@ -156,6 +156,15 @@ public class MenuBarController {
         });
         menus.get("File").getItems().get(1).setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN));
 
+        menus.get("File").getItems().get(2).setOnAction( e ->{
+            if(!SketchController.isAlreadySaved())
+                if (!Alerter.popConfirmDialog(LanguageController.getInstance().getString("r_u_sure"),
+                        LanguageController.getInstance().getString("erase"),
+                        LanguageController.getInstance().getString("ok_with"))) {
+                    return;
+                }
+            controlledStage.close();
+        });
     }
 
     public Stage getStage(){

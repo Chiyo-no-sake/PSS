@@ -11,7 +11,7 @@ public class SketchController {
     private byte[] sketch;
     private final Set<String> tags;
 
-    private boolean bAlreadySaved;
+    private static boolean bAlreadySaved;
 
     public void setSketch(byte[] sketch) {
         this.sketch = sketch;
@@ -68,12 +68,12 @@ public class SketchController {
         return tags;
     }
 
-    public boolean isAlreadySaved() {
+    public static boolean isAlreadySaved() {
         return bAlreadySaved;
     }
 
-    public void setAlreadySaved(boolean bAlreadySaved) {
-        this.bAlreadySaved = bAlreadySaved;
+    public static void setAlreadySaved(boolean bAlreadySaved) {
+        SketchController.bAlreadySaved = bAlreadySaved;
     }
 
     public String getTagsAsString(){
