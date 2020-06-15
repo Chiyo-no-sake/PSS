@@ -18,6 +18,8 @@ import java.util.Set;
 
 public class SketchView extends View {
 
+    private Button back;
+
     public SketchView(Image image, Set<String> tags) {
 
         this.setAlignment(Pos.TOP_CENTER);
@@ -35,10 +37,7 @@ public class SketchView extends View {
         ListView<String> listView = new ListView<>(observableList);
         listView.setEditable(false);
 
-        Button back = new Button(LanguageController.getInstance().getString("back"));
-        back.setOnAction(e ->{
-            ViewManager.getInstance().toView(GalleryViewController.getInstance().getGalleryView());
-        });
+        back = new Button(LanguageController.getInstance().getString("back"));
 
         Insets insets = new Insets(10);
 
@@ -59,6 +58,12 @@ public class SketchView extends View {
         });
 
         this.getChildren().add(borderPane);
+
+        SketchViewController.getInstance().setSketchView(this);
+    }
+
+    public Button getBackBtn() {
+        return back;
     }
 
     @Override

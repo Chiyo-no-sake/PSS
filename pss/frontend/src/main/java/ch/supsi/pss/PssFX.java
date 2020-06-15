@@ -55,6 +55,11 @@ public class PssFX extends Application {
         tagView.prefHeightProperty().bind(stage.heightProperty());
         tagView.prefWidthProperty().bind(stage.widthProperty());
 
+        TagViewController.getInstance().setOnBack(e -> {
+            ViewManager.getInstance().toView(DrawViewController.getInstance().getDrawView());
+        });
+
+
         // Draw window settings
         drawView = new DrawView();
         drawView.prefHeightProperty().bind(stage.heightProperty());

@@ -1,6 +1,8 @@
 package ch.supsi.pss.model.gallery;
 
+import ch.supsi.pss.view.GalleryViewController;
 import ch.supsi.pss.view.SketchView;
+import ch.supsi.pss.view.SketchViewController;
 import ch.supsi.pss.view.ViewManager;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
@@ -34,6 +36,9 @@ public class SketchPreview extends BorderPane implements Comparable<SketchPrevie
 
         this.setOnMouseClicked( e -> {
             ViewManager.getInstance().toView(new SketchView(img, tags));
+            SketchViewController.getInstance().setOnBack(ev ->{
+                ViewManager.getInstance().toView(GalleryViewController.getInstance().getGalleryView());
+            });
         });
     }
 

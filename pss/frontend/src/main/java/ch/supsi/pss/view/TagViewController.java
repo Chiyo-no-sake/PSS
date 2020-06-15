@@ -1,6 +1,8 @@
 package ch.supsi.pss.view;
 
 import ch.supsi.pss.model.menubar.MenuBarController;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
 
 public class TagViewController {
@@ -9,8 +11,6 @@ public class TagViewController {
 
     private TagViewController() {
     }
-
-    ;
 
     public static TagViewController getInstance() {
         if (instance == null)
@@ -29,10 +29,10 @@ public class TagViewController {
                 tagView.submitTag();
         });
 
-        tagView.getDoneBtn().setOnAction(e -> {
-            ViewManager.getInstance().toView(DrawViewController.getInstance().getDrawView());
-            MenuBarController.getInstance().getMenuBar().updateClickableMenus();
-        });
+    }
+
+    public void setOnBack(EventHandler<ActionEvent> handler){
+        tagView.getDoneBtn().setOnAction(handler);
     }
 
     public void setTagView(TagView tagView) {
