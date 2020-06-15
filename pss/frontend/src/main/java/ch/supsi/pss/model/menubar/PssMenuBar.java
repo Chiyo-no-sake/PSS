@@ -27,7 +27,7 @@ public class PssMenuBar extends MenuBar {
         Menu fileMenu = new Menu("File");
         fileMenu.getItems().add(new MenuItem(languageController.getString("newTab")));
         fileMenu.getItems().add(new MenuItem(languageController.getString("save")));
-        //fileMenu.getItems().add(new MenuItem("save as"));
+        fileMenu.getItems().add(new MenuItem(languageController.getString("exit")));
 
         Menu editMenu = new Menu(languageController.getString("edit"));
         editMenu.getItems().add(new MenuItem(languageController.getString("clear")));
@@ -87,7 +87,7 @@ public class PssMenuBar extends MenuBar {
         } else if (ViewManager.getInstance().getCurrView() instanceof TagView){
             setMenusForTags();
         } else if (ViewManager.getInstance().getCurrView() instanceof SketchView){
-            setMenusForTags();
+            setMenusForSkechView();
         }
     }
 
@@ -108,6 +108,8 @@ public class PssMenuBar extends MenuBar {
 
     private void setMenusForGallery() {
         menus.get("File").getItems().forEach(i -> i.setDisable(true));
+        menus.get("File").getItems().get(2).setDisable(false);
+        menus.get("Edit").getItems().get(2).setDisable(false);
         menus.get("Edit").getItems().get(0).setDisable(true);
         menus.get("Edit").getItems().get(1).setDisable(true);
         menus.get("View").getItems().get(0).setDisable(true);
@@ -116,6 +118,7 @@ public class PssMenuBar extends MenuBar {
 
     private void setMenusForSkechView() {
         menus.get("File").getItems().forEach(i -> i.setDisable(true));
+        menus.get("File").getItems().get(2).setDisable(false);
         menus.get("Edit").getItems().get(0).setDisable(true);
         menus.get("Edit").getItems().get(1).setDisable(true);
         menus.get("View").getItems().get(0).setDisable(true);
@@ -123,6 +126,7 @@ public class PssMenuBar extends MenuBar {
     }
 
     private void setMenusForTags() {
+        menus.get("File").getItems().get(2).setDisable(false);
         menus.get("Edit").getItems().get(0).setDisable(true);
         menus.get("Edit").getItems().get(1).setDisable(true);
         menus.get("Edit").getItems().get(2).setDisable(false);
