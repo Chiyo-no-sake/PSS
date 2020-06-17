@@ -4,7 +4,7 @@ import ch.supsi.pss.misc.LanguageController;
 import ch.supsi.pss.misc.PreferencesRepository;
 import ch.supsi.pss.model.menubar.MenuBarController;
 import ch.supsi.pss.model.gallery.SketchPreview;
-import ch.supsi.pss.sketch.SketchReader;
+import ch.supsi.pss.sketch.SketchController;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
@@ -83,7 +83,7 @@ public class GalleryView extends View {
     }
 
     private ArrayList<SketchPreview> takeAllSketches() {
-        Map<byte[], Set<String>> tmp = SketchReader.getInstance().getSketches();
+        Map<byte[], Set<String>> tmp = SketchController.getAllSketches();//SketchReader.getInstance().getSketches();
 
         Map<Image, Set<String>> sketches = new HashMap<>();
         tmp.keySet().forEach((bytes -> {
@@ -145,7 +145,8 @@ public class GalleryView extends View {
     @Override
     public void onShow() {
         searchBar.clear();
-        SketchReader.getInstance().refreshSketches();
+        //SketchReader.getInstance().refreshSketches();
+        SketchController.refresh();
         this.updateGalleryContent();
         MenuBarController.getInstance().getMenuBar().updateClickableMenus();
     }

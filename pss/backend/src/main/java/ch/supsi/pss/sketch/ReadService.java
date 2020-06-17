@@ -1,6 +1,7 @@
 package ch.supsi.pss.sketch;
 
 import ch.supsi.pss.misc.PreferencesRepository;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -12,19 +13,10 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class SketchReader {
+public class ReadService {
     private static final Map<byte[], Set<String>> sketches = new HashMap<>();
-    private static SketchReader instance;
 
-    public SketchReader() {}
-
-    public static SketchReader getInstance(){
-        if(instance == null)
-            instance = new SketchReader();
-        return instance;
-    }
-
-    public void refreshSketches(){
+    public static void refreshSketches(){
         sketches.clear();
 
         File drawsFolder = new File(PreferencesRepository.getDrawsPath());
@@ -44,9 +36,8 @@ public class SketchReader {
 
                         if(!tags.isEmpty()) {
                             sketches.put(bytes, tags);
-                        }else{
+                        }else
                             System.out.println("Can't find metadata for draw: " + uuid);
-                        }
 
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -55,7 +46,7 @@ public class SketchReader {
             }
     }
 
-    private Set<String> getTags(String uuid){
+    private static Set<String> getTags(String uuid){
         File metaFolder = new File(PreferencesRepository.getMetadataPath());
         File[] listOfFiles = metaFolder.listFiles();
 
@@ -78,7 +69,7 @@ public class SketchReader {
         return tags;
     }
 
-    public Map<byte[], Set<String>> getSketches() {
+    public static Map<byte[], Set<String>> getSketches() {
         return sketches;
     }
 }

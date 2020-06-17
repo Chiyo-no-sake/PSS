@@ -1,6 +1,7 @@
 package ch.supsi.pss.model.menubar;
 
 import ch.supsi.pss.misc.LanguageController;
+import ch.supsi.pss.misc.PomInformations;
 import ch.supsi.pss.misc.PreferencesRepository;
 import ch.supsi.pss.sketch.SketchController;
 import ch.supsi.pss.model.drawFrame.canvas.DrawCanvasController;
@@ -14,12 +15,15 @@ import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
+import org.apache.maven.model.Developer;
+
 
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.Locale;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class MenuBarController {
     private PssMenuBar menuBar;
@@ -114,10 +118,20 @@ public class MenuBarController {
 
         // 'Help->About' listener
         menus.get("Help").getItems().get(0).setOnAction(e -> {
+
+            String version = PomInformations.getInfoFromPom().getVersion();
+            List<String> names = PomInformations.getInfoFromPom().getDevelopers().stream()
+                    .map(Developer::getName)
+                    .collect(Collectors.toList());
+
+            String developers = "";
+            for (int i = 0; i < names.size(); i++)
+                developers += names.get(i) + (i!=names.size()-1 ? "," : "");
+
             Alerter.popInformationAlert(
                     languageController.getString("about_tab"),
-                    PreferencesRepository.getAllProperties(false).getProperty("application_title")+ " - v" + PreferencesRepository.getAllProperties(true).getProperty("current_version"),
-                    PreferencesRepository.getAllProperties(false).getProperty("authors") );
+                    PomInformations.getInfoFromPom().getName()+ " - v" + version,
+                    developers);
         });
 
 
@@ -135,7 +149,7 @@ public class MenuBarController {
             SketchController sketchController = DrawCanvasController.getInstance().getSketchController();
 
             boolean already_saved = SketchController.isAlreadySaved();
-            if (sketchController.saveSketch()) {
+            if (sketchController.save()) {
                 if (!already_saved)
                     Alerter.popInformationAlert(languageController.getString("saved_title"), null, languageController.getString("saved"));
                 else

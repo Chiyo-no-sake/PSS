@@ -4,8 +4,21 @@
                              http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>ch.supsi.pss</groupId>
+    <name>Personal Sketching System</name>
     <artifactId>pss-project-frontend</artifactId>
     <version>1.0.0</version>
+
+    <developers>
+        <developer>
+            <id>kalu</id>
+            <name>Luca Pasini</name>
+        </developer>
+        <developer>
+            <id>miggio</id>
+            <name>Matteo Miggiano</name>
+        </developer>
+    </developers>
+
     <!-- <packaging>jar</packaging>  -->
     <dependencies>
         <dependency>

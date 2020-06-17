@@ -3,69 +3,63 @@ package ch.supsi.pss.sketch;
 import java.time.LocalDate;
 import java.util.*;
 
-public class SketchController {
+public class SketchController implements HasUUID, HasBytes, HasTags, Savable {
 
-    private SketchService sketchService;
-
-    private final String uuid;
-    private byte[] sketch;
-    private final Set<String> tags;
-
+    private String uuid;
+    private byte[] bytes;
+    private Set<String> tags;
     private static boolean bAlreadySaved;
 
-    public void setSketch(byte[] sketch) {
-        this.sketch = sketch;
-    }
-
-    public byte[] getSketch() {
-        return sketch;
-    }
-
-    public SketchController(final byte[] sketch) {
-        uuid = UUID.randomUUID().toString();
-        sketchService = new SketchService(uuid);
-        this.sketch = sketch;
-
-        tags = new TreeSet<>();
-        bAlreadySaved = false;
-    }
-
-    // to initialize some start tags
-    public SketchController(final byte[] sketch, Collection<String> tags) {
-        uuid = UUID.randomUUID().toString();
-        sketchService = new SketchService(uuid);
-        this.sketch = sketch;
-
-        bAlreadySaved = false;
-
-        this.tags = new TreeSet<>();
+    public SketchController(final byte[] bytes, Collection<String> tags) {
+        setBytes(bytes);
+        setUUID(UUID.randomUUID().toString());
+        setTags(tags);
         this.tags.add(LocalDate.now().toString());
+        bAlreadySaved = false;
+    }
+
+    @Override
+    public void setUUID(String uuid) {
+        this.uuid = uuid;
+    }
+
+    @Override
+    public String getUUID() {
+        return uuid;
+    }
+
+    @Override
+    public void setBytes(byte[] bytes) {
+        this.bytes = bytes;
+    }
+
+    @Override
+    public byte[] getBytes() {
+        return bytes;
+    }
+
+    @Override
+    public void setTags(Collection<String> tags) {
+        this.tags = new TreeSet<>();
         this.tags.addAll(tags);
     }
 
-    public boolean saveSketch(){
-        if(sketchService.saveSketch(sketch, tags)) {
-            bAlreadySaved = true;
-            return true;
-        }
-
-        return false;
-    }
-
-    public void setSketchService(SketchService sketchService) {
-        this.sketchService = sketchService;
-    }
-
-    public SketchService getSketchService() {
-        return sketchService;
+    @Override
+    public Set<String> getTags() {
+        return tags;
     }
 
     public boolean addTag(String tag){
         return tags.add(tag);
     }
 
-    public Set<String> getTags() {
-        return tags;
+    @Override
+    public boolean save() {
+        if(SaveService.saveSketch(bytes,tags,uuid)) {
+            bAlreadySaved = true;
+            return true;
+        }
+        return false;
     }
 
     public static boolean isAlreadySaved() {
@@ -85,5 +79,13 @@ public class SketchController {
         });
 
         return sb.toString();
+    }
+
+    public static void refresh() {
+        ReadService.refreshSketches();
+    }
+
+    public static Map<byte[], Set<String>> getAllSketches() {
+        return ReadService.getSketches();
     }
 }

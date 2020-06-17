@@ -12,17 +12,9 @@ public abstract class PreferencesRepository{
     private static String drawsPath = null, metadataPath = null;
     private static Properties properties = new Properties();
 
-    static {
-        try {
-            properties.load(PreferencesRepository.class.getClassLoader().getResourceAsStream("config.properties"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     private static final String CONFIG_PROPERTIES =
             USER_HOME
-                    + File.separator + ".pss" + properties.getProperty("current_version")
+                    + File.separator + ".pss" + PomInformations.getInfoFromPom().getVersion()
                     + File.separator + "config.properties"  ;
 
     public static String getUserHome() {

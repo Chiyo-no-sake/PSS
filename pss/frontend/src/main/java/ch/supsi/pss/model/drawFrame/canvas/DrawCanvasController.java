@@ -7,7 +7,6 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -44,7 +43,7 @@ public class DrawCanvasController {
     }
 
     public SketchController getSketchController(){
-        sketchController.setSketch(getCanvasSnapshot());
+        sketchController.setBytes(getCanvasSnapshot());
         return sketchController;
     }
 

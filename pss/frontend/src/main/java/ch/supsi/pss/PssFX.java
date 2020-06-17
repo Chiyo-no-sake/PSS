@@ -1,5 +1,6 @@
 package ch.supsi.pss;
 
+import ch.supsi.pss.misc.PomInformations;
 import ch.supsi.pss.misc.PreferencesRepository;
 import ch.supsi.pss.model.menubar.PssMenuBar;
 import ch.supsi.pss.sketch.SketchCreator;
@@ -12,7 +13,7 @@ import javafx.stage.Stage;
 
 public class PssFX extends Application {
 
-    private static final String title = "Personal Sketching System";
+    private static final String title = PomInformations.getInfoFromPom().getName();
 
     static View galleryView, drawView, tagView;
 
