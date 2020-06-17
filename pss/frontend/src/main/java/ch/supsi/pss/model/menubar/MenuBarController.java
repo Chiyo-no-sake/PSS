@@ -1,7 +1,7 @@
 package ch.supsi.pss.model.menubar;
 
 import ch.supsi.pss.misc.LanguageController;
-import ch.supsi.pss.misc.PomInformations;
+import ch.supsi.pss.misc.PomProperties;
 import ch.supsi.pss.misc.PreferencesRepository;
 import ch.supsi.pss.sketch.SketchController;
 import ch.supsi.pss.model.drawFrame.canvas.DrawCanvasController;
@@ -15,15 +15,10 @@ import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
-import org.apache.maven.model.Developer;
-
-
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class MenuBarController {
     private PssMenuBar menuBar;
@@ -119,19 +114,12 @@ public class MenuBarController {
         // 'Help->About' listener
         menus.get("Help").getItems().get(0).setOnAction(e -> {
 
-            String version = PomInformations.getInfoFromPom().getVersion();
-            List<String> names = PomInformations.getInfoFromPom().getDevelopers().stream()
-                    .map(Developer::getName)
-                    .collect(Collectors.toList());
-
-            String developers = "";
-            for (int i = 0; i < names.size(); i++)
-                developers += names.get(i) + (i!=names.size()-1 ? "," : "");
-
             Alerter.popInformationAlert(
                     languageController.getString("about_tab"),
-                    PomInformations.getInfoFromPom().getName()+ " - v" + version,
-                    developers);
+                    PomProperties.getInstance().getData().getProperty("name") +
+                            " - v" + PomProperties.getInstance().getData().getProperty("version"),
+                    PomProperties.getInstance().getData().getProperty("developer1") + ", " +
+                            PomProperties.getInstance().getData().getProperty("developer2"));
         });
 
 

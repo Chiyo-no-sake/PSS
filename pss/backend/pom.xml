@@ -4,20 +4,15 @@
                              http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>ch.supsi.pss</groupId>
-    <name>Personal Sketching System</name>
     <artifactId>pss-project-backend</artifactId>
     <version>1.0.0</version>
 
-    <developers>
-        <developer>
-            <id>kalu</id>
-            <name>Luca Pasini</name>
-        </developer>
-        <developer>
-            <id>miggio</id>
-            <name>Matteo Miggiano</name>
-        </developer>
-    </developers>
+    <properties>
+        <name>Personal Sketching System</name>
+        <version>${project.version}</version>
+        <developer1>Luca Pasini</developer1>
+        <developer2>Matteo Miggiano</developer2>
+    </properties>
 
     <build>
         <plugins>
@@ -30,7 +25,15 @@
                 </configuration>
             </plugin>
         </plugins>
+
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
     </build>
+
     <dependencies>
         <dependency>
             <groupId>org.apache.maven</groupId>

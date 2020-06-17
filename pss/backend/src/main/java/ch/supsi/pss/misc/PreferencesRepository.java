@@ -14,7 +14,7 @@ public abstract class PreferencesRepository{
 
     private static final String CONFIG_PROPERTIES =
             USER_HOME
-                    + File.separator + ".pss" + PomInformations.getInfoFromPom().getVersion()
+                    + File.separator + ".pss" + PomProperties.getInstance().getData().getProperty("version")
                     + File.separator + "config.properties"  ;
 
     public static String getUserHome() {
