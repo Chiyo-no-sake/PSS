@@ -7,6 +7,10 @@
     <artifactId>pss-project-frontend</artifactId>
     <version>1.0.0</version>
 
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
     <!-- <packaging>jar</packaging>  -->
     <dependencies>
         <dependency>

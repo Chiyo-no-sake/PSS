@@ -12,6 +12,7 @@
         <version>${project.version}</version>
         <developer1>Luca Pasini</developer1>
         <developer2>Matteo Miggiano</developer2>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <build>
