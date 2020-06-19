@@ -1,11 +1,8 @@
 package ch.supsi.pss.sketch;
 
-import ch.supsi.pss.misc.PreferencesRepository;
+import ch.supsi.pss.misc.RepositoryController;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
@@ -16,10 +13,15 @@ import java.util.Set;
 public class ReadService {
     private static final Map<byte[], Set<String>> sketches = new HashMap<>();
 
-    public static void refreshSketches(){
+    public static boolean refreshSketches(){
         sketches.clear();
 
-        File drawsFolder = new File(PreferencesRepository.getDrawsPath());
+        File drawsFolder = null;
+        try {
+             drawsFolder = new File(RepositoryController.getInstance().getDrawsPath());
+        }catch (Exception e){
+            return false;
+        }
 
         File[] listOfFiles = drawsFolder.listFiles();
 
@@ -27,7 +29,7 @@ public class ReadService {
             for (File file : listOfFiles) {
                 if (file.isFile()) {
                     String path = file.toString();
-                    String uuid = path.replace( PreferencesRepository.getDrawsPath(), "").replace(".png", "");
+                    String uuid = path.replace( RepositoryController.getInstance().getDrawsPath(), "").replace(".png", "");
 
                     try{
                         byte[] bytes = Files.readAllBytes(Paths.get(path));
@@ -44,10 +46,12 @@ public class ReadService {
                     }
                 }
             }
+
+        return true;
     }
 
     private static Set<String> getTags(String uuid){
-        File metaFolder = new File(PreferencesRepository.getMetadataPath());
+        File metaFolder = new File(RepositoryController.getInstance().getMetaPath());
         File[] listOfFiles = metaFolder.listFiles();
 
         Set<String> tags = new HashSet<>();

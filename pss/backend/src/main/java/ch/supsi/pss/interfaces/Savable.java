@@ -1,4 +1,4 @@
-package ch.supsi.pss.sketch;
+package ch.supsi.pss.interfaces;
 
 public interface Savable {
     public boolean save();

@@ -1,7 +1,7 @@
 package ch.supsi.pss;
 
 import ch.supsi.pss.misc.PomProperties;
-import ch.supsi.pss.misc.PreferencesRepository;
+import ch.supsi.pss.misc.RepositoryController;
 import ch.supsi.pss.model.menubar.PssMenuBar;
 import ch.supsi.pss.sketch.SketchCreator;
 import ch.supsi.pss.view.*;
@@ -23,16 +23,14 @@ public class PssFX extends Application {
 
     @java.lang.Override
     public void start(Stage stage) {
+        RepositoryController rep = RepositoryController.getInstance();
+
         // get window width and height properties
         final double DEF_WIN_WIDTH = Double.parseDouble(
-                PreferencesRepository.getAllProperties(true).getProperty("default_app_width"));
+                rep.getConf().getProperty("default_app_width"));
 
         final double DEF_WIN_HEIGHT = Double.parseDouble(
-                PreferencesRepository.getAllProperties(true).getProperty("default_app_height"));
-
-
-        //Setup properties file on host
-        PreferencesRepository.copyPropertiesFile();
+                rep.getConf().getProperty("default_app_height"));
 
         stage.setTitle(title);
 

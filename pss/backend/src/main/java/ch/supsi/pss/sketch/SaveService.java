@@ -1,6 +1,7 @@
 package ch.supsi.pss.sketch;
 
-import ch.supsi.pss.misc.PreferencesRepository;
+import ch.supsi.pss.misc.RepositoryController;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
@@ -14,7 +15,7 @@ public class SaveService {
     }
 
     private static boolean saveDraw(final String uuid, final byte[] sketch) {
-        File file = new File(PreferencesRepository.getDrawsPath() + File.separator + uuid + ".png");
+        File file = new File(RepositoryController.getInstance().getDrawsPath() + File.separator + uuid + ".png");
         try (FileOutputStream stream = new FileOutputStream(file)){
             stream.write(sketch);
             return true;
@@ -27,7 +28,7 @@ public class SaveService {
     }
 
     private static boolean saveMetadata(final String uuid, final Collection<String> tags) {
-        File file = new File(PreferencesRepository.getMetadataPath() + File.separator + uuid);
+        File file = new File(RepositoryController.getInstance().getMetaPath() + File.separator + uuid);
         try {
             PrintWriter out = new PrintWriter(new FileWriter(file));
 

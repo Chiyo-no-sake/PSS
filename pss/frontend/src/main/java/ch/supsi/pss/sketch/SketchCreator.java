@@ -1,11 +1,8 @@
 package ch.supsi.pss.sketch;
 
-import ch.supsi.pss.misc.LanguageController;
-import ch.supsi.pss.misc.PreferencesRepository;
+import ch.supsi.pss.misc.*;
 import ch.supsi.pss.model.drawFrame.canvas.DrawCanvasController;
 import ch.supsi.pss.model.drawFrame.toolbar.DrawToolbarController;
-import ch.supsi.pss.misc.Alerter;
-import ch.supsi.pss.misc.WeekDays;
 import ch.supsi.pss.model.menubar.MenuBarController;
 
 import java.util.ArrayList;
@@ -42,11 +39,11 @@ public class SketchCreator {
                     return;
                 }
 
-            double width = Double.parseDouble(bPortrait ? PreferencesRepository.getAllProperties(true).getProperty("portrait_draw_width")
-                    : PreferencesRepository.getAllProperties(true).getProperty("horizontal_draw_width"));
+            double width = Double.parseDouble(bPortrait ? RepositoryController.getInstance().getConf().getProperty("portrait_draw_width")
+                    : RepositoryController.getInstance().getConf().getProperty("horizontal_draw_width"));
 
-            double height = Double.parseDouble(bPortrait ? PreferencesRepository.getAllProperties(true).getProperty("portrait_draw_height")
-                    : PreferencesRepository.getAllProperties(true).getProperty("horizontal_draw_height"));
+            double height = Double.parseDouble(bPortrait ? RepositoryController.getInstance().getConf().getProperty("portrait_draw_height")
+                    : RepositoryController.getInstance().getConf().getProperty("horizontal_draw_height"));
 
             DrawCanvasController.getInstance().getDrawCanvas().createPaper(width, height);
 

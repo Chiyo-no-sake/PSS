@@ -7,17 +7,6 @@
     <artifactId>pss-project-frontend</artifactId>
     <version>1.0.0</version>
 
-    <developers>
-        <developer>
-            <id>kalu</id>
-            <name>Luca Pasini</name>
-        </developer>
-        <developer>
-            <id>miggio</id>
-            <name>Matteo Miggiano</name>
-        </developer>
-    </developers>
-
     <!-- <packaging>jar</packaging>  -->
     <dependencies>
         <dependency>

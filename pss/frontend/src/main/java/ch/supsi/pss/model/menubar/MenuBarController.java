@@ -1,11 +1,8 @@
 package ch.supsi.pss.model.menubar;
 
-import ch.supsi.pss.misc.LanguageController;
-import ch.supsi.pss.misc.PomProperties;
-import ch.supsi.pss.misc.PreferencesRepository;
+import ch.supsi.pss.misc.*;
 import ch.supsi.pss.sketch.SketchController;
 import ch.supsi.pss.model.drawFrame.canvas.DrawCanvasController;
-import ch.supsi.pss.misc.Alerter;
 import ch.supsi.pss.sketch.SketchCreator;
 import ch.supsi.pss.view.*;
 import javafx.scene.control.Alert;
@@ -16,13 +13,13 @@ import javafx.scene.input.KeyCombination;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import java.io.File;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 
 public class MenuBarController {
     private PssMenuBar menuBar;
     private Stage stage;
+    private RepositoryController repo = RepositoryController.getInstance();
 
     private static MenuBarController instance;
 
@@ -86,19 +83,15 @@ public class MenuBarController {
 
         // 'Edit->Preferences->Folder' listener
         menus.get("Preferences").getItems().get(1).setOnAction(e -> {
-            if(PreferencesRepository.propertiesExistsOrNotContainsKey())
-                setDirectory();
-            else{
-                Path path = Paths.get(PreferencesRepository.getProperties().getProperty("path"));
-                File tmp = directoryChooser(path.getParent().toString());
-                PreferencesRepository.updateDirectory(tmp);
-            }
+            File file = directoryChooser();
+            if(file != null)
+                repo.setDirectory(file);
         });
 
         // 'Edit->Preferences->Language->Italiano' listener
         menus.get("Language").getItems().get(0).setOnAction(e -> {
             if (Alerter.popConfirmDialog(languageController.getString("restart"), languageController.getString("restart_mes"), languageController.getString("r_u_sure"))) {
-                PreferencesRepository.changeField("current_language", Locale.ITALIAN.getLanguage());
+                repo.getConf().changeLanguage(Locale.ITALIAN.getLanguage());
                 controlledStage.close();
             }
         });
@@ -106,7 +99,7 @@ public class MenuBarController {
         // 'Edit->Preferences->Language->English' listener
         menus.get("Language").getItems().get(1).setOnAction(e -> {
             if (Alerter.popConfirmDialog(languageController.getString("restart"), languageController.getString("restart_mes"), languageController.getString("r_u_sure"))) {
-                PreferencesRepository.changeField("current_language", Locale.ENGLISH.getLanguage());
+                repo.getConf().changeLanguage(Locale.ENGLISH.getLanguage());
                 controlledStage.close();
             }
         });
@@ -133,9 +126,13 @@ public class MenuBarController {
         // 'File->save' listener
         menus.get("File").getItems().get(1).setOnAction(e -> {
 
-            setDirectory();
-            SketchController sketchController = DrawCanvasController.getInstance().getSketchController();
+            if(repo.getDirectoryPath() == null ){
+                File file = directoryChooser();
+                if(file != null)
+                    repo.setDirectory(file);
+            }
 
+            SketchController sketchController = DrawCanvasController.getInstance().getSketchController();
             boolean already_saved = SketchController.isAlreadySaved();
             if (sketchController.save()) {
                 if (!already_saved)
@@ -173,18 +170,12 @@ public class MenuBarController {
         return stage;
     }
 
-    private void setDirectory(){
-        PreferencesRepository.setProperties(false);
-        if(PreferencesRepository.containsPathOrFolderNotExists())
-            PreferencesRepository.setDirectory(directoryChooser(PreferencesRepository.getUserHome()));
-        PreferencesRepository.setOrCreateFolders();
-    }
-
-    public File directoryChooser(final String path ){
+    public File directoryChooser(){
         DirectoryChooser dir = new DirectoryChooser();
-        if(path != null)
-            dir.setInitialDirectory(new File(path));
-
+        if (repo.getDirectoryPath() == null)
+            dir.setInitialDirectory(new File(System.getProperty("user.home")));
+        else
+            dir.setInitialDirectory(new File(Paths.get(repo.getDirectoryPath()).getParent().toString()));
         return dir.showDialog(stage);
     }
 }

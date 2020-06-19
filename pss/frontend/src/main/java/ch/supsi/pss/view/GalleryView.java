@@ -1,7 +1,7 @@
 package ch.supsi.pss.view;
 
 import ch.supsi.pss.misc.LanguageController;
-import ch.supsi.pss.misc.PreferencesRepository;
+import ch.supsi.pss.misc.RepositoryController;
 import ch.supsi.pss.model.menubar.MenuBarController;
 import ch.supsi.pss.model.gallery.SketchPreview;
 import ch.supsi.pss.sketch.SketchController;
@@ -26,14 +26,10 @@ public class GalleryView extends View {
     private final FlowPane gallery;
 
     private final static double PREVIEW_WIDTH = Double.parseDouble(
-            PreferencesRepository
-                    .getAllProperties(true)
-                    .getProperty("preview_sketch_width"));
+            RepositoryController.getInstance().getConf().getProperty("preview_sketch_width"));
 
     private final static double PREVIEW_HEIGHT = Double.parseDouble(
-            PreferencesRepository
-                    .getAllProperties(true)
-                    .getProperty("preview_sketch_height"));
+            RepositoryController.getInstance().getConf().getProperty("preview_sketch_height"));
 
     public GalleryView() {
         // Gallery Window Layout
@@ -145,8 +141,9 @@ public class GalleryView extends View {
     @Override
     public void onShow() {
         searchBar.clear();
-        //SketchReader.getInstance().refreshSketches();
-        SketchController.refresh();
+        if(!SketchController.refresh()){
+            gallery.getChildren().add(new Label(LanguageController.getInstance().getString("gallery_no_result")));
+        }
         this.updateGalleryContent();
         MenuBarController.getInstance().getMenuBar().updateClickableMenus();
     }

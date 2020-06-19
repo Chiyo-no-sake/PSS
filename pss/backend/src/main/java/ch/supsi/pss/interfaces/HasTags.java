@@ -1,4 +1,4 @@
-package ch.supsi.pss.sketch;
+package ch.supsi.pss.interfaces;
 
 import java.util.Collection;
 import java.util.Set;

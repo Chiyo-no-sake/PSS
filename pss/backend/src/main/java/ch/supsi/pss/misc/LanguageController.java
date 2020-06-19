@@ -10,7 +10,7 @@ public class LanguageController {
     private final ResourceBundle resourceBundle;
 
     private LanguageController(){
-        locale = new Locale(PreferencesRepository.getLanguage());
+        locale = new Locale(RepositoryController.getInstance().getConf().getProperty("current_language"));
         resourceBundle = ResourceBundle.getBundle("myProps", locale);
     }
 

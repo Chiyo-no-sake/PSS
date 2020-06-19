@@ -1,5 +1,10 @@
 package ch.supsi.pss.sketch;
 
+import ch.supsi.pss.interfaces.HasBytes;
+import ch.supsi.pss.interfaces.HasTags;
+import ch.supsi.pss.interfaces.HasUUID;
+import ch.supsi.pss.interfaces.Savable;
+
 import java.time.LocalDate;
 import java.util.*;
 
@@ -81,8 +86,8 @@ public class SketchController implements HasUUID, HasBytes, HasTags, Savable {
         return sb.toString();
     }
 
-    public static void refresh() {
-        ReadService.refreshSketches();
+    public static boolean refresh() {
+        return ReadService.refreshSketches();
     }
 
     public static Map<byte[], Set<String>> getAllSketches() {

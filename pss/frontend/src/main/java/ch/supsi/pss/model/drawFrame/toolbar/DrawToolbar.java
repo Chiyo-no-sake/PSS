@@ -1,7 +1,7 @@
 package ch.supsi.pss.model.drawFrame.toolbar;
 
 import ch.supsi.pss.misc.LanguageController;
-import ch.supsi.pss.misc.PreferencesRepository;
+import ch.supsi.pss.misc.RepositoryController;
 import ch.supsi.pss.model.drawFrame.canvas.DrawCanvas;
 import ch.supsi.pss.model.drawFrame.canvas.DrawCanvasController;
 import javafx.geometry.Insets;
@@ -22,9 +22,9 @@ import java.util.ArrayList;
  */
 public class DrawToolbar extends ToolBar {
     private static final int BTN_SIZE = Integer.parseInt(
-            PreferencesRepository.getAllProperties(true).getProperty("toolbar_btn_size"));
+            RepositoryController.getInstance().getConf().getProperty("toolbar_btn_size"));
     private static final int SPACER_HEIGHT = Integer.parseInt(
-            PreferencesRepository.getAllProperties(true).getProperty("toolbar_spacer_height"));
+            RepositoryController.getInstance().getConf().getProperty("toolbar_spacer_height"));
 
     private static final String PENCIL_ICO = "/icons/pencil.png";
     private static final String SQUARE_ICO = "/icons/square.png";

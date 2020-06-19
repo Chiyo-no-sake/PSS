@@ -1,7 +1,7 @@
 package ch.supsi.pss.model.drawFrame.toolbar;
 
 import ch.supsi.pss.misc.LanguageController;
-import ch.supsi.pss.misc.PreferencesRepository;
+import ch.supsi.pss.misc.RepositoryController;
 import javafx.geometry.Orientation;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -13,13 +13,13 @@ import javafx.scene.paint.Paint;
 
 public class StrokeSlider extends VBox {
     private static final int STROKE_DEF_THICK = Integer.parseInt(
-            PreferencesRepository.getAllProperties(true).getProperty("default_stroke_thick"));
+            RepositoryController.getInstance().getConf().getProperty("default_stroke_thick"));
 
     private static final int SLIDER_HEIGHT = Integer.parseInt(
-            PreferencesRepository.getAllProperties(true).getProperty("toolbar_slider_height"));
+            RepositoryController.getInstance().getConf().getProperty("toolbar_slider_height"));
 
     private static final int BTN_SIZE = Integer.parseInt(
-            PreferencesRepository.getAllProperties(true).getProperty("toolbar_btn_size"));
+            RepositoryController.getInstance().getConf().getProperty("toolbar_btn_size"));
 
     private final Slider strokeSlider;
     private final Canvas squareView;
