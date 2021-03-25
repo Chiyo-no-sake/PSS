@@ -4,7 +4,7 @@
 
 ## What's this?
 This project was developed for the software engineering course in SUPSI.
-It serve as a simple and fast Sketching System that allows to draw fast sketchis with different shapes and colors.
+It serve as a simple and fast Sketching System that allows to draw simple sketches with different shapes and colors, with possibility to save them as png.
 
 This project is preconfigured to be built with maven, it contains a backend that interact with filesystem and a frontend that handles the GUI.
 
